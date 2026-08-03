@@ -1,0 +1,5 @@
+placement_type,mode,used_nodes_amount,total_load,min_node_load,max_node_load,avg_node_load,node_load_standard_deviation,total_remaining_capacity
+tuple_ilp,baseline,8,1192,147,150,149.0,1.224744871391589,8
+tuple_ilp,updates,8,1194,148,150,149.25,0.82915619758885,6
+conflict_locality_ilp,baseline,8,1192,146,150,149.0,1.4142135623730951,8
+conflict_locality_ilp,updates,8,1194,147,150,149.25,0.9682458365518543,6

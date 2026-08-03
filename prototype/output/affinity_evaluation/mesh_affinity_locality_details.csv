@@ -1,0 +1,13 @@
+placement_type,fragment_i,fragment_j,affinity,node_i,node_j,same_node
+round_robin,branch_code_A05,top_category_B,8,node_1,node_2,False
+round_robin,branch_code_C05,top_category_B,7,node_5,node_2,False
+round_robin,branch_code_A05,branch_code_C05,5,node_1,node_5,False
+tuple_ilp,branch_code_A05,top_category_B,8,node_5,node_5,True
+tuple_ilp,branch_code_C05,top_category_B,7,node_10,node_5,False
+tuple_ilp,branch_code_A05,branch_code_C05,5,node_5,node_10,False
+conflict_locality_ilp,branch_code_A05,top_category_B,8,node_10,node_10,True
+conflict_locality_ilp,branch_code_C05,top_category_B,7,node_10,node_10,True
+conflict_locality_ilp,branch_code_A05,branch_code_C05,5,node_10,node_10,True
+conflict_locality_ilp_updated,branch_code_A05,top_category_B,8,node_3,node_2,False
+conflict_locality_ilp_updated,branch_code_C05,top_category_B,7,node_2,node_2,True
+conflict_locality_ilp_updated,branch_code_A05,branch_code_C05,5,node_3,node_2,False

@@ -1,0 +1,4 @@
+placement_type,mode,failed_node_id,amount_affected_items,amount_recoverable_items,amount_recovered_items,amount_unrecoverable_items,recovery_rate,available_nodes,selected_recovery_nodes,recovery_time_sec,amount_recovered_fragments,amount_recovered_fragment_memberships
+round_robin,baseline,node_1,71,71,71,0,1.0,9,5,0.06245600013062358,30,87
+tuple_ilp,baseline,node_1,137,137,137,0,1.0,7,7,0.05185150005854666,67,68
+conflict_locality_ilp,baseline,node_1,131,131,131,0,1.0,7,6,0.05247560003772378,68,150

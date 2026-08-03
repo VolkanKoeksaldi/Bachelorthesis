@@ -1,0 +1,682 @@
+[
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D033281"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "descriptor_name": "Workload Generated Descriptor 1",
+        "fragment_ids": [
+            "top_category_D",
+            "branch_code_A04",
+            "subbranch_code_E05.313"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_001"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 1"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_001"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_D",
+            "subbranch_code_E05.313"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D004780"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "descriptor_name": "Workload Generated Descriptor 2",
+        "fragment_ids": [
+            "top_category_D",
+            "branch_code_G11",
+            "subbranch_code_C01.436"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_002"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 2"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_002"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_C01.436",
+            "branch_code_G11"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D001100"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "descriptor_name": "Workload Generated Descriptor 3",
+        "fragment_ids": [
+            "top_category_A",
+            "branch_code_A12",
+            "subbranch_code_D26.255"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_003"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 3"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_003"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_A",
+            "subbranch_code_D26.255"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D019881"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "descriptor_name": "Workload Generated Descriptor 4",
+        "fragment_ids": [
+            "top_category_G",
+            "branch_code_G16",
+            "subbranch_code_G16.024"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_004"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 4"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_004"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_G",
+            "branch_code_G16"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D020947"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "descriptor_name": "Workload Generated Descriptor 5",
+        "fragment_ids": [
+            "top_category_I",
+            "branch_code_M01",
+            "subbranch_code_A03.734"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_005"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 5"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_005"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_I",
+            "branch_code_M01"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D011667"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "descriptor_name": "Workload Generated Descriptor 6",
+        "fragment_ids": [
+            "top_category_I",
+            "branch_code_A20",
+            "subbranch_code_D25.223"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_006"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 6"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_006"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "branch_code_A20",
+            "top_category_I"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D003182"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "descriptor_name": "Workload Generated Descriptor 7",
+        "fragment_ids": [
+            "top_category_M",
+            "branch_code_A13",
+            "subbranch_code_G03.796"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_007"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 7"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_007"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "branch_code_A13",
+            "subbranch_code_G03.796"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D061347"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "descriptor_name": "Workload Generated Descriptor 8",
+        "fragment_ids": [
+            "top_category_B",
+            "branch_code_H01",
+            "subbranch_code_J03.635"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_008"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 8"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_008"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_J03.635",
+            "top_category_B"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000092342"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "descriptor_name": "Workload Generated Descriptor 9",
+        "fragment_ids": [
+            "top_category_M",
+            "branch_code_A11",
+            "subbranch_code_E05.979"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_009"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 9"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_009"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_E05.979",
+            "branch_code_A11"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D020503"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "descriptor_name": "Workload Generated Descriptor 10",
+        "fragment_ids": [
+            "top_category_G",
+            "branch_code_G15",
+            "subbranch_code_B02.075"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_010"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 10"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_010"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_G",
+            "subbranch_code_B02.075"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D057080"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "descriptor_name": "Workload Generated Descriptor 11",
+        "fragment_ids": [
+            "top_category_J",
+            "branch_code_A11",
+            "subbranch_code_E02.197"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_011"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 11"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_011"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_J",
+            "branch_code_A11"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D009539"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "descriptor_name": "Workload Generated Descriptor 12",
+        "fragment_ids": [
+            "top_category_V",
+            "branch_code_G06",
+            "subbranch_code_G04.161"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_012"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 12"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_012"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_V",
+            "branch_code_G06"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D012178"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "descriptor_name": "Workload Generated Descriptor 13",
+        "fragment_ids": [
+            "top_category_G",
+            "branch_code_G10",
+            "subbranch_code_E04.943"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_013"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 13"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_013"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_E04.943",
+            "top_category_G"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D028243"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "descriptor_name": "Workload Generated Descriptor 14",
+        "fragment_ids": [
+            "top_category_F",
+            "branch_code_E04",
+            "subbranch_code_E02.815"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_014"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 14"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_014"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_F",
+            "branch_code_E04"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D013003"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "descriptor_name": "Workload Generated Descriptor 15",
+        "fragment_ids": [
+            "top_category_I",
+            "branch_code_G06",
+            "subbranch_code_D26.360"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_015"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 15"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_015"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_D26.360",
+            "branch_code_G06"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000068696"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "descriptor_name": "Workload Generated Descriptor 16",
+        "fragment_ids": [
+            "top_category_B",
+            "branch_code_C06",
+            "subbranch_code_A12.790"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_016"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 16"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_016"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "branch_code_C06",
+            "subbranch_code_A12.790"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D009189"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "descriptor_name": "Workload Generated Descriptor 17",
+        "fragment_ids": [
+            "top_category_C",
+            "branch_code_C04",
+            "subbranch_code_E07.877"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_017"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 17"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_017"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_C",
+            "branch_code_C04"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D013556"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "descriptor_name": "Workload Generated Descriptor 18",
+        "fragment_ids": [
+            "top_category_V",
+            "branch_code_A19",
+            "subbranch_code_E04.650"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_018"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 18"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_018"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "top_category_V",
+            "subbranch_code_E04.650"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D054560"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "descriptor_name": "Workload Generated Descriptor 19",
+        "fragment_ids": [
+            "top_category_I",
+            "branch_code_I01",
+            "subbranch_code_H01.158"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_019"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 19"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_019"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "subbranch_code_H01.158",
+            "branch_code_I01"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D012413"
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "descriptor_name": "Workload Generated Descriptor 20",
+        "fragment_ids": [
+            "top_category_H",
+            "branch_code_A18",
+            "subbranch_code_V02.305"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_020"
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "new_descriptor_name": "Updated Workload Generated Descriptor 20"
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_020"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "branch_code_A18",
+            "top_category_H"
+        ]
+    }
+]

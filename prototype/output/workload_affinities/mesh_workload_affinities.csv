@@ -1,0 +1,4 @@
+fragment_i,fragment_j,affinity
+branch_code_A05,top_category_B,8
+branch_code_C05,top_category_B,7
+branch_code_A05,branch_code_C05,5

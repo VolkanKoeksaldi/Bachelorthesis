@@ -1,0 +1,4 @@
+placement_type,failed_node_id,amount_affected_descriptors,amount_recoverable_descriptors,amount_recovered_descriptors,amount_unrecoverable_descriptors,recovery_rate,available_nodes,selected_recovery_nodes,recovery_time_sec,amount_recovered_fragments,amount_recovered_fragment_memberships
+round_robin,node_1,71,71,71,0,1.0,9,5,0.05460789997596294,30,87
+tuple_ilp,node_1,137,137,137,0,1.0,8,7,0.05437329993583262,23,150
+conflict_locality_ilp,node_1,131,131,131,0,1.0,7,6,0.05265159998089075,68,150

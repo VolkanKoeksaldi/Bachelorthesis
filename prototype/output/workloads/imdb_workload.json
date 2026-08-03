@@ -1,0 +1,682 @@
+[
+    {
+        "operation": "SELECT",
+        "title_id": "tt13573410"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_001",
+        "primary_title": "Workload Generated Descriptor 1",
+        "fragment_ids": [
+            "title_type_short",
+            "decade_1890s",
+            "primary_genre_Talk-Show"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_001"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_001",
+        "new_primary_title": "Updated Workload Generated Descriptor 1"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_001"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1890s",
+            "title_type_short"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt4166944"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_002",
+        "primary_title": "Workload Generated Descriptor 2",
+        "fragment_ids": [
+            "title_type_tvEpisode",
+            "decade_2000s",
+            "primary_genre_Animation"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_002"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_002",
+        "new_primary_title": "Updated Workload Generated Descriptor 2"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_002"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Animation",
+            "title_type_tvEpisode"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt8281776"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_003",
+        "primary_title": "Workload Generated Descriptor 3",
+        "fragment_ids": [
+            "title_type_tvShort",
+            "decade_1890s",
+            "primary_genre_Action"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_003"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_003",
+        "new_primary_title": "Updated Workload Generated Descriptor 3"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_003"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_tvShort",
+            "primary_genre_Action"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt6609158"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_004",
+        "primary_title": "Workload Generated Descriptor 4",
+        "fragment_ids": [
+            "title_type_video",
+            "decade_1980s",
+            "primary_genre_Action"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_004"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_004",
+        "new_primary_title": "Updated Workload Generated Descriptor 4"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_004"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Action",
+            "title_type_video"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt18969712"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_005",
+        "primary_title": "Workload Generated Descriptor 5",
+        "fragment_ids": [
+            "title_type_video",
+            "decade_1950s",
+            "primary_genre_Documentary"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_005"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_005",
+        "new_primary_title": "Updated Workload Generated Descriptor 5"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_005"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1950s",
+            "primary_genre_Documentary"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt25395404"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_006",
+        "primary_title": "Workload Generated Descriptor 6",
+        "fragment_ids": [
+            "title_type_movie",
+            "decade_2010s",
+            "primary_genre_UNKNOWN"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_006"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_006",
+        "new_primary_title": "Updated Workload Generated Descriptor 6"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_006"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_movie",
+            "decade_2010s"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt4879490"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_007",
+        "primary_title": "Workload Generated Descriptor 7",
+        "fragment_ids": [
+            "title_type_tvMovie",
+            "decade_1910s",
+            "primary_genre_Crime"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_007"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_007",
+        "new_primary_title": "Updated Workload Generated Descriptor 7"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_007"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1910s",
+            "title_type_tvMovie"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt15588132"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_008",
+        "primary_title": "Workload Generated Descriptor 8",
+        "fragment_ids": [
+            "title_type_tvShort",
+            "decade_1900s",
+            "primary_genre_Game-Show"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_008"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_008",
+        "new_primary_title": "Updated Workload Generated Descriptor 8"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_008"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1900s",
+            "primary_genre_Game-Show"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt40498782"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_009",
+        "primary_title": "Workload Generated Descriptor 9",
+        "fragment_ids": [
+            "title_type_movie",
+            "decade_2000s",
+            "primary_genre_Music"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_009"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_009",
+        "new_primary_title": "Updated Workload Generated Descriptor 9"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_009"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Music",
+            "title_type_movie"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt7265982"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_010",
+        "primary_title": "Workload Generated Descriptor 10",
+        "fragment_ids": [
+            "title_type_short",
+            "decade_1970s",
+            "primary_genre_Family"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_010"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_010",
+        "new_primary_title": "Updated Workload Generated Descriptor 10"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_010"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Family",
+            "decade_1970s"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt10309612"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_011",
+        "primary_title": "Workload Generated Descriptor 11",
+        "fragment_ids": [
+            "title_type_tvMiniSeries",
+            "decade_2000s",
+            "primary_genre_Adventure"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_011"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_011",
+        "new_primary_title": "Updated Workload Generated Descriptor 11"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_011"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_tvMiniSeries",
+            "primary_genre_Adventure"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt2609088"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_012",
+        "primary_title": "Workload Generated Descriptor 12",
+        "fragment_ids": [
+            "title_type_tvMovie",
+            "decade_1900s",
+            "primary_genre_Western"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_012"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_012",
+        "new_primary_title": "Updated Workload Generated Descriptor 12"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_012"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_tvMovie",
+            "primary_genre_Western"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt39006652"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_013",
+        "primary_title": "Workload Generated Descriptor 13",
+        "fragment_ids": [
+            "title_type_tvMovie",
+            "decade_1960s",
+            "primary_genre_Sci-Fi"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_013"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_013",
+        "new_primary_title": "Updated Workload Generated Descriptor 13"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_013"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1960s",
+            "title_type_tvMovie"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt34725937"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_014",
+        "primary_title": "Workload Generated Descriptor 14",
+        "fragment_ids": [
+            "title_type_tvSeries",
+            "decade_1920s",
+            "primary_genre_Short"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_014"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_014",
+        "new_primary_title": "Updated Workload Generated Descriptor 14"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_014"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1920s",
+            "title_type_tvSeries"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt1202814"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_015",
+        "primary_title": "Workload Generated Descriptor 15",
+        "fragment_ids": [
+            "title_type_tvEpisode",
+            "decade_1970s",
+            "primary_genre_Talk-Show"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_015"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_015",
+        "new_primary_title": "Updated Workload Generated Descriptor 15"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_015"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_tvEpisode",
+            "primary_genre_Talk-Show"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt8538052"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_016",
+        "primary_title": "Workload Generated Descriptor 16",
+        "fragment_ids": [
+            "title_type_tvShort",
+            "decade_1930s",
+            "primary_genre_Sci-Fi"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_016"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_016",
+        "new_primary_title": "Updated Workload Generated Descriptor 16"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_016"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Sci-Fi",
+            "title_type_tvShort"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt30581660"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_017",
+        "primary_title": "Workload Generated Descriptor 17",
+        "fragment_ids": [
+            "title_type_tvSeries",
+            "decade_2020s",
+            "primary_genre_Thriller"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_017"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_017",
+        "new_primary_title": "Updated Workload Generated Descriptor 17"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_017"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "title_type_tvSeries",
+            "primary_genre_Thriller"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt9842044"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_018",
+        "primary_title": "Workload Generated Descriptor 18",
+        "fragment_ids": [
+            "title_type_movie",
+            "decade_2010s",
+            "primary_genre_Fantasy"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_018"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_018",
+        "new_primary_title": "Updated Workload Generated Descriptor 18"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_018"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_2010s",
+            "primary_genre_Fantasy"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt15725868"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_019",
+        "primary_title": "Workload Generated Descriptor 19",
+        "fragment_ids": [
+            "title_type_tvMiniSeries",
+            "decade_UNKNOWN",
+            "primary_genre_Reality-TV"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_019"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_019",
+        "new_primary_title": "Updated Workload Generated Descriptor 19"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_019"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "primary_genre_Reality-TV",
+            "decade_UNKNOWN"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "tt3809300"
+    },
+    {
+        "operation": "INSERT",
+        "title_id": "D_WORKLOAD_020",
+        "primary_title": "Workload Generated Descriptor 20",
+        "fragment_ids": [
+            "title_type_tvSpecial",
+            "decade_1950s",
+            "primary_genre_Sci-Fi"
+        ]
+    },
+    {
+        "operation": "SELECT",
+        "title_id": "D_WORKLOAD_020"
+    },
+    {
+        "operation": "UPDATE",
+        "title_id": "D_WORKLOAD_020",
+        "new_primary_title": "Updated Workload Generated Descriptor 20"
+    },
+    {
+        "operation": "DELETE",
+        "title_id": "D_WORKLOAD_020"
+    },
+    {
+        "operation": "FRAGMENT_SELECT",
+        "fragment_ids": [
+            "decade_1950s",
+            "title_type_tvSpecial"
+        ]
+    }
+]

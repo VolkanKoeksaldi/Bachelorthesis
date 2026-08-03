@@ -1,0 +1,1918 @@
+[
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.015265900176018476,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 1
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.027813900029286742,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_001",
+            "item_name": "Workload Generated Descriptor 1",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 2
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.01643839990720153,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_001",
+                    "Workload Generated Descriptor 1",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 3
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.019985599908977747,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 4
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.039162299828603864,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 5
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.01596460002474487,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 6
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.019445099867880344,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_002",
+            "item_name": "Workload Generated Descriptor 2",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 7
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.01419240003451705,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_002",
+                    "Workload Generated Descriptor 2",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 8
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.013656500028446317,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 9
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.029462700011208653,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 10
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.015635699965059757,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 11
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.026375799905508757,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_003",
+            "item_name": "Workload Generated Descriptor 3",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 12
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.015892099821940064,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_003",
+                    "Workload Generated Descriptor 3",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 13
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.020197200123220682,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 14
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.035087900003418326,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 15
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.02372800000011921,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 16
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.02559480001218617,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_004",
+            "item_name": "Workload Generated Descriptor 4",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 17
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.015444000018760562,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_004",
+                    "Workload Generated Descriptor 4",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 18
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.0201322000939399,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 19
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.03819780005142093,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 20
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.017988600069656968,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 21
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.018166299909353256,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_005",
+            "item_name": "Workload Generated Descriptor 5",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 22
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.014783399878069758,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_005",
+                    "Workload Generated Descriptor 5",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 23
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.014404300134629011,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 24
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.027856700122356415,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 25
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.016026300145313144,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 26
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.031437400029972196,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_006",
+            "item_name": "Workload Generated Descriptor 6",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 27
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.015894899843260646,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_006",
+                    "Workload Generated Descriptor 6",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 28
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.019864500034600496,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 29
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.03712640004232526,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 30
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.017121799988672137,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 31
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.02760059991851449,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_007",
+            "item_name": "Workload Generated Descriptor 7",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 32
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.018405399983748794,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_007",
+                    "Workload Generated Descriptor 7",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 33
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.021595299942418933,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 34
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.03744510002434254,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 35
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.01890680007636547,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 36
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.01997960009612143,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_008",
+            "item_name": "Workload Generated Descriptor 8",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 37
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.015316100092604756,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_008",
+                    "Workload Generated Descriptor 8",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 38
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.02123879990540445,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 39
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.029029600089415908,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 40
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.014994699973613024,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 41
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.025193199981004,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_009",
+            "item_name": "Workload Generated Descriptor 9",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 42
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.017017799895256758,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_009",
+                    "Workload Generated Descriptor 9",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 43
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.020624900003895164,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 44
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.03611740004271269,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 45
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.016956800129264593,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 46
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.018954799976199865,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_010",
+            "item_name": "Workload Generated Descriptor 10",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 47
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.016760699916630983,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_010",
+                    "Workload Generated Descriptor 10",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 48
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.013771299971267581,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 49
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.028342299861833453,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 50
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000010",
+        "runtime_seconds": 0.02530570002272725,
+        "result": {
+            "rows": [
+                [
+                    "D000010",
+                    "Abducens Nerve",
+                    "{\"scope_notes\":[\"The 6th cranial nerve which originates in the ABDUCENS NUCLEUS of the PONS and sends motor fibers to the lateral rectus muscles of the EYE. Damage to the nerve or its nucleus disrupts horizontal eye movement control.\\n    \"],\"entry_terms\":[\"Abducen, Nervus\",\"Abducens Nerve\",\"Abducens, Nervus\",\"Abducent Nerve\",\"Abducent Nerves\",\"Cranial Nerve VI\",\"Cranial Nerve VIs\",\"Cranial Nerve, Sixth\",\"Nerve VI\",\"Nerve VI, Cranial\",\"Nerve VIs\",\"Nerve VIs, Cranial\",\"Nerve, Abducens\",\"Nerve, Abducent\",\"Nerve, Sixth Cranial\",\"Nerves, Sixth Cranial\",\"Nervus Abducen\",\"Nervus Abducens\",\"Sixth Cranial Nerve\",\"Sixth Cranial Nerves\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000166\",\"qualifier_name\":\"cytology\",\"abbreviation\":\"CY\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000637\",\"qualifier_name\":\"transplantation\",\"abbreviation\":\"TR\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"neoplasms = ABDUCENS NERVE DISEASES (IM) + CRANIAL NERVE NEOPLASMS (IM) + histological type of neoplasm (IM)\\n  \"}",
+                    2557
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_5"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A08.800",
+                "top_category_A",
+                "branch_code_A08"
+            ]
+        },
+        "operation_id": 51
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.019212699960917234,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_011",
+            "item_name": "Workload Generated Descriptor 11",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 52
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.015126300044357777,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_011",
+                    "Workload Generated Descriptor 11",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 53
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.012956199934706092,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 54
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.02902889996767044,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 55
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.015824100002646446,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 56
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.020823400001972914,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_012",
+            "item_name": "Workload Generated Descriptor 12",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 57
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.016261700075119734,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_012",
+                    "Workload Generated Descriptor 12",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 58
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.014704199973493814,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 59
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.028272699797526002,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 60
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.016791899921372533,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 61
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.019742100033909082,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_013",
+            "item_name": "Workload Generated Descriptor 13",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 62
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.022761299973353744,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_013",
+                    "Workload Generated Descriptor 13",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 63
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.012864199932664633,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 64
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.029314100043848157,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 65
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000010",
+        "runtime_seconds": 0.01606840011663735,
+        "result": {
+            "rows": [
+                [
+                    "D000010",
+                    "Abducens Nerve",
+                    "{\"scope_notes\":[\"The 6th cranial nerve which originates in the ABDUCENS NUCLEUS of the PONS and sends motor fibers to the lateral rectus muscles of the EYE. Damage to the nerve or its nucleus disrupts horizontal eye movement control.\\n    \"],\"entry_terms\":[\"Abducen, Nervus\",\"Abducens Nerve\",\"Abducens, Nervus\",\"Abducent Nerve\",\"Abducent Nerves\",\"Cranial Nerve VI\",\"Cranial Nerve VIs\",\"Cranial Nerve, Sixth\",\"Nerve VI\",\"Nerve VI, Cranial\",\"Nerve VIs\",\"Nerve VIs, Cranial\",\"Nerve, Abducens\",\"Nerve, Abducent\",\"Nerve, Sixth Cranial\",\"Nerves, Sixth Cranial\",\"Nervus Abducen\",\"Nervus Abducens\",\"Sixth Cranial Nerve\",\"Sixth Cranial Nerves\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000166\",\"qualifier_name\":\"cytology\",\"abbreviation\":\"CY\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000637\",\"qualifier_name\":\"transplantation\",\"abbreviation\":\"TR\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"neoplasms = ABDUCENS NERVE DISEASES (IM) + CRANIAL NERVE NEOPLASMS (IM) + histological type of neoplasm (IM)\\n  \"}",
+                    2557
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_5"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A08.800",
+                "top_category_A",
+                "branch_code_A08"
+            ]
+        },
+        "operation_id": 66
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.025144000072032213,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_014",
+            "item_name": "Workload Generated Descriptor 14",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 67
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.015667200088500977,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_014",
+                    "Workload Generated Descriptor 14",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 68
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.020352999912574887,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 69
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.03544100001454353,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 70
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.017544800182804465,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 71
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.025539500173181295,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_015",
+            "item_name": "Workload Generated Descriptor 15",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 72
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.01575989997945726,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_015",
+                    "Workload Generated Descriptor 15",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 73
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.019988100044429302,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 74
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.04137980006635189,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 75
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.016140500083565712,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 76
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.01855419995263219,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_016",
+            "item_name": "Workload Generated Descriptor 16",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 77
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.013740400085225701,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_016",
+                    "Workload Generated Descriptor 16",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 78
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.01356270001269877,
+        "result": {
+            "updated_rows": 1,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 79
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.027731900103390217,
+        "result": {
+            "deleted_rows": 1,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1"
+            ]
+        },
+        "operation_id": 80
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.014987899921834469,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 81
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.026057800045236945,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_017",
+            "item_name": "Workload Generated Descriptor 17",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 82
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.016948600066825747,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_017",
+                    "Workload Generated Descriptor 17",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 83
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.02110059978440404,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 84
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.03637290000915527,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 85
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.017659000121057034,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 86
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.032461300026625395,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_018",
+            "item_name": "Workload Generated Descriptor 18",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 87
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.01666629989631474,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_018",
+                    "Workload Generated Descriptor 18",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 88
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.022580399876460433,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 89
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.03721059998497367,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 90
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000015",
+        "runtime_seconds": 0.017021300038322806,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple",
+                    "{\"scope_notes\":[\"Congenital abnormalities that affect more than one organ or body structure.\\n    \"],\"entry_terms\":[\"Abnormalities, Multiple\",\"Multiple Abnormalities\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"coordinate with specific abnormalities\\n  \"}",
+                    2852
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "top_category_C",
+                "subbranch_code_C16.131"
+            ]
+        },
+        "operation_id": 91
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.029177899938076735,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_019",
+            "item_name": "Workload Generated Descriptor 19",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 92
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.01777929998934269,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_019",
+                    "Workload Generated Descriptor 19",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 93
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.022493300028145313,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 94
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.04195159999653697,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 95
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000005",
+        "runtime_seconds": 0.02145370002835989,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen",
+                    "{\"scope_notes\":[\"That portion of the body that lies between the THORAX and the PELVIS.\\n    \"],\"entry_terms\":[\"Abdomen\",\"Abdomens\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"general or unspecified; prefer specifics; ABDOMINAL MUSCLES and specifics are available; abrupt disease requiring emergency surgery equals ABDOMEN, ACUTE\\n  \"}",
+                    1545
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "branch_code_A01",
+                "top_category_A",
+                "subbranch_code_A01.923"
+            ]
+        },
+        "operation_id": 96
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.02797119994647801,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_020",
+            "item_name": "Workload Generated Descriptor 20",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_1"
+            ]
+        },
+        "operation_id": 97
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.026856499956920743,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_020",
+                    "Workload Generated Descriptor 20",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_C05",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 98
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.022630600025877357,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 99
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.10331279993988574,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_1",
+                "node_7"
+            ]
+        },
+        "operation_id": 100
+    }
+]

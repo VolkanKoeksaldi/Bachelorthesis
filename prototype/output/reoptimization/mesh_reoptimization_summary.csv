@@ -1,0 +1,3 @@
+placement_type,total_pairs,changed_pairs,unchanged_pairs,change_ratio
+conflict_locality_ilp,43660,11240,32420,0.25744388456252865
+tuple_ilp,43660,10261,33399,0.23502061383417316

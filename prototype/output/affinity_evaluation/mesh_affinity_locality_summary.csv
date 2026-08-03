@@ -1,0 +1,5 @@
+placement_type,number_affinity_pairs,same_node_pairs,total_affinity,colocated_affinity,separated_affinity,locality_ratio
+round_robin,3,0,20,0,20,0.0
+tuple_ilp,3,1,20,8,12,0.4
+conflict_locality_ilp,3,3,20,20,0,1.0
+conflict_locality_ilp_updated,3,1,20,7,13,0.35

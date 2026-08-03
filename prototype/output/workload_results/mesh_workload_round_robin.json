@@ -1,0 +1,1882 @@
+[
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.021550199948251247,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 1
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "runtime_seconds": 0.030936399940401316,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_001",
+            "descriptor_name": "Workload Generated Descriptor 1",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_10"
+            ]
+        },
+        "operation_id": 2
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "runtime_seconds": 0.021538999979384243,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_001",
+                    "Workload Generated Descriptor 1"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 3
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "runtime_seconds": 0.023202399956062436,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 4
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_001",
+        "runtime_seconds": 0.03830450004898012,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 5
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.021751100081019104,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 6
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "runtime_seconds": 0.029895100044086576,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_002",
+            "descriptor_name": "Workload Generated Descriptor 2",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 7
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "runtime_seconds": 0.02042539999820292,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_002",
+                    "Workload Generated Descriptor 2"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 8
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "runtime_seconds": 0.021682499907910824,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 9
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_002",
+        "runtime_seconds": 0.03645170002710074,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 10
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.02009650005493313,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 11
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "runtime_seconds": 0.028593599912710488,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_003",
+            "descriptor_name": "Workload Generated Descriptor 3",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_10"
+            ]
+        },
+        "operation_id": 12
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "runtime_seconds": 0.02607930009253323,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_003",
+                    "Workload Generated Descriptor 3"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 13
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "runtime_seconds": 0.019837000058032572,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 14
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_003",
+        "runtime_seconds": 0.03901800001040101,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 15
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.021233699982985854,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 16
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "runtime_seconds": 0.029726200038567185,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_004",
+            "descriptor_name": "Workload Generated Descriptor 4",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 17
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "runtime_seconds": 0.0203200998948887,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_004",
+                    "Workload Generated Descriptor 4"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 18
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "runtime_seconds": 0.01940930006094277,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 19
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_004",
+        "runtime_seconds": 0.03829239995684475,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 20
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.022730500088073313,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 21
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "runtime_seconds": 0.02954020001925528,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_005",
+            "descriptor_name": "Workload Generated Descriptor 5",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 22
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "runtime_seconds": 0.026835200027562678,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_005",
+                    "Workload Generated Descriptor 5"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 23
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "runtime_seconds": 0.020014400011859834,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 24
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_005",
+        "runtime_seconds": 0.040114000090397894,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 25
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.021816199994646013,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 26
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "runtime_seconds": 0.029610999976284802,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_006",
+            "descriptor_name": "Workload Generated Descriptor 6",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_10"
+            ]
+        },
+        "operation_id": 27
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "runtime_seconds": 0.02012930007185787,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_006",
+                    "Workload Generated Descriptor 6"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 28
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "runtime_seconds": 0.020444300025701523,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 29
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_006",
+        "runtime_seconds": 0.037258800002746284,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 30
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.020627799909561872,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 31
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "runtime_seconds": 0.028389399987645447,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_007",
+            "descriptor_name": "Workload Generated Descriptor 7",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 32
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "runtime_seconds": 0.027366399997845292,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_007",
+                    "Workload Generated Descriptor 7"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 33
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "runtime_seconds": 0.01957919995766133,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 34
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_007",
+        "runtime_seconds": 0.03810829995200038,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 35
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.020119599997997284,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 36
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "runtime_seconds": 0.02999670000281185,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_008",
+            "descriptor_name": "Workload Generated Descriptor 8",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 37
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "runtime_seconds": 0.020061599905602634,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_008",
+                    "Workload Generated Descriptor 8"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 38
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "runtime_seconds": 0.02012460003606975,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 39
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_008",
+        "runtime_seconds": 0.03702829999383539,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 40
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.021294499980285764,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 41
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "runtime_seconds": 0.037233500042930245,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_009",
+            "descriptor_name": "Workload Generated Descriptor 9",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_10"
+            ]
+        },
+        "operation_id": 42
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "runtime_seconds": 0.020091000013053417,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_009",
+                    "Workload Generated Descriptor 9"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 43
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "runtime_seconds": 0.019440899952314794,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 44
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_009",
+        "runtime_seconds": 0.04313220002222806,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 45
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.022871099994517863,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 46
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "runtime_seconds": 0.03033009998034686,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_010",
+            "descriptor_name": "Workload Generated Descriptor 10",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 47
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "runtime_seconds": 0.019965099985711277,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_010",
+                    "Workload Generated Descriptor 10"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 48
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "runtime_seconds": 0.019944299943745136,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 49
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_010",
+        "runtime_seconds": 0.03760939999483526,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 50
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000010",
+        "runtime_seconds": 0.021057499921880662,
+        "result": {
+            "rows": [
+                [
+                    "D000010",
+                    "Abducens Nerve"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_A08",
+                "subbranch_code_A08.800",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 51
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "runtime_seconds": 0.03560780000407249,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_011",
+            "descriptor_name": "Workload Generated Descriptor 11",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 52
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "runtime_seconds": 0.019365300075151026,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_011",
+                    "Workload Generated Descriptor 11"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 53
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "runtime_seconds": 0.02158290008082986,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 54
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_011",
+        "runtime_seconds": 0.036535699968226254,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 55
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.020803799969144166,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 56
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "runtime_seconds": 0.02837399998679757,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_012",
+            "descriptor_name": "Workload Generated Descriptor 12",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 57
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "runtime_seconds": 0.019763799966312945,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_012",
+                    "Workload Generated Descriptor 12"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 58
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "runtime_seconds": 0.019538599997758865,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 59
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_012",
+        "runtime_seconds": 0.037931400001980364,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 60
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.020350400009192526,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 61
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "runtime_seconds": 0.03456709999591112,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_013",
+            "descriptor_name": "Workload Generated Descriptor 13",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 62
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "runtime_seconds": 0.019531500060111284,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_013",
+                    "Workload Generated Descriptor 13"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 63
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "runtime_seconds": 0.019455500063486397,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 64
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_013",
+        "runtime_seconds": 0.03719340008683503,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 65
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000010",
+        "runtime_seconds": 0.020678200060501695,
+        "result": {
+            "rows": [
+                [
+                    "D000010",
+                    "Abducens Nerve"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_A08",
+                "subbranch_code_A08.800",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 66
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "runtime_seconds": 0.02742289996240288,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_014",
+            "descriptor_name": "Workload Generated Descriptor 14",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_7",
+                "node_10"
+            ]
+        },
+        "operation_id": 67
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "runtime_seconds": 0.01963870006147772,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_014",
+                    "Workload Generated Descriptor 14"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 68
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "runtime_seconds": 0.019868999952450395,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 69
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_014",
+        "runtime_seconds": 0.03721650002989918,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 70
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.02127129992004484,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 71
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "runtime_seconds": 0.03530099999625236,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_015",
+            "descriptor_name": "Workload Generated Descriptor 15",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 72
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "runtime_seconds": 0.019879099912941456,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_015",
+                    "Workload Generated Descriptor 15"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 73
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "runtime_seconds": 0.019996099988929927,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 74
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_015",
+        "runtime_seconds": 0.03816009999718517,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 75
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.020700199995189905,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 76
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "runtime_seconds": 0.029246200108900666,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_016",
+            "descriptor_name": "Workload Generated Descriptor 16",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 77
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "runtime_seconds": 0.021282200003042817,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_016",
+                    "Workload Generated Descriptor 16"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_A05"
+            ]
+        },
+        "operation_id": 78
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "runtime_seconds": 0.01949330000206828,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 79
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_016",
+        "runtime_seconds": 0.03742039995267987,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_7"
+            ]
+        },
+        "operation_id": 80
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.020844100043177605,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 81
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "runtime_seconds": 0.03527229989413172,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_017",
+            "descriptor_name": "Workload Generated Descriptor 17",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 82
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "runtime_seconds": 0.019523599999956787,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_017",
+                    "Workload Generated Descriptor 17"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 83
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "runtime_seconds": 0.02174519991967827,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 84
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_017",
+        "runtime_seconds": 0.04224330000579357,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 85
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.022993599995970726,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 86
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "runtime_seconds": 0.0300825999584049,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_018",
+            "descriptor_name": "Workload Generated Descriptor 18",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 87
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "runtime_seconds": 0.02033799991477281,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_018",
+                    "Workload Generated Descriptor 18"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A05",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 88
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "runtime_seconds": 0.019912899937480688,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 89
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_018",
+        "runtime_seconds": 0.0366175000090152,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_7"
+            ]
+        },
+        "operation_id": 90
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000015",
+        "runtime_seconds": 0.021586499991826713,
+        "result": {
+            "rows": [
+                [
+                    "D000015",
+                    "Abnormalities, Multiple"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_C16",
+                "subbranch_code_C16.131",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 91
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "runtime_seconds": 0.034452299936674535,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_019",
+            "descriptor_name": "Workload Generated Descriptor 19",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_2",
+                "node_10"
+            ]
+        },
+        "operation_id": 92
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "runtime_seconds": 0.019837999949231744,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_019",
+                    "Workload Generated Descriptor 19"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 93
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "runtime_seconds": 0.020175899961031973,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 94
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_019",
+        "runtime_seconds": 0.037957699969410896,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 95
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D000005",
+        "runtime_seconds": 0.02083170006517321,
+        "result": {
+            "rows": [
+                [
+                    "D000005",
+                    "Abdomen"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A01.923",
+                "branch_code_A01",
+                "top_category_A"
+            ]
+        },
+        "operation_id": 96
+    },
+    {
+        "operation": "INSERT",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "runtime_seconds": 0.027675400022417307,
+        "result": {
+            "Inserted descriptor_ui": "D_WORKLOAD_020",
+            "descriptor_name": "Workload Generated Descriptor 20",
+            "inserted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 97
+    },
+    {
+        "operation": "SELECT",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "runtime_seconds": 0.019943099934607744,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_020",
+                    "Workload Generated Descriptor 20"
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2"
+            ],
+            "fragment_ids": [
+                "top_category_B",
+                "branch_code_C05"
+            ]
+        },
+        "operation_id": 98
+    },
+    {
+        "operation": "UPDATE",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "runtime_seconds": 0.020089500001631677,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 99
+    },
+    {
+        "operation": "DELETE",
+        "descriptor_ui": "D_WORKLOAD_020",
+        "runtime_seconds": 0.03712150000501424,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 2,
+            "contacted_nodes": [
+                "node_10",
+                "node_2"
+            ]
+        },
+        "operation_id": 100
+    }
+]

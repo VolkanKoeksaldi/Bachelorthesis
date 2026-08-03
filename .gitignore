@@ -1,0 +1,14 @@
+/bachelor_thesis_ayse_yilmaz (1).pdf
+/data
+/Funktionstests
+/output
+/Paper
+/Paper Notizen
+/src
+/Zwischendateien Assignments
+/Zwischenstand
+# Ignore raw datasets except the small MeSH sample
+prototype/data/raw/*
+!prototype/data/raw/mesh/
+prototype/data/raw/mesh/*
+!prototype/data/raw/mesh/desc2026_sample.xml

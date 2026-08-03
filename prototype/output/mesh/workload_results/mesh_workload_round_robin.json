@@ -1,0 +1,2089 @@
+[
+    {
+        "operation": "SELECT",
+        "item_id": "D033281",
+        "runtime_seconds": 0.02104509999981019,
+        "result": {
+            "rows": [
+                [
+                    "D033281",
+                    "Nontherapeutic Human Experimentation",
+                    "{\"scope_notes\":[\"Human experimentation that is not intended to benefit the subjects on whom it is performed. Phase I drug studies (CLINICAL TRIALS, PHASE I AS TOPIC) and research involving healthy volunteers are examples of nontherapeutic human experimentation.\\n    \"],\"entry_terms\":[\"Experimentation, Nontherapeutic Human\",\"Human Experimentation, Nontherapeutic\",\"Nontherapeutic Human Experimentation\",\"Nontherapeutic Research\",\"Research, Nontherapeutic\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000331\",\"qualifier_name\":\"legislation & jurisprudence\",\"abbreviation\":\"LJ\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000706\",\"qualifier_name\":\"statistics & numerical data\",\"abbreviation\":\"SN\"},{\"qualifier_ui\":\"Q000941\",\"qualifier_name\":\"ethics\",\"abbreviation\":\"ES\"}],\"annotation\":\"use only when the issue of nontherapeutic research is discussed, including its ethical, legal, psychological, or social implications\\n  \"}",
+                    1089
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_4",
+                "node_5",
+                "node_6",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_H01",
+                "branch_code_E05",
+                "subbranch_code_E05.445",
+                "subbranch_code_H01.770",
+                "top_category_E",
+                "top_category_H"
+            ]
+        },
+        "operation_id": 1
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.042044000000259985,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_001",
+            "item_name": "Workload Generated Descriptor 1",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_10",
+                "node_8"
+            ]
+        },
+        "operation_id": 2
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.02171760000010181,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_001",
+                    "Workload Generated Descriptor 1",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_4",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_D",
+                "branch_code_A04",
+                "subbranch_code_E05.313"
+            ]
+        },
+        "operation_id": 3
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.024250999999821943,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_4",
+                "node_8"
+            ]
+        },
+        "operation_id": 4
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.05002939999985756,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_4",
+                "node_8"
+            ]
+        },
+        "operation_id": 5
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D004780",
+        "runtime_seconds": 0.019630400000096415,
+        "result": {
+            "rows": [
+                [
+                    "D004780",
+                    "Environment, Controlled",
+                    "{\"scope_notes\":[\"A state in which the environs of hospitals, laboratories, domestic and animal housing, work places, spacecraft, and other surroundings are under technological control with regard to air conditioning, heating, lighting, humidity, ventilation, and other ambient features. The concept includes control of atmospheric composition. (From Jane's Aerospace Dictionary, 3d ed)\\n    \"],\"entry_terms\":[\"Area, Laminar Air-Flow\",\"Clean Room\",\"Clean Rooms\",\"Controlled Environment\",\"Controlled Environments\",\"Environment, Controlled\",\"Environments, Controlled\",\"Laminar Air Flow Areas\",\"Laminar Air-Flow Area\",\"Laminar Air-Flow Areas\",\"Room, Clean\"],\"allowable_qualifiers\":[],\"annotation\":null}",
+                    728
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_5",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "subbranch_code_N06.230",
+                "top_category_N",
+                "branch_code_N06"
+            ]
+        },
+        "operation_id": 6
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.03720870000006471,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_002",
+            "item_name": "Workload Generated Descriptor 2",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_3",
+                "node_8"
+            ]
+        },
+        "operation_id": 7
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.01995310000029349,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_002",
+                    "Workload Generated Descriptor 2",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_4",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_D",
+                "branch_code_G11",
+                "subbranch_code_C01.436"
+            ]
+        },
+        "operation_id": 8
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.024453300000004674,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_4",
+                "node_8"
+            ]
+        },
+        "operation_id": 9
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.0517784999997275,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_4",
+                "node_8"
+            ]
+        },
+        "operation_id": 10
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D001100",
+        "runtime_seconds": 0.028109800000038376,
+        "result": {
+            "rows": [
+                [
+                    "D001100",
+                    "Arachnoiditis",
+                    "{\"scope_notes\":[\"Acute or chronic inflammation of the arachnoid membrane of the meninges most often involving the spinal cord or base of the brain. This term generally refers to a persistent inflammatory process characterized by thickening of the ARACHNOID membrane and dural adhesions. Associated conditions include prior surgery, infections, trauma, SUBARACHNOID HEMORRHAGE, and chemical irritation. Clinical features vary with the site of inflammation, but include cranial neuropathies, radiculopathies, and myelopathies. (From Joynt, Clinical Neurology, 1997, Ch48, p25)\\n    \"],\"entry_terms\":[\"Arachnoid Membrane Inflammation\",\"Arachnoid Membrane Inflammations\",\"Arachnoiditides\",\"Arachnoiditis\",\"Inflammation, Arachnoid Membrane\",\"Inflammations, Arachnoid Membrane\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000150\",\"qualifier_name\":\"complications\",\"abbreviation\":\"CO\"},{\"qualifier_ui\":\"Q000151\",\"qualifier_name\":\"congenital\",\"abbreviation\":\"CN\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":null}",
+                    3564
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_3"
+            ],
+            "fragment_ids": [
+                "subbranch_code_C10.586",
+                "branch_code_C10",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 11
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.04228209999973842,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_003",
+            "item_name": "Workload Generated Descriptor 3",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_1",
+                "node_8",
+                "node_7"
+            ]
+        },
+        "operation_id": 12
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.020016800000121293,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_003",
+                    "Workload Generated Descriptor 3",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_7",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_A",
+                "branch_code_A12",
+                "subbranch_code_D26.255"
+            ]
+        },
+        "operation_id": 13
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.02698420000024271,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_1",
+                "node_7",
+                "node_8"
+            ]
+        },
+        "operation_id": 14
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.05066629999964789,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_1",
+                "node_7",
+                "node_8"
+            ]
+        },
+        "operation_id": 15
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D019881",
+        "runtime_seconds": 0.020507400000042253,
+        "result": {
+            "rows": [
+                [
+                    "D019881",
+                    "Aminoacyltransferases",
+                    "{\"scope_notes\":[\"Enzymes that catalyze the transfer of an aminoacyl group from donor to acceptor resulting in the formation of an ester or amide linkage. EC 2.3.2.\\n    \"],\"entry_terms\":[\"Aminoacyltransferases\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000037\",\"qualifier_name\":\"antagonists & inhibitors\",\"abbreviation\":\"AI\"},{\"qualifier_ui\":\"Q000096\",\"qualifier_name\":\"biosynthesis\",\"abbreviation\":\"BI\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000138\",\"qualifier_name\":\"chemical synthesis\",\"abbreviation\":\"CS\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000172\",\"qualifier_name\":\"deficiency\",\"abbreviation\":\"DF\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"}],\"annotation\":null}",
+                    2599
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_2",
+                "node_4"
+            ],
+            "fragment_ids": [
+                "subbranch_code_D08.811",
+                "top_category_D",
+                "branch_code_D08"
+            ]
+        },
+        "operation_id": 16
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.04636230000005526,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_004",
+            "item_name": "Workload Generated Descriptor 4",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_10"
+            ]
+        },
+        "operation_id": 17
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.02171939999971073,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_004",
+                    "Workload Generated Descriptor 4",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_7",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_G",
+                "branch_code_G16",
+                "subbranch_code_G16.024"
+            ]
+        },
+        "operation_id": 18
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.03726569999980711,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_7",
+                "node_8"
+            ]
+        },
+        "operation_id": 19
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.05420559999993202,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_7",
+                "node_8"
+            ]
+        },
+        "operation_id": 20
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D020947",
+        "runtime_seconds": 0.020732999999836466,
+        "result": {
+            "rows": [
+                [
+                    "D020947",
+                    "Tea Tree Oil",
+                    "{\"scope_notes\":[\"Essential oil extracted from MELALEUCA ALTERNIFOLIA (tea tree). It is used as a topical antimicrobial due to the presence of terpineol.\\n    \"],\"entry_terms\":[\"Aetheroleum Melaleucae alternifoliae\",\"Melaleuca alternifolia Oil\",\"Melaleucae alternifoliae, Aetheroleum\",\"Oil, Melaleuca alternifolia\",\"Oil, Tea Tree\",\"Tea Tree Oil\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000138\",\"qualifier_name\":\"chemical synthesis\",\"abbreviation\":\"CS\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"}],\"annotation\":null}",
+                    1858
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_D20",
+                "branch_code_D10",
+                "top_category_D",
+                "subbranch_code_D10.627",
+                "subbranch_code_D20.215"
+            ]
+        },
+        "operation_id": 21
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.03783889999976964,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_005",
+            "item_name": "Workload Generated Descriptor 5",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_9",
+                "node_10",
+                "node_8"
+            ]
+        },
+        "operation_id": 22
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.018605899999784015,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_005",
+                    "Workload Generated Descriptor 5",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "subbranch_code_A03.734",
+                "top_category_I",
+                "branch_code_M01"
+            ]
+        },
+        "operation_id": 23
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.025345699999888893,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 24
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.05021970000007059,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 25
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D011667",
+        "runtime_seconds": 0.021661300000232586,
+        "result": {
+            "rows": [
+                [
+                    "D011667",
+                    "Pulmonary Veins",
+                    "{\"scope_notes\":[\"The veins that return the oxygenated blood from the lungs to the left atrium of the heart.\\n    \"],\"entry_terms\":[\"Pulmonary Vein\",\"Pulmonary Veins\",\"Vein, Pulmonary\",\"Veins, Pulmonary\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000166\",\"qualifier_name\":\"cytology\",\"abbreviation\":\"CY\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000293\",\"qualifier_name\":\"injuries\",\"abbreviation\":\"IN\"},{\"qualifier_ui\":\"Q000294\",\"qualifier_name\":\"innervation\",\"abbreviation\":\"IR\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000637\",\"qualifier_name\":\"transplantation\",\"abbreviation\":\"TR\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":null}",
+                    2090
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_3",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "top_category_A",
+                "branch_code_A07",
+                "subbranch_code_A07.015"
+            ]
+        },
+        "operation_id": 26
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.04771339999979318,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_006",
+            "item_name": "Workload Generated Descriptor 6",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_9",
+                "node_6",
+                "node_3"
+            ]
+        },
+        "operation_id": 27
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.019216700000015408,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_006",
+                    "Workload Generated Descriptor 6",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_3"
+            ],
+            "available_nodes": [
+                "node_3",
+                "node_6",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "subbranch_code_D25.223",
+                "top_category_I",
+                "branch_code_A20"
+            ]
+        },
+        "operation_id": 28
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.02523830000018279,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_6",
+                "node_9"
+            ]
+        },
+        "operation_id": 29
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.049216400000204885,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_6",
+                "node_9"
+            ]
+        },
+        "operation_id": 30
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D003182",
+        "runtime_seconds": 0.01925570000003063,
+        "result": {
+            "rows": [
+                [
+                    "D003182",
+                    "Complement C5",
+                    "{\"scope_notes\":[\"C5 plays a central role in both the classical and the alternative pathway of COMPLEMENT ACTIVATION. C5 is cleaved by C5 CONVERTASE into COMPLEMENT C5A and COMPLEMENT C5B. The smaller fragment C5a is an ANAPHYLATOXIN and mediator of inflammatory process. The major fragment C5b binds to the membrane initiating the spontaneous assembly of the late complement components, C5-C9, into the MEMBRANE ATTACK COMPLEX.\\n    \"],\"entry_terms\":[\"C5 Complement\",\"C5, Complement\",\"C5, Precursor\",\"C5, Precursor Complement\",\"Complement 5\",\"Complement C5\",\"Complement C5, Precursor\",\"Complement Component 5\",\"Complement, C5\",\"Component 5, Complement\",\"Precursor C5\",\"Precursor Complement C5\",\"Pro C5\",\"Pro complement 5\",\"Pro-C5\",\"Pro-complement 5\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000037\",\"qualifier_name\":\"antagonists & inhibitors\",\"abbreviation\":\"AI\"},{\"qualifier_ui\":\"Q000096\",\"qualifier_name\":\"biosynthesis\",\"abbreviation\":\"BI\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000138\",\"qualifier_name\":\"chemical synthesis\",\"abbreviation\":\"CS\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000172\",\"qualifier_name\":\"deficiency\",\"abbreviation\":\"DF\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000819\",\"qualifier_name\":\"agonists\",\"abbreviation\":\"AG\"}],\"annotation\":null}",
+                    3133
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_5"
+            ],
+            "fragment_ids": [
+                "branch_code_D12",
+                "subbranch_code_D12.776",
+                "top_category_D"
+            ]
+        },
+        "operation_id": 31
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.03782860000001165,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_007",
+            "item_name": "Workload Generated Descriptor 7",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_9",
+                "node_2"
+            ]
+        },
+        "operation_id": 32
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.02089350000005652,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_007",
+                    "Workload Generated Descriptor 7",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "top_category_M",
+                "branch_code_A13",
+                "subbranch_code_G03.796"
+            ]
+        },
+        "operation_id": 33
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.02639499999986583,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_9"
+            ]
+        },
+        "operation_id": 34
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.055863699999918026,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_9"
+            ]
+        },
+        "operation_id": 35
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D061347",
+        "runtime_seconds": 0.02981900000031601,
+        "result": {
+            "rows": [
+                [
+                    "D061347",
+                    "Forgiveness",
+                    "{\"scope_notes\":[\"Excusing or pardoning for an offense or release of anger or resentment.\\n    \"],\"entry_terms\":[\"Forgiveness\",\"Forgivenesses\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000941\",\"qualifier_name\":\"ethics\",\"abbreviation\":\"ES\"}],\"annotation\":null}",
+                    673
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_4",
+                "node_6",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "top_category_F",
+                "subbranch_code_F01.470",
+                "branch_code_F01",
+                "subbranch_code_F01.829"
+            ]
+        },
+        "operation_id": 36
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.03732380000019475,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_008",
+            "item_name": "Workload Generated Descriptor 8",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_10",
+                "node_3"
+            ]
+        },
+        "operation_id": 37
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.02028939999991053,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_008",
+                    "Workload Generated Descriptor 8",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2",
+                "node_3"
+            ],
+            "fragment_ids": [
+                "subbranch_code_J03.635",
+                "branch_code_H01",
+                "top_category_B"
+            ]
+        },
+        "operation_id": 38
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.025530199999593606,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_2",
+                "node_3"
+            ]
+        },
+        "operation_id": 39
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.049343600000156584,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_2",
+                "node_3"
+            ]
+        },
+        "operation_id": 40
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000092342",
+        "runtime_seconds": 0.02183680000007371,
+        "result": {
+            "rows": [
+                [
+                    "D000092342",
+                    "Polypoidal Choroidal Vasculopathy",
+                    "{\"scope_notes\":[\"A CHOROID neovascularization characterized by serosanguineous retinal pigment epithelial detachment and leakage of serous exudate sometimes associated with aneurysmal polypoidal lesions.\\n    \"],\"entry_terms\":[\"CNV, Polypoidal\",\"Choroidal Neovascularization, Polypoidal\",\"Choroidal Neovascularizations, Polypoidal\",\"Choroidal Vasculopathies, Polypoidal\",\"Choroidal Vasculopathy, Polypoidal\",\"Idiopathic Polypoidal Choroidal Vasculopathy\",\"Neovascularization, Polypoidal Choroidal\",\"Polypoidal CNV\",\"Polypoidal CNVs\",\"Polypoidal Choroidal Neovascularization\",\"Polypoidal Choroidal Neovascularizations\",\"Polypoidal Choroidal Vasculopathies\",\"Polypoidal Choroidal Vasculopathy\",\"Vasculopathy, Polypoidal Choroidal\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000150\",\"qualifier_name\":\"complications\",\"abbreviation\":\"CO\"},{\"qualifier_ui\":\"Q000151\",\"qualifier_name\":\"congenital\",\"abbreviation\":\"CN\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":null}",
+                    3544
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_2",
+                "node_3",
+                "node_4"
+            ],
+            "fragment_ids": [
+                "branch_code_C23",
+                "subbranch_code_C11.941",
+                "subbranch_code_C23.550",
+                "branch_code_C11",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 41
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.039839000000029046,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_009",
+            "item_name": "Workload Generated Descriptor 9",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_7",
+                "node_2"
+            ]
+        },
+        "operation_id": 42
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.029061799999908544,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_009",
+                    "Workload Generated Descriptor 9",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_M",
+                "branch_code_A11",
+                "subbranch_code_E05.979"
+            ]
+        },
+        "operation_id": 43
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.027077599999756785,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_7"
+            ]
+        },
+        "operation_id": 44
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.0504651000001104,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_7"
+            ]
+        },
+        "operation_id": 45
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D020503",
+        "runtime_seconds": 0.020308600000134902,
+        "result": {
+            "rows": [
+                [
+                    "D020503",
+                    "Union List",
+                    "{\"scope_notes\":[\"Works consisting of records of the holdings or items owned by two or more libraries.\\n    \"],\"entry_terms\":[\"Union List\",\"Union Lists\"],\"allowable_qualifiers\":[],\"annotation\":\"This heading is used as a Publication Type. INDEXER: Do not use\\n  \"}",
+                    279
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_5",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_V",
+                "branch_code_V02",
+                "subbranch_code_V02.945"
+            ]
+        },
+        "operation_id": 46
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.031850500000018656,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_010",
+            "item_name": "Workload Generated Descriptor 10",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_6"
+            ]
+        },
+        "operation_id": 47
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.018040299999938725,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_010",
+                    "Workload Generated Descriptor 10",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_6"
+            ],
+            "available_nodes": [
+                "node_6",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "subbranch_code_B02.075",
+                "top_category_G",
+                "branch_code_G15"
+            ]
+        },
+        "operation_id": 48
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.020012299999962124,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_6",
+                "node_7"
+            ]
+        },
+        "operation_id": 49
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.04253500000004351,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_6",
+                "node_7"
+            ]
+        },
+        "operation_id": 50
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D057080",
+        "runtime_seconds": 0.019105300000319403,
+        "result": {
+            "rows": [
+                [
+                    "D057080",
+                    "Pongo abelii",
+                    "{\"scope_notes\":[\"A species of orangutan, family HOMINIDAE, found in the forests on the island of Sumatra.\\n    \"],\"entry_terms\":[\"Orangutan, Sumatran\",\"Pongo abelii\",\"Pongo abelius\",\"Pongo pygmaeus abeli\",\"Pongo pygmaeus abelii\",\"Sumatran Orangutan\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000293\",\"qualifier_name\":\"injuries\",\"abbreviation\":\"IN\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"}],\"annotation\":\"diseases: coordinate with APE DISEASES + specific disease /vet\\n  \"}",
+                    1783
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_B01",
+                "top_category_B",
+                "subbranch_code_B01.050"
+            ]
+        },
+        "operation_id": 51
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.0477258000000802,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_011",
+            "item_name": "Workload Generated Descriptor 11",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_7",
+                "node_5"
+            ]
+        },
+        "operation_id": 52
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.01951820000022053,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_011",
+                    "Workload Generated Descriptor 11",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_5",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "branch_code_A11",
+                "top_category_J",
+                "subbranch_code_E02.197"
+            ]
+        },
+        "operation_id": 53
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.025357900000017253,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_5",
+                "node_7"
+            ]
+        },
+        "operation_id": 54
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.04989500000010594,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_5",
+                "node_7"
+            ]
+        },
+        "operation_id": 55
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D009539",
+        "runtime_seconds": 0.01904400000012174,
+        "result": {
+            "rows": [
+                [
+                    "D009539",
+                    "Nicotinic Acids",
+                    "{\"scope_notes\":[\"2-, 3-, or 4-Pyridinecarboxylic acids. Pyridine derivatives substituted with a carboxy group at the 2-, 3-, or 4-position. The 3-carboxy derivative (NIACIN) is active as a vitamin.\\n    \"],\"entry_terms\":[\"Acids, Nicotinic\",\"Nicotinic Acids\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000037\",\"qualifier_name\":\"antagonists & inhibitors\",\"abbreviation\":\"AI\"},{\"qualifier_ui\":\"Q000096\",\"qualifier_name\":\"biosynthesis\",\"abbreviation\":\"BI\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000138\",\"qualifier_name\":\"chemical synthesis\",\"abbreviation\":\"CS\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000172\",\"qualifier_name\":\"deficiency\",\"abbreviation\":\"DF\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000819\",\"qualifier_name\":\"agonists\",\"abbreviation\":\"AG\"}],\"annotation\":\"/defic: consider also PELLAGRA; /ther use: coordinate disease with /drug ther, not /diet ther\\n  \"}",
+                    2650
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_7",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_D03",
+                "top_category_D",
+                "subbranch_code_D03.066",
+                "subbranch_code_D03.383"
+            ]
+        },
+        "operation_id": 56
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.03583509999998569,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_012",
+            "item_name": "Workload Generated Descriptor 12",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_5",
+                "node_8",
+                "node_6"
+            ]
+        },
+        "operation_id": 57
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.018784800000048563,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_012",
+                    "Workload Generated Descriptor 12",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_5"
+            ],
+            "available_nodes": [
+                "node_5",
+                "node_6",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_V",
+                "branch_code_G06",
+                "subbranch_code_G04.161"
+            ]
+        },
+        "operation_id": 58
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.09431429999995089,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_5",
+                "node_6",
+                "node_8"
+            ]
+        },
+        "operation_id": 59
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.05200220000006084,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_5",
+                "node_6",
+                "node_8"
+            ]
+        },
+        "operation_id": 60
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D012178",
+        "runtime_seconds": 0.03018149999979869,
+        "result": {
+            "rows": [
+                [
+                    "D012178",
+                    "Retinopathy of Prematurity",
+                    "{\"scope_notes\":[\"A bilateral retinopathy occurring in premature infants treated with excessively high concentrations of oxygen, characterized by vascular dilatation, proliferation, and tortuosity, edema, and retinal detachment, with ultimate conversion of the retina into a fibrous mass that can be seen as a dense retrolental membrane. Usually growth of the eye is arrested and may result in microophthalmia, and blindness may occur. (Dorland, 27th ed)\\n    \"],\"entry_terms\":[\"Fibroplasia, Retrolental\",\"Fibroplasias, Retrolental\",\"Prematurity Retinopathies\",\"Prematurity Retinopathy\",\"Retinopathy of Prematurity\",\"Retrolental Fibroplasia\",\"Retrolental Fibroplasias\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000150\",\"qualifier_name\":\"complications\",\"abbreviation\":\"CO\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":\"do not use /congen & do not coord with INFANT, NEWBORN, DISEASES; caused by oxygen ther of premature inf but for this etiol, do not use /chem ind: use /etiol if this etiol is discussed at all (& then probably NIM): TN 167\\n  \"}",
+                    3619
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_2",
+                "node_3",
+                "node_5",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "subbranch_code_C16.614",
+                "branch_code_C11",
+                "top_category_C",
+                "subbranch_code_C11.768",
+                "branch_code_C16"
+            ]
+        },
+        "operation_id": 61
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.04080500000009124,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_013",
+            "item_name": "Workload Generated Descriptor 13",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_2",
+                "node_5"
+            ]
+        },
+        "operation_id": 62
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.02134780000005776,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_013",
+                    "Workload Generated Descriptor 13",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_5",
+                "node_7"
+            ],
+            "fragment_ids": [
+                "top_category_G",
+                "subbranch_code_E04.943",
+                "branch_code_G10"
+            ]
+        },
+        "operation_id": 63
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.02698789999976725,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_5",
+                "node_7"
+            ]
+        },
+        "operation_id": 64
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.053695499999776075,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_5",
+                "node_7"
+            ]
+        },
+        "operation_id": 65
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D028243",
+        "runtime_seconds": 0.028474799999912648,
+        "result": {
+            "rows": [
+                [
+                    "D028243",
+                    "Cerebral Amyloid Angiopathy, Familial",
+                    "{\"scope_notes\":[\"A familial disorder marked by AMYLOID deposits in the walls of small and medium sized blood vessels of CEREBRAL CORTEX and MENINGES.\\n    \"],\"entry_terms\":[\"Amyloidosis VI\",\"Amyloidosis VIs\",\"Amyloidosis, Cerebroarterial, Icelandic Type\",\"Amyloidosis, Icelandic Type\",\"Autosomal Dominant Cerebrovascular Amyloidosis\",\"Cerebral Amyloid Angiopathy, Cst3 Related\",\"Cerebral Amyloid Angiopathy, Cst3-Related\",\"Cerebral Amyloid Angiopathy, Familial\",\"Cerebral Amyloid Angiopathy, Genetic\",\"Cerebral Amyloid Angiopathy, Hereditary\",\"Cerebral Hemorrhage, Hereditary, With Amyloidosis\",\"Familial Cerebral Amyloid Angiopathy\",\"HCHWA\",\"Hereditary Cerebral Amyloid Angiopathy\",\"Hereditary Cerebral Amyloid Angiopathy, Icelandic Type\",\"Hereditary Cerebral Hemorrhage With Amyloidosis\",\"Icelandic Type Amyloidosis\",\"Icelandic Type Hereditary Cerebral Amyloid Angiopathy\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000139\",\"qualifier_name\":\"chemically induced\",\"abbreviation\":\"CI\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000150\",\"qualifier_name\":\"complications\",\"abbreviation\":\"CO\"},{\"qualifier_ui\":\"Q000175\",\"qualifier_name\":\"diagnosis\",\"abbreviation\":\"DI\"},{\"qualifier_ui\":\"Q000178\",\"qualifier_name\":\"diet therapy\",\"abbreviation\":\"DH\"},{\"qualifier_ui\":\"Q000188\",\"qualifier_name\":\"drug therapy\",\"abbreviation\":\"DT\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000208\",\"qualifier_name\":\"ethnology\",\"abbreviation\":\"EH\"},{\"qualifier_ui\":\"Q000209\",\"qualifier_name\":\"etiology\",\"abbreviation\":\"ET\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000401\",\"qualifier_name\":\"mortality\",\"abbreviation\":\"MO\"},{\"qualifier_ui\":\"Q000451\",\"qualifier_name\":\"nursing\",\"abbreviation\":\"NU\"},{\"qualifier_ui\":\"Q000453\",\"qualifier_name\":\"epidemiology\",\"abbreviation\":\"EP\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000517\",\"qualifier_name\":\"prevention & control\",\"abbreviation\":\"PC\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000532\",\"qualifier_name\":\"radiotherapy\",\"abbreviation\":\"RT\"},{\"qualifier_ui\":\"Q000534\",\"qualifier_name\":\"rehabilitation\",\"abbreviation\":\"RH\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000628\",\"qualifier_name\":\"therapy\",\"abbreviation\":\"TH\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000662\",\"qualifier_name\":\"veterinary\",\"abbreviation\":\"VE\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":null}",
+                    3614
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_10",
+                "node_3",
+                "node_4",
+                "node_5",
+                "node_7",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_C10",
+                "subbranch_code_C10.228",
+                "branch_code_C14",
+                "branch_code_C18",
+                "subbranch_code_C16.320",
+                "subbranch_code_C18.452",
+                "top_category_C",
+                "branch_code_C16",
+                "subbranch_code_C14.907"
+            ]
+        },
+        "operation_id": 66
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.03921360000003915,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_014",
+            "item_name": "Workload Generated Descriptor 14",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_6",
+                "node_5",
+                "node_4"
+            ]
+        },
+        "operation_id": 67
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.026986699999724806,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_014",
+                    "Workload Generated Descriptor 14",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_5",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "top_category_F",
+                "branch_code_E04",
+                "subbranch_code_E02.815"
+            ]
+        },
+        "operation_id": 68
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.02634570000009262,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_5",
+                "node_6"
+            ]
+        },
+        "operation_id": 69
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.05118220000031215,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_5",
+                "node_6"
+            ]
+        },
+        "operation_id": 70
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D013003",
+        "runtime_seconds": 0.021002599999974336,
+        "result": {
+            "rows": [
+                [
+                    "D013003",
+                    "Somatosensory Cortex",
+                    "{\"scope_notes\":[\"Area of the parietal lobe concerned with receiving sensations such as movement, pain, pressure, position, temperature, touch, and vibration. It lies posterior to the central sulcus.\\n    \"],\"entry_terms\":[\"Anterior Parietal Cortex\",\"Area 1, Brodmann\",\"Area 1, Brodmann's\",\"Area 2, Brodmann\",\"Area 2, Brodmann's\",\"Area 3, Brodmann\",\"Area 3, Brodmann's\",\"Area, Primary Somatosensory\",\"Area, Primary Somesthetic\",\"Area, Secondary Somatosensory\",\"Areas, Primary Somatosensory\",\"Brodmann Area 1\",\"Brodmann Area 2\",\"Brodmann Area 3\",\"Brodmann Areas 1, 2, 3\",\"Brodmann Areas 1, 2, and 3\",\"Brodmann Areas 3, 1, 2\",\"Brodmann Areas 3, 1, and 2\",\"Brodmann's Area 1\",\"Brodmann's Area 2\",\"Brodmann's Area 3\",\"Brodmann's Areas 1, 2, and 3\",\"Brodmann's Areas 3, 1, and 2\",\"Brodmanns Area 1\",\"Brodmanns Area 2\",\"Brodmanns Area 3\",\"Cortex, Anterior Parietal\",\"Cortex, Parietal-Opercular\",\"Cortex, Primary Somatosensory\",\"Cortex, S1\",\"Cortex, S2\",\"Cortex, SI\",\"Cortex, SII\",\"Cortex, Secondary Sensory\",\"Cortex, Secondary Somatosensory\",\"Cortex, Somatosensory\",\"Gyrus Postcentralis\",\"Gyrus, Post Central\",\"Gyrus, Postcentral\",\"Parietal Cortex, Anterior\",\"Parietal Opercular Cortex\",\"Parietal-Opercular Cortex\",\"Parietal-Opercular Cortices\",\"Post Central Gyrus\",\"Postcentral Gyrus\",\"Primary Somatic Sensory Area\",\"Primary Somatosensory Area\",\"Primary Somatosensory Areas\",\"Primary Somatosensory Cortex\",\"Primary Somatosensory Cortices\",\"Primary Somesthetic Area\",\"Primary Somesthetic Areas\",\"S1 Cortex\",\"S1 Cortices\",\"S2 Cortex\",\"S2 Cortices\",\"SI Cortex\",\"SII Cortex\",\"SII Cortices\",\"Second Somatic Sensory Area\",\"Secondary Sensory Cortex\",\"Secondary Somatosensory Area\",\"Secondary Somatosensory Areas\",\"Secondary Somatosensory Cortex\",\"Sensory Cortex, Secondary\",\"Somatosensory Area, Primary\",\"Somatosensory Area, Secondary\",\"Somatosensory Areas, Primary\",\"Somatosensory Cortex\",\"Somatosensory Cortex, Primary\",\"Somatosensory Cortex, Secondary\",\"Somesthetic Area, Primary\",\"Somesthetic Areas, Primary\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000098\",\"qualifier_name\":\"blood supply\",\"abbreviation\":\"BS\"},{\"qualifier_ui\":\"Q000166\",\"qualifier_name\":\"cytology\",\"abbreviation\":\"CY\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000293\",\"qualifier_name\":\"injuries\",\"abbreviation\":\"IN\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000473\",\"qualifier_name\":\"pathology\",\"abbreviation\":\"PA\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000503\",\"qualifier_name\":\"physiopathology\",\"abbreviation\":\"PP\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000637\",\"qualifier_name\":\"transplantation\",\"abbreviation\":\"TR\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"},{\"qualifier_ui\":\"Q000000981\",\"qualifier_name\":\"diagnostic imaging\",\"abbreviation\":\"DG\"}],\"annotation\":null}",
+                    3893
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_4",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "top_category_A",
+                "subbranch_code_A08.186",
+                "branch_code_A08"
+            ]
+        },
+        "operation_id": 71
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.04179209999983868,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_015",
+            "item_name": "Workload Generated Descriptor 15",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_9",
+                "node_8",
+                "node_1"
+            ]
+        },
+        "operation_id": 72
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.02241539999977249,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_015",
+                    "Workload Generated Descriptor 15",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "subbranch_code_D26.360",
+                "branch_code_G06",
+                "top_category_I"
+            ]
+        },
+        "operation_id": 73
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.027408599999944272,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_1",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 74
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.053093100000296545,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_1",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 75
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D000068696",
+        "runtime_seconds": 0.021016400000007707,
+        "result": {
+            "rows": [
+                [
+                    "D000068696",
+                    "Rilpivirine",
+                    "{\"scope_notes\":[\"A diarylpyrimidine derivative and REVERSE TRANSCRIPTASE INHIBITOR with antiviral activity against HIV-1 that is used in the treatment of HIV INFECTIONS. It is also used in combination with other ANTI-HIV AGENTS, since ANTIVIRAL DRUG RESISTANCE emerges rapidly when it is used alone.\\n    \"],\"entry_terms\":[\"278, TMC\",\"HCl, Rilpivirine\",\"Hydrochloride, Rilpivirine\",\"R278474\",\"Rilpivirine\",\"Rilpivirine HCl\",\"Rilpivirine Hydrochloride\",\"TMC 278\",\"TMC-278\",\"TMC278\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000031\",\"qualifier_name\":\"analogs & derivatives\",\"abbreviation\":\"AA\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000037\",\"qualifier_name\":\"antagonists & inhibitors\",\"abbreviation\":\"AI\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000138\",\"qualifier_name\":\"chemical synthesis\",\"abbreviation\":\"CS\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000819\",\"qualifier_name\":\"agonists\",\"abbreviation\":\"AG\"}],\"annotation\":null}",
+                    2557
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_7",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_D02",
+                "subbranch_code_D03.383",
+                "top_category_D",
+                "subbranch_code_D02.626",
+                "branch_code_D03"
+            ]
+        },
+        "operation_id": 76
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.044147200000224984,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_016",
+            "item_name": "Workload Generated Descriptor 16",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_6",
+                "node_3"
+            ]
+        },
+        "operation_id": 77
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.01916080000000875,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_016",
+                    "Workload Generated Descriptor 16",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_3",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "branch_code_C06",
+                "top_category_B",
+                "subbranch_code_A12.790"
+            ]
+        },
+        "operation_id": 78
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.02590039999995497,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_6"
+            ]
+        },
+        "operation_id": 79
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.056284600000253704,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_3",
+                "node_6"
+            ]
+        },
+        "operation_id": 80
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D009189",
+        "runtime_seconds": 0.025463200000103825,
+        "result": {
+            "rows": [
+                [
+                    "D009189",
+                    "Avian Myeloblastosis Virus",
+                    "{\"scope_notes\":[\"A species of ALPHARETROVIRUS causing anemia in fowl.\\n    \"],\"entry_terms\":[\"Avian Myeloblastosis Virus\",\"Avian Myeloblastosis Viruses\",\"Myeloblastosis Virus, Avian\",\"Myeloblastosis Viruses, Avian\",\"Virus, Avian Myeloblastosis\",\"Viruses, Avian Myeloblastosis\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000187\",\"qualifier_name\":\"drug effects\",\"abbreviation\":\"DE\"},{\"qualifier_ui\":\"Q000201\",\"qualifier_name\":\"enzymology\",\"abbreviation\":\"EN\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000472\",\"qualifier_name\":\"pathogenicity\",\"abbreviation\":\"PY\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000648\",\"qualifier_name\":\"ultrastructure\",\"abbreviation\":\"UL\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"}],\"annotation\":\"infection = AVIAN LEUKOSIS + BIRDS or POULTRY (NIM) or specific bird or fowl (IM)\\n  \"}",
+                    1479
+                ]
+            ],
+            "contacted_nodes": [
+                "node_1"
+            ],
+            "available_nodes": [
+                "node_1",
+                "node_2",
+                "node_3",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_B04",
+                "subbranch_code_B04.820",
+                "top_category_B",
+                "subbranch_code_B04.613"
+            ]
+        },
+        "operation_id": 81
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.04378289999976914,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_017",
+            "item_name": "Workload Generated Descriptor 17",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_3",
+                "node_4",
+                "node_10"
+            ]
+        },
+        "operation_id": 82
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.024197100000037608,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_017",
+                    "Workload Generated Descriptor 17",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_3",
+                "node_4"
+            ],
+            "fragment_ids": [
+                "branch_code_C04",
+                "subbranch_code_E07.877",
+                "top_category_C"
+            ]
+        },
+        "operation_id": 83
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.027532699999937904,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_3",
+                "node_4"
+            ]
+        },
+        "operation_id": 84
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.0657083999999486,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_10",
+                "node_3",
+                "node_4"
+            ]
+        },
+        "operation_id": 85
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D013556",
+        "runtime_seconds": 0.017780000000129803,
+        "result": {
+            "rows": [
+                [
+                    "D013556",
+                    "Swine, Miniature",
+                    "{\"scope_notes\":[\"Genetically developed small pigs for use in biomedical research. There are several strains - Yucatan miniature, Sinclair miniature, and Minnesota miniature.\\n    \"],\"entry_terms\":[\"Miniature Swine\",\"Miniature Swines\",\"Minipig\",\"Minipigs\",\"Swine, Miniature\",\"Swines, Miniature\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000002\",\"qualifier_name\":\"abnormalities\",\"abbreviation\":\"AB\"},{\"qualifier_ui\":\"Q000033\",\"qualifier_name\":\"anatomy & histology\",\"abbreviation\":\"AH\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000196\",\"qualifier_name\":\"embryology\",\"abbreviation\":\"EM\"},{\"qualifier_ui\":\"Q000235\",\"qualifier_name\":\"genetics\",\"abbreviation\":\"GE\"},{\"qualifier_ui\":\"Q000254\",\"qualifier_name\":\"growth & development\",\"abbreviation\":\"GD\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000293\",\"qualifier_name\":\"injuries\",\"abbreviation\":\"IN\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000382\",\"qualifier_name\":\"microbiology\",\"abbreviation\":\"MI\"},{\"qualifier_ui\":\"Q000469\",\"qualifier_name\":\"parasitology\",\"abbreviation\":\"PS\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000523\",\"qualifier_name\":\"psychology\",\"abbreviation\":\"PX\"},{\"qualifier_ui\":\"Q000601\",\"qualifier_name\":\"surgery\",\"abbreviation\":\"SU\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000821\",\"qualifier_name\":\"virology\",\"abbreviation\":\"VI\"}],\"annotation\":null}",
+                    1767
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_8"
+            ],
+            "fragment_ids": [
+                "branch_code_B01",
+                "top_category_B",
+                "subbranch_code_B01.050"
+            ]
+        },
+        "operation_id": 86
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.033558800000264455,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_018",
+            "item_name": "Workload Generated Descriptor 18",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_5",
+                "node_6"
+            ]
+        },
+        "operation_id": 87
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.02099080000016329,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_018",
+                    "Workload Generated Descriptor 18",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_5"
+            ],
+            "available_nodes": [
+                "node_5",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "top_category_V",
+                "subbranch_code_E04.650",
+                "branch_code_A19"
+            ]
+        },
+        "operation_id": 88
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.02083279999988008,
+        "result": {
+            "updated_rows": 2,
+            "contacted_nodes": [
+                "node_5",
+                "node_6"
+            ]
+        },
+        "operation_id": 89
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.04697100000021237,
+        "result": {
+            "deleted_rows": 2,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_5",
+                "node_6"
+            ]
+        },
+        "operation_id": 90
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D054560",
+        "runtime_seconds": 0.0240353000003779,
+        "result": {
+            "rows": [
+                [
+                    "D054560",
+                    "National Human Genome Research Institute (U.S.)",
+                    "{\"scope_notes\":[\"Component of the NATIONAL INSTITUTES OF HEALTH. It conducts and supports research into the mapping of the human genome and other organism genomes. The National Center for Human Genome Research was established in 1989 and re-named the National Human Genome Research Institute in 1997.\\n    \"],\"entry_terms\":[\"NHGRI\",\"National Center for Human Genome Research\",\"National Center for Human Genome Research (U.S.)\",\"National Human Genome Research Institute\",\"National Human Genome Research Institute (U.S.)\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000331\",\"qualifier_name\":\"legislation & jurisprudence\",\"abbreviation\":\"LJ\"},{\"qualifier_ui\":\"Q000458\",\"qualifier_name\":\"organization & administration\",\"abbreviation\":\"OG\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000639\",\"qualifier_name\":\"trends\",\"abbreviation\":\"TD\"},{\"qualifier_ui\":\"Q000706\",\"qualifier_name\":\"statistics & numerical data\",\"abbreviation\":\"SN\"},{\"qualifier_ui\":\"Q000941\",\"qualifier_name\":\"ethics\",\"abbreviation\":\"ES\"}],\"annotation\":\"add UNITED STATES; research support by this agency is checked as RESEARCH SUPPORT, N.I.H., EXTRAMURAL or RESEARCH SUPPORT, N.I.H., INTRAMURAL; CATALOGER: Use NAF entry\\n  \"}",
+                    1524
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2",
+                "node_3",
+                "node_4",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "subbranch_code_I01.409",
+                "branch_code_N03",
+                "branch_code_I01",
+                "top_category_I",
+                "subbranch_code_N03.540",
+                "top_category_N"
+            ]
+        },
+        "operation_id": 91
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.0399305999999342,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_019",
+            "item_name": "Workload Generated Descriptor 19",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_9",
+                "node_2",
+                "node_6"
+            ]
+        },
+        "operation_id": 92
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.027392299999974057,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_019",
+                    "Workload Generated Descriptor 19",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_2"
+            ],
+            "available_nodes": [
+                "node_2",
+                "node_6",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_I01",
+                "top_category_I",
+                "subbranch_code_H01.158"
+            ]
+        },
+        "operation_id": 93
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.02642100000002756,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_6",
+                "node_9"
+            ]
+        },
+        "operation_id": 94
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.05226630000015575,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_2",
+                "node_6",
+                "node_9"
+            ]
+        },
+        "operation_id": 95
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D012413",
+        "runtime_seconds": 0.027906799999982468,
+        "result": {
+            "rows": [
+                [
+                    "D012413",
+                    "Rubidium",
+                    "{\"scope_notes\":[\"An element that is an alkali metal. It has an atomic symbol Rb, atomic number 37, and atomic weight 85.47. It is used as a chemical reagent and in the manufacture of photoelectric cells.\\n    \"],\"entry_terms\":[\"Rubidium\"],\"allowable_qualifiers\":[{\"qualifier_ui\":\"Q000008\",\"qualifier_name\":\"administration & dosage\",\"abbreviation\":\"AD\"},{\"qualifier_ui\":\"Q000009\",\"qualifier_name\":\"adverse effects\",\"abbreviation\":\"AE\"},{\"qualifier_ui\":\"Q000032\",\"qualifier_name\":\"analysis\",\"abbreviation\":\"AN\"},{\"qualifier_ui\":\"Q000097\",\"qualifier_name\":\"blood\",\"abbreviation\":\"BL\"},{\"qualifier_ui\":\"Q000134\",\"qualifier_name\":\"cerebrospinal fluid\",\"abbreviation\":\"CF\"},{\"qualifier_ui\":\"Q000145\",\"qualifier_name\":\"classification\",\"abbreviation\":\"CL\"},{\"qualifier_ui\":\"Q000172\",\"qualifier_name\":\"deficiency\",\"abbreviation\":\"DF\"},{\"qualifier_ui\":\"Q000191\",\"qualifier_name\":\"economics\",\"abbreviation\":\"EC\"},{\"qualifier_ui\":\"Q000266\",\"qualifier_name\":\"history\",\"abbreviation\":\"HI\"},{\"qualifier_ui\":\"Q000276\",\"qualifier_name\":\"immunology\",\"abbreviation\":\"IM\"},{\"qualifier_ui\":\"Q000302\",\"qualifier_name\":\"isolation & purification\",\"abbreviation\":\"IP\"},{\"qualifier_ui\":\"Q000378\",\"qualifier_name\":\"metabolism\",\"abbreviation\":\"ME\"},{\"qualifier_ui\":\"Q000493\",\"qualifier_name\":\"pharmacokinetics\",\"abbreviation\":\"PK\"},{\"qualifier_ui\":\"Q000494\",\"qualifier_name\":\"pharmacology\",\"abbreviation\":\"PD\"},{\"qualifier_ui\":\"Q000502\",\"qualifier_name\":\"physiology\",\"abbreviation\":\"PH\"},{\"qualifier_ui\":\"Q000506\",\"qualifier_name\":\"poisoning\",\"abbreviation\":\"PO\"},{\"qualifier_ui\":\"Q000528\",\"qualifier_name\":\"radiation effects\",\"abbreviation\":\"RE\"},{\"qualifier_ui\":\"Q000592\",\"qualifier_name\":\"standards\",\"abbreviation\":\"ST\"},{\"qualifier_ui\":\"Q000600\",\"qualifier_name\":\"supply & distribution\",\"abbreviation\":\"SD\"},{\"qualifier_ui\":\"Q000627\",\"qualifier_name\":\"therapeutic use\",\"abbreviation\":\"TU\"},{\"qualifier_ui\":\"Q000633\",\"qualifier_name\":\"toxicity\",\"abbreviation\":\"TO\"},{\"qualifier_ui\":\"Q000652\",\"qualifier_name\":\"urine\",\"abbreviation\":\"UR\"},{\"qualifier_ui\":\"Q000737\",\"qualifier_name\":\"chemistry\",\"abbreviation\":\"CH\"},{\"qualifier_ui\":\"Q000819\",\"qualifier_name\":\"agonists\",\"abbreviation\":\"AG\"}],\"annotation\":null}",
+                    2198
+                ]
+            ],
+            "contacted_nodes": [
+                "node_10"
+            ],
+            "available_nodes": [
+                "node_10",
+                "node_2",
+                "node_4",
+                "node_6"
+            ],
+            "fragment_ids": [
+                "subbranch_code_D01.268",
+                "branch_code_D01",
+                "top_category_D",
+                "subbranch_code_D01.552"
+            ]
+        },
+        "operation_id": 96
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.044737199999872246,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_020",
+            "item_name": "Workload Generated Descriptor 20",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_8",
+                "node_4",
+                "node_9"
+            ]
+        },
+        "operation_id": 97
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.022906899999725283,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_020",
+                    "Workload Generated Descriptor 20",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_4"
+            ],
+            "available_nodes": [
+                "node_4",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "branch_code_A18",
+                "subbranch_code_V02.305",
+                "top_category_H"
+            ]
+        },
+        "operation_id": 98
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.026975900000252295,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 99
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.05492839999988064,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_4",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 100
+    }
+]

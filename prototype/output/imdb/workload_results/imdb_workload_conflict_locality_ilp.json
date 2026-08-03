@@ -1,0 +1,2062 @@
+[
+    {
+        "operation": "SELECT",
+        "item_id": "tt13573410",
+        "runtime_seconds": 0.02116399999999885,
+        "result": {
+            "rows": [
+                [
+                    "tt13573410",
+                    "Episode dated 17 April 2020",
+                    "{\"original_title\": \"Episode dated 17 April 2020\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2020, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"News\"], \"average_rating\": null, \"num_votes\": null}",
+                    254
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "primary_genre_News",
+                "decade_2020s"
+            ]
+        },
+        "operation_id": 1
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.03165269999999509,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_001",
+            "item_name": "Workload Generated Descriptor 1",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 2
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.020563499999980195,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_001",
+                    "Workload Generated Descriptor 1",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_short",
+                "primary_genre_Talk-Show",
+                "decade_1890s"
+            ]
+        },
+        "operation_id": 3
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.02234669999995731,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 4
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_001",
+        "runtime_seconds": 0.06042739999998048,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 5
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt4166944",
+        "runtime_seconds": 0.020427000000040607,
+        "result": {
+            "rows": [
+                [
+                    "tt4166944",
+                    "38 Sweet Facts About Candy",
+                    "{\"original_title\": \"38 Sweet Facts About Candy\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2013, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Documentary\", \"Short\"], \"average_rating\": null, \"num_votes\": null}",
+                    267
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_2010s",
+                "title_type_tvEpisode",
+                "primary_genre_Documentary"
+            ]
+        },
+        "operation_id": 6
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.03025589999992917,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_002",
+            "item_name": "Workload Generated Descriptor 2",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 7
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.020043399999963185,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_002",
+                    "Workload Generated Descriptor 2",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Animation",
+                "title_type_tvEpisode",
+                "decade_2000s"
+            ]
+        },
+        "operation_id": 8
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.023034199999983684,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 9
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_002",
+        "runtime_seconds": 0.055906400000026224,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 10
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt8281776",
+        "runtime_seconds": 0.02144670000006954,
+        "result": {
+            "rows": [
+                [
+                    "tt8281776",
+                    "Growing Up Multiple",
+                    "{\"original_title\": \"Growing Up Multiple\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2016, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Talk-Show\"], \"average_rating\": null, \"num_votes\": null}",
+                    242
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Talk-Show",
+                "decade_2010s",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 11
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.02861880000000383,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_003",
+            "item_name": "Workload Generated Descriptor 3",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 12
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.021334999999908177,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_003",
+                    "Workload Generated Descriptor 3",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvShort",
+                "primary_genre_Action",
+                "decade_1890s"
+            ]
+        },
+        "operation_id": 13
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.0227701999999681,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 14
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_003",
+        "runtime_seconds": 0.056724800000097275,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 15
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt6609158",
+        "runtime_seconds": 0.022025399999961337,
+        "result": {
+            "rows": [
+                [
+                    "tt6609158",
+                    "2017: Day 7, Part 4",
+                    "{\"original_title\": \"2017: Day 7, Part 4\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2017, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Sport\"], \"average_rating\": null, \"num_votes\": null}",
+                    238
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_2010s",
+                "primary_genre_Sport",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 16
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.027684099999987666,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_004",
+            "item_name": "Workload Generated Descriptor 4",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 17
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.021111000000018976,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_004",
+                    "Workload Generated Descriptor 4",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1980s",
+                "title_type_video",
+                "primary_genre_Action"
+            ]
+        },
+        "operation_id": 18
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.02260409999996682,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 19
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_004",
+        "runtime_seconds": 0.05808020000006309,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 20
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt18969712",
+        "runtime_seconds": 0.021601999999916188,
+        "result": {
+            "rows": [
+                [
+                    "tt18969712",
+                    "Episode #2.18",
+                    "{\"original_title\": \"Episode #2.18\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 1993, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Musical\"], \"average_rating\": null, \"num_votes\": null}",
+                    229
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1990s",
+                "primary_genre_Musical",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 21
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.02710890000003019,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_005",
+            "item_name": "Workload Generated Descriptor 5",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 22
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.0317529999999806,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_005",
+                    "Workload Generated Descriptor 5",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1950s",
+                "title_type_video",
+                "primary_genre_Documentary"
+            ]
+        },
+        "operation_id": 23
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.0226854000000003,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 24
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_005",
+        "runtime_seconds": 0.059699600000044484,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 25
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt25395404",
+        "runtime_seconds": 0.020694899999966765,
+        "result": {
+            "rows": [
+                [
+                    "tt25395404",
+                    "Episode #1.3",
+                    "{\"original_title\": \"Episode #1.3\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2022, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Drama\"], \"average_rating\": null, \"num_votes\": null}",
+                    225
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "title_type_tvEpisode",
+                "decade_2020s"
+            ]
+        },
+        "operation_id": 26
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.027308699999935016,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_006",
+            "item_name": "Workload Generated Descriptor 6",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 27
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.022102799999970557,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_006",
+                    "Workload Generated Descriptor 6",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_2010s",
+                "title_type_movie",
+                "primary_genre_UNKNOWN"
+            ]
+        },
+        "operation_id": 28
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.022862600000053135,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 29
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_006",
+        "runtime_seconds": 0.057347100000015416,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 30
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt4879490",
+        "runtime_seconds": 0.021198999999910484,
+        "result": {
+            "rows": [
+                [
+                    "tt4879490",
+                    "Episode #1.10",
+                    "{\"original_title\": \"Episode #1.10\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": null, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Crime\", \"Mystery\"], \"average_rating\": null, \"num_votes\": null}",
+                    237
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Crime",
+                "title_type_tvEpisode",
+                "decade_UNKNOWN"
+            ]
+        },
+        "operation_id": 31
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.026837399999976697,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_007",
+            "item_name": "Workload Generated Descriptor 7",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 32
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.020426400000019385,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_007",
+                    "Workload Generated Descriptor 7",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1910s",
+                "title_type_tvMovie",
+                "primary_genre_Crime"
+            ]
+        },
+        "operation_id": 33
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.022605699999985518,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 34
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_007",
+        "runtime_seconds": 0.06187379999994391,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 35
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt15588132",
+        "runtime_seconds": 0.02426819999993768,
+        "result": {
+            "rows": [
+                [
+                    "tt15588132",
+                    "10. jan. 2009 - L\u00f8rdagsrevyen",
+                    "{\"original_title\": \"10. jan. 2009 - L\\u00f8rdagsrevyen\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2009, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"News\"], \"average_rating\": null, \"num_votes\": null}",
+                    264
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "primary_genre_News",
+                "decade_2000s"
+            ]
+        },
+        "operation_id": 36
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.02629479999995965,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_008",
+            "item_name": "Workload Generated Descriptor 8",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 37
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.022711599999979626,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_008",
+                    "Workload Generated Descriptor 8",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1900s",
+                "primary_genre_Game-Show",
+                "title_type_tvShort"
+            ]
+        },
+        "operation_id": 38
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.023686100000077204,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 39
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_008",
+        "runtime_seconds": 0.056333900000026915,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 40
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt40498782",
+        "runtime_seconds": 0.03191989999993439,
+        "result": {
+            "rows": [
+                [
+                    "tt40498782",
+                    "Episode #1.1079",
+                    "{\"original_title\": \"Episode #1.1079\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": null, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Drama\"], \"average_rating\": null, \"num_votes\": null}",
+                    231
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "title_type_tvEpisode",
+                "decade_UNKNOWN"
+            ]
+        },
+        "operation_id": 41
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.025860500000021602,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_009",
+            "item_name": "Workload Generated Descriptor 9",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 42
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.01999749999993128,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_009",
+                    "Workload Generated Descriptor 9",
+                    "{}",
+                    47
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_movie",
+                "decade_2000s",
+                "primary_genre_Music"
+            ]
+        },
+        "operation_id": 43
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.024199800000019422,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 44
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_009",
+        "runtime_seconds": 0.059143100000028426,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 45
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt7265982",
+        "runtime_seconds": 0.02258560000007037,
+        "result": {
+            "rows": [
+                [
+                    "tt7265982",
+                    "B!Bi fait le march\u00e9",
+                    "{\"original_title\": \"B!Bi fait le march\\u00e9\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 1988, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Comedy\"], \"average_rating\": null, \"num_votes\": null}",
+                    245
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "decade_1980s",
+                "primary_genre_Comedy"
+            ]
+        },
+        "operation_id": 46
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.027550399999995534,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_010",
+            "item_name": "Workload Generated Descriptor 10",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 47
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.02208199999995486,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_010",
+                    "Workload Generated Descriptor 10",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_short",
+                "decade_1970s",
+                "primary_genre_Family"
+            ]
+        },
+        "operation_id": 48
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.023573399999918365,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 49
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_010",
+        "runtime_seconds": 0.0587650999999596,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 50
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt10309612",
+        "runtime_seconds": 0.022535299999958625,
+        "result": {
+            "rows": [
+                [
+                    "tt10309612",
+                    "Episode #1.12",
+                    "{\"original_title\": \"Episode #1.12\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2015, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Drama\"], \"average_rating\": null, \"num_votes\": null}",
+                    227
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "decade_2010s",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 51
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.02898630000004232,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_011",
+            "item_name": "Workload Generated Descriptor 11",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 52
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.02327920000004724,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_011",
+                    "Workload Generated Descriptor 11",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Adventure",
+                "title_type_tvMiniSeries",
+                "decade_2000s"
+            ]
+        },
+        "operation_id": 53
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.023289200000021992,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 54
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_011",
+        "runtime_seconds": 0.058407499999930224,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 55
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt2609088",
+        "runtime_seconds": 0.023531800000000658,
+        "result": {
+            "rows": [
+                [
+                    "tt2609088",
+                    "The Luminance",
+                    "{\"original_title\": \"The Luminance\", \"title_type\": \"short\", \"is_adult\": 0, \"start_year\": 2012, \"end_year\": null, \"runtime_minutes\": 13, \"genres\": [\"Drama\", \"Short\"], \"average_rating\": null, \"num_votes\": null}",
+                    229
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "title_type_short",
+                "decade_2010s"
+            ]
+        },
+        "operation_id": 56
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.02818969999998444,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_012",
+            "item_name": "Workload Generated Descriptor 12",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 57
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.03618419999997968,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_012",
+                    "Workload Generated Descriptor 12",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1900s",
+                "title_type_tvMovie",
+                "primary_genre_Western"
+            ]
+        },
+        "operation_id": 58
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.027074399999946763,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 59
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_012",
+        "runtime_seconds": 0.10885380000001987,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 60
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt39006652",
+        "runtime_seconds": 0.02098829999999907,
+        "result": {
+            "rows": [
+                [
+                    "tt39006652",
+                    "Episode #1.3309",
+                    "{\"original_title\": \"Episode #1.3309\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 1967, \"end_year\": null, \"runtime_minutes\": 20, \"genres\": [\"News\"], \"average_rating\": null, \"num_votes\": null}",
+                    228
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1960s",
+                "title_type_tvEpisode",
+                "primary_genre_News"
+            ]
+        },
+        "operation_id": 61
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.027433400000063557,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_013",
+            "item_name": "Workload Generated Descriptor 13",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 62
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.025581999999985783,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_013",
+                    "Workload Generated Descriptor 13",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Sci-Fi",
+                "title_type_tvMovie",
+                "decade_1960s"
+            ]
+        },
+        "operation_id": 63
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.02344719999996414,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 64
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_013",
+        "runtime_seconds": 0.05723390000002837,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 65
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt34725937",
+        "runtime_seconds": 0.022089100000016515,
+        "result": {
+            "rows": [
+                [
+                    "tt34725937",
+                    "35. Sie mussten sterben - Femizide: Katja",
+                    "{\"original_title\": \"35. Sie mussten sterben - Femizide: Katja\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2023, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Documentary\"], \"average_rating\": null, \"num_votes\": null}",
+                    289
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "primary_genre_Documentary",
+                "decade_2020s"
+            ]
+        },
+        "operation_id": 66
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.02761950000001434,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_014",
+            "item_name": "Workload Generated Descriptor 14",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 67
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.021789399999988746,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_014",
+                    "Workload Generated Descriptor 14",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Short",
+                "title_type_tvSeries",
+                "decade_1920s"
+            ]
+        },
+        "operation_id": 68
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.022577599999976883,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 69
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_014",
+        "runtime_seconds": 0.05624050000005809,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 70
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt1202814",
+        "runtime_seconds": 0.02123770000002878,
+        "result": {
+            "rows": [
+                [
+                    "tt1202814",
+                    "Le golf",
+                    "{\"original_title\": \"Le golf\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2008, \"end_year\": null, \"runtime_minutes\": 30, \"genres\": [\"Comedy\"], \"average_rating\": null, \"num_votes\": null}",
+                    213
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "decade_2000s",
+                "primary_genre_Comedy"
+            ]
+        },
+        "operation_id": 71
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.026257900000018708,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_015",
+            "item_name": "Workload Generated Descriptor 15",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 72
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.02091100000006918,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_015",
+                    "Workload Generated Descriptor 15",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Talk-Show",
+                "decade_1970s",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 73
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.022372200000063458,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 74
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_015",
+        "runtime_seconds": 0.056819500000074186,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 75
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt8538052",
+        "runtime_seconds": 0.03464680000001863,
+        "result": {
+            "rows": [
+                [
+                    "tt8538052",
+                    "Episode #1.137",
+                    "{\"original_title\": \"Episode #1.137\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 1974, \"end_year\": null, \"runtime_minutes\": 50, \"genres\": [], \"average_rating\": null, \"num_votes\": null}",
+                    219
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_1970s",
+                "title_type_tvEpisode",
+                "primary_genre_UNKNOWN"
+            ]
+        },
+        "operation_id": 76
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.026944999999955144,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_016",
+            "item_name": "Workload Generated Descriptor 16",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 77
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.02077529999996841,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_016",
+                    "Workload Generated Descriptor 16",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Sci-Fi",
+                "title_type_tvShort",
+                "decade_1930s"
+            ]
+        },
+        "operation_id": 78
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.02268909999997959,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 79
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_016",
+        "runtime_seconds": 0.055838699999981145,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 80
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt30581660",
+        "runtime_seconds": 0.020992800000044554,
+        "result": {
+            "rows": [
+                [
+                    "tt30581660",
+                    "Bridge of Lions Live 24/7 - St. Augustine, Florida",
+                    "{\"original_title\": \"Bridge of Lions Live 24/7 - St. Augustine, Florida\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2023, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Documentary\"], \"average_rating\": null, \"num_votes\": null}",
+                    307
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvEpisode",
+                "primary_genre_Documentary",
+                "decade_2020s"
+            ]
+        },
+        "operation_id": 81
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.026809399999933703,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_017",
+            "item_name": "Workload Generated Descriptor 17",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 82
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.02160870000000159,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_017",
+                    "Workload Generated Descriptor 17",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvSeries",
+                "decade_2020s",
+                "primary_genre_Thriller"
+            ]
+        },
+        "operation_id": 83
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.023427999999967142,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 84
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_017",
+        "runtime_seconds": 0.06180010000002767,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 85
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt9842044",
+        "runtime_seconds": 0.02336280000008628,
+        "result": {
+            "rows": [
+                [
+                    "tt9842044",
+                    "Episode #2.3",
+                    "{\"original_title\": \"Episode #2.3\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": 2018, \"end_year\": null, \"runtime_minutes\": null, \"genres\": [\"Drama\"], \"average_rating\": null, \"num_votes\": null}",
+                    224
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "decade_2010s",
+                "title_type_tvEpisode"
+            ]
+        },
+        "operation_id": 86
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.028698599999984253,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_018",
+            "item_name": "Workload Generated Descriptor 18",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 87
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.022064600000021528,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_018",
+                    "Workload Generated Descriptor 18",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "decade_2010s",
+                "title_type_movie",
+                "primary_genre_Fantasy"
+            ]
+        },
+        "operation_id": 88
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.02354760000002898,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 89
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_018",
+        "runtime_seconds": 0.05984560000001693,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 90
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt15725868",
+        "runtime_seconds": 0.02203780000002098,
+        "result": {
+            "rows": [
+                [
+                    "tt15725868",
+                    "Episode #1.2998",
+                    "{\"original_title\": \"Episode #1.2998\", \"title_type\": \"tvEpisode\", \"is_adult\": 0, \"start_year\": null, \"end_year\": null, \"runtime_minutes\": 30, \"genres\": [\"Drama\"], \"average_rating\": null, \"num_votes\": null}",
+                    229
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "title_type_tvEpisode",
+                "decade_UNKNOWN"
+            ]
+        },
+        "operation_id": 91
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.0270736999999599,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_019",
+            "item_name": "Workload Generated Descriptor 19",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 92
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.03427379999993718,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_019",
+                    "Workload Generated Descriptor 19",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "title_type_tvMiniSeries",
+                "primary_genre_Reality-TV",
+                "decade_UNKNOWN"
+            ]
+        },
+        "operation_id": 93
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.022637899999949695,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 94
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_019",
+        "runtime_seconds": 0.06059779999998227,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 95
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "tt3809300",
+        "runtime_seconds": 0.02208470000005036,
+        "result": {
+            "rows": [
+                [
+                    "tt3809300",
+                    "Sirat",
+                    "{\"original_title\": \"Sirat\", \"title_type\": \"tvSeries\", \"is_adult\": 0, \"start_year\": 2011, \"end_year\": 2011, \"runtime_minutes\": null, \"genres\": [\"Drama\"], \"average_rating\": 4.9, \"num_votes\": 24}",
+                    206
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Drama",
+                "title_type_tvSeries",
+                "decade_2010s"
+            ]
+        },
+        "operation_id": 96
+    },
+    {
+        "operation": "INSERT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.026148699999907876,
+        "result": {
+            "inserted_item_id": "D_WORKLOAD_020",
+            "item_name": "Workload Generated Descriptor 20",
+            "inserted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_9",
+                "node_8"
+            ]
+        },
+        "operation_id": 97
+    },
+    {
+        "operation": "SELECT",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.0219648000000916,
+        "result": {
+            "rows": [
+                [
+                    "D_WORKLOAD_020",
+                    "Workload Generated Descriptor 20",
+                    "{}",
+                    48
+                ]
+            ],
+            "contacted_nodes": [
+                "node_7"
+            ],
+            "available_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ],
+            "fragment_ids": [
+                "primary_genre_Sci-Fi",
+                "title_type_tvSpecial",
+                "decade_1950s"
+            ]
+        },
+        "operation_id": 98
+    },
+    {
+        "operation": "UPDATE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.022926800000050207,
+        "result": {
+            "updated_rows": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 99
+    },
+    {
+        "operation": "DELETE",
+        "item_id": "D_WORKLOAD_020",
+        "runtime_seconds": 0.06232160000001841,
+        "result": {
+            "deleted_rows": 3,
+            "deleted_memberships": 3,
+            "contacted_nodes": [
+                "node_7",
+                "node_8",
+                "node_9"
+            ]
+        },
+        "operation_id": 100
+    }
+]

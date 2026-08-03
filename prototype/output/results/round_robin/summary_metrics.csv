@@ -1,0 +1,16 @@
+metric,value
+used_nodes,10.0
+global_unique_items,300.0
+total_node_item_copies,989.0
+item_redundancy_factor,3.296666666666667
+total_fragment_memberships,1192.0
+min_items_per_node,71.0
+max_items_per_node,158.0
+avg_items_per_node,98.9
+item_load_imbalance,87.0
+total_overlap_pairs,813.0
+same_node_overlap_pairs,81.0
+different_node_overlap_pairs,732.0
+same_node_overlap_ratio,0.0996309963099631
+weighted_total_overlap,1762.0
+weighted_same_node_overlap,195.0

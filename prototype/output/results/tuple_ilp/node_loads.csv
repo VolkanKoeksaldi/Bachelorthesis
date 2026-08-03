@@ -1,0 +1,11 @@
+node_id,used,number_of_fragments,node_load,node_capacity,remaining_capacity
+node_1,1,67,150,150,0
+node_2,1,27,150,150,0
+node_3,1,32,150,150,0
+node_4,1,11,150,150,0
+node_5,0,0,0,150,150
+node_6,1,42,144,150,6
+node_7,1,25,150,150,0
+node_8,1,56,150,150,0
+node_9,1,36,148,150,2
+node_10,0,0,0,150,150
