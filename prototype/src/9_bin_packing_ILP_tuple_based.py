@@ -484,7 +484,7 @@ def process_tuple_ilp(config, mode):
     # parallel="on": Enables parallel solver execution
     # mip_heuristic_effort=0.5: Increases effort spent on heuristics 
     #                           for finding feasible solutions (finds a feasible solution quicker)
-    # mip_heuristic_run_shifting=True: Enables shifting heuristics for finding feasible solutions
+    # mip_heuristic_run_shifting=True: Enables shifting heuristics for quicker finding feasible solutions
     # mip_heuristic_run_zi_round=True: Enable ZI round heuristics, which attempts to obtain feasible 
     #                                  solutions by rounding a LP solution
     solver = pulp.HiGHS(msg=True, threads=8, timeLimit=1800, parallel="on", mip_heuristic_effort=0.5, 
