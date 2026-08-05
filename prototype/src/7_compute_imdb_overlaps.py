@@ -1,5 +1,3 @@
-# Generates imdb_overlaps.csv
-
 from pathlib import Path
 from itertools import combinations
 
@@ -30,14 +28,14 @@ MODE = "baseline"
 
 item_ids_column = "title_ids"
 
-# Wenn True, dann werden auch Fragmente desselben schemas verglichen.
-# Es sollten hierbei bei disjunkten fragmentierungen keine zusätzlichen Overlaps entstehen.
-# Wenn False, dann werden nur Fragmente aus unterschiedlichen Schemes verglichen
+# If set as True, then fragments belonging to the same scheme are compared.
+# Since fragments within each IMDb scheme are disjoint, this should not produce additional overlaps.
+# If set as False, then only fragments from different schemes are compared.
 compare_same_scheme = False
 
 def parse_title_ids(value):
     """
-    Wandelt String title_ids in ein Set um.
+    Converts a title id string into a set
     """
 
     if pd.isna(value) or value == "":
@@ -49,12 +47,16 @@ def parse_title_ids(value):
 
 def prepare_fragments(fragments_df):
     """
-    Um Fragmente für Overlaps vorzubereiten.
+    Prepares the fragments for calculating overlaps by converting their title id strings into sets.
     """
 
     prepared = []
 
+    # iterates over all fragments without including the index from the DataFrame
     for row in fragments_df.itertuples(index=False):
+
+        # getattr() reads the attribute of item_ids_column in row.
+        # it corresponds to row.title_ids
         title_ids = parse_title_ids(getattr(row, item_ids_column))
 
         prepared.append({
@@ -69,17 +71,19 @@ def prepare_fragments(fragments_df):
 
 def compute_overlaps(prepared, compare_same_scheme):
     """
-    Vergleicht alle Fragmentpaare nach Overlaps.
+    Compares fragment pairs and returns the pairs that have an overlap.
     """
 
     overlap_rows = []
     
-    # Alle möglichen Fragmentpaare werden hier durchgegangen.
+    # Generates every unordered pair of distinct fragments once.
     for f1, f2 in combinations(prepared, 2):
+
+        # Skips pairs from same fragmentation scheme
         if (not compare_same_scheme and f1["scheme"] == f2["scheme"]):
             continue
         
-        # Schnittmenge berechnen.
+        # Calculates overlap of two title id sets
         overlap = f1["title_ids"].intersection(f2["title_ids"])
 
         if overlap:
@@ -98,14 +102,19 @@ def compute_overlaps(prepared, compare_same_scheme):
 
 
 def process_imdb_overlaps(input_path, output_path, compare_same_scheme):
+    """
+    Loads fragments and then validates the required columns.
+    Afterwards, computes their overlaps and stores the result as a CSV.
+    """
+
     fragments_df = pd.read_csv(input_path)
 
     required_columns = {"fragment_id", "scheme", "value", "fragment_size", "title_ids"}
 
-    missing = (required_columns-set(fragments_df.columns))
+    missing = (required_columns - set(fragments_df.columns))
 
     if missing:
-        raise ValueError(f"Es fehlen folgende Spalten in dem Fragment: {sorted(missing)}")
+        raise ValueError(f"These columns from fragment file are still missing: {sorted(missing)}")
 
     prepared_fragments = prepare_fragments(fragments_df)
 
@@ -115,26 +124,27 @@ def process_imdb_overlaps(input_path, output_path, compare_same_scheme):
 
     overlaps_df.to_csv(output_path, index=False)
 
-    print(f"Fragments Anzahl: {len(fragments_df)}")
-    print(f"Anzahl Overlap Paare: {len(overlaps_df)}")
+    print(f"Number of fragments: {len(fragments_df)}")
+    print(f"NUmber of overlap pairs in fragments: {len(overlaps_df)}")
 
     if not overlaps_df.empty:
-        print(f"Summe der paarweisen Overlap-Größen: {overlaps_df['overlap_size'].sum()}")
+        print(f"Sum of overlap sizes: {overlaps_df['overlap_size'].sum()}")
 
         print("Largest overlap:")
+        # sorts overlap pairs by descreasing overlap size and then prints the ten largest values
         print(overlaps_df.sort_values("overlap_size", ascending=False).head(10))
 
-    print(f"Datei gespeichert unter {output_path}")
+    print(f"Output saved to: {output_path}")
 
     return overlaps_df
 
 def main():
     if MODE not in MODES:
-        raise ValueError(f"Unbekannter Modus: {MODE}")
+        raise ValueError(f"Unknown mode: {MODE}")
 
     selected_input_path, selected_output_path = MODES[MODE]
 
-    print(f"Modus: {MODE}")
+    print(f"Mode: {MODE}")
 
     process_imdb_overlaps(
         selected_input_path,

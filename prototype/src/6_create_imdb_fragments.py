@@ -1,6 +1,3 @@
-# Generates imdb_fragments.csv
-# Generates imdb_fragment_memberships.csv
-
 from pathlib import Path
 import pandas as pd
 
@@ -11,14 +8,15 @@ fragment_output_path = Path("prototype/output/processed/imdb_fragments.csv")
 
 def create_memberships(titles_df):
     """
-    Erstellt die Memberships für jeden Titel mit "title_type, decade, genre" als Spalten.
-    Ein Titel mit mehreren Genres erhält hier dann mehrere Genre-Memberships
+    Creates fragment memberships for each title based on the title type, decade, and primary genre.
+    Each title then belongs to exactly one fragment in each scheme.
     """
 
     membership_rows = []
 
+    # iterates over all titles without including the index from the DataFrame
     for row in titles_df.itertuples(index=False):
-        # Membership für Titeltyp
+        # membership based on title type
         membership_rows.append({
              "fragment_id": f"title_type_{row.title_type}",
              "scheme": "title_type",
@@ -27,7 +25,7 @@ def create_memberships(titles_df):
              "primary_title": row.primary_title
         })
 
-        # Membership für Decade
+        # membership based on decade
         membership_rows.append({
              "fragment_id": f"decade_{row.decade}",
              "scheme": "decade",
@@ -36,6 +34,7 @@ def create_memberships(titles_df):
              "primary_title": row.primary_title
         })
 
+        # membership based on primary genre
         membership_rows.append({
             "fragment_id": f"primary_genre_{row.primary_genre}",
             "scheme": "primary_genre",
@@ -48,17 +47,20 @@ def create_memberships(titles_df):
 
 def create_fragments(memberships):
     """
-    Fasst die memberships zu Fragmenten zusammen.
+    Title memberships are grouped into fragments.
     """
 
     fragment_rows = []
 
+    # Each group represents one fragment
     for (fragment_id, scheme, value), group in memberships.groupby(["fragment_id", "scheme", "value"]):
 
+        # Ensures that each title occurs only once within a fragment and orders the titles by their ids.
         unique_titles = (group
                          .drop_duplicates(subset=["title_id"])
                          .sort_values("title_id"))
 
+        # tolist() transforms the pandas series of the string with title_id column into a python list.
         title_ids = unique_titles["title_id"].astype(str).tolist()
 
         title_names = unique_titles["primary_title"].astype(str).tolist()
@@ -76,6 +78,11 @@ def create_fragments(memberships):
           
 
 def process_imdb_fragments(input_path, membership_output_path, fragment_output_path):
+    """
+    Loads the prepared titles and creates their fragment memberships.
+    Afterwards the memberships are grouped into fragments and both result tables are stored.
+    """
+
     titles_df = pd.read_csv(input_path)
 
     memberships_df = create_memberships(titles_df)
@@ -87,9 +94,9 @@ def process_imdb_fragments(input_path, membership_output_path, fragment_output_p
     memberships_df.to_csv(membership_output_path, index=False)
     fragments_df.to_csv(fragment_output_path, index=False)
 
-    print(f"Titles: {titles_df['title_id'].nunique()}")
-    print(f"Memberships Anzahl: {len(memberships_df)}")
-    print(f"Fragments Anzahl: {len(fragments_df)}")
+    print(f"Unique titles: {titles_df['title_id'].nunique()}")
+    print(f"Number of Memberships: {len(memberships_df)}")
+    print(f"Number of Fragments: {len(fragments_df)}")
 
 def main():
     process_imdb_fragments(input_path, membership_output_path, fragment_output_path)
@@ -97,4 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
