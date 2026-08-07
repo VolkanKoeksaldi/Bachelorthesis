@@ -1,18 +1,18 @@
 from pathlib import Path
 import json
 import pandas as pd
-
+from experiment_config import experiment_path
 from database_operations import DATASETS as CONFIGS
 
 EVALUATION_CONFIGS = {
     "mesh": {
-        "workload_directory": Path("prototype/output/mesh/workload_results"),
-        "output_directory": Path("prototype/output/workload_evaluation")
+        "workload_directory": experiment_path("mesh/workload_results"),
+        "output_directory": experiment_path("workload_evaluation")
     },
 
     "imdb": {
-        "workload_directory": Path("prototype/output/imdb/workload_results"),
-        "output_directory": Path("prototype/output/workload_evaluation")
+        "workload_directory": experiment_path("imdb/workload_results"),
+        "output_directory": experiment_path("workload_evaluation")
     }
 }
 
@@ -21,109 +21,90 @@ DATASET = "mesh"
 
 def load_results(placement_type, dataset, config):
     """
-    Lädt die Ergebnisse einer Placement-Variante
+    Loads the workload results of one placement method.
     """
     workload_directory = config["workload_directory"]
 
     result_path = workload_directory / f"{dataset}_workload_{placement_type}.json"
 
     if not result_path.exists():
-        raise FileNotFoundError(f"Die erwartete Datei wurde nicht gefunden {result_path}.")
+        raise FileNotFoundError(f"Expected workload result file not found: {result_path}")
 
     with result_path.open("r", encoding="utf-8") as file:
         results = json.load(file)
 
+    if not isinstance(results, list):
+        raise ValueError(f"Workload result file must be a JSON list: {result_path}")
+
+    if not results:
+        raise ValueError(f"Workload result file contains no operations: {result_path}")
+    
     return results
 
-def get_contacted_nodes(result):
+def get_operation_nodes(result, field_name, fallback_field=None):
     """
-    Gibt die kontaktierten Nodes zurück.
+    Returns unique node IDs from one operation-result field.
     """
     operation_result = result.get("result", {})
-    
-    contacted_nodes = operation_result.get("contacted_nodes", [])
 
-    return sorted(set(contacted_nodes), key=lambda node_id: int(node_id.rsplit("_", 1)[-1]))
-    
-def get_contacted_nodes_amount(result):
-    """
-    Holt die Anzahl der kontaktierten Nodes.
-    """
+    if not isinstance(operation_result, dict):
+        raise ValueError(f"Result of a workload operation must be an object.")
 
-    return len(get_contacted_nodes(result))
+    node_ids = operation_result.get(field_name)
+
+    if node_ids is None and fallback_field is not None:
+        node_ids = operation_result.get(fallback_field, [])
+
+    if node_ids is None:
+        return []
+    
+    # builds a set of string node_ids in every contacted_nodes. removes duplicate node_ids.
+    node_ids = {str(node_id) for node_id in node_ids}
+
+    # contacted_nodes are sorted. Sorting by number after "node_".
+    return sorted(node_ids, key=lambda node_id: int(node_id.rsplit("_", 1)[-1]))
+
 
 def get_available_nodes(result):
     """
-    Zum Messen der Replikationsverfügbarkeit von bestimmten Tupeln
+    Returns the number of nodes on which the item is available.
     """
+
     operation_result = result["result"]
+
+    if not isinstance(operation_result, dict):
+        raise ValueError(f"Result of a workload operation must be an object.")
+    
     if "available_nodes" in operation_result:
-        return len(operation_result["available_nodes"])
+        return len(set(operation_result["available_nodes"]))
     return None
 
 def get_fragment_ids_amount(result):
     """
-    Zum Zählen der Fragment_ids auf denen Descriptoren vorhanden sind.
+    Returns number of fragments containing the item.
     """
+
     operation_result = result["result"]
+
     if "fragment_ids" in operation_result:
-        return len(operation_result["fragment_ids"])
+        return len(set(operation_result["fragment_ids"]))
     return None
 
-def prepare_result(results, placement_type):
-    """
-    Wandelt Ergebnisse in tabellarische Zeilen um.
-    """
-    rows = []
-
-    for result in results:
-
-        contacted_nodes = get_contacted_nodes(result)
-
-        stretch, jump = compute_stretch_jump(contacted_nodes)
-
-        rows.append({
-            "placement_type": placement_type,
-            "operation": result["operation"],
-            "runtime_seconds": result["runtime_seconds"],
-            "operation_nodes": len(contacted_nodes),
-            "contacted_nodes": ",".join(contacted_nodes),
-            "available_nodes": get_available_nodes(result),
-            "fragment_count": get_fragment_ids_amount(result),
-            "stretch": stretch,
-            "jump": jump
-
-            }
-        )
-
-    return rows
-
-def all_results(dataset, evaluation_config, database_config):
-    """
-    Lädt alle Ergebnisse der Placements
-    """
-
-    all_rows = []
-
-    for placement_type in database_config["placements"].keys():
-        results = load_results(placement_type, dataset, evaluation_config)
-
-        rows = prepare_result(results, placement_type)
-
-        all_rows.extend(rows)
-
-    return pd.DataFrame(all_rows)
-
 def compute_stretch_jump(contacted_nodes):
+    """
+    Computes stretch and jump metrics for contacted nodes.
+    Node ids are interpreted as positions in a linear node order.
+    """
 
     node_indices = sorted({int(node_id.rsplit("_", 1)[-1]) for node_id in contacted_nodes})
 
     if not node_indices:
         return None, None
-    elif len(node_indices) == 1:
+    
+    if len(node_indices) == 1:
         return 1.0, 1
 
-    span = (node_indices[-1] - node_indices[0] + 1)
+    span = node_indices[-1] - node_indices[0] + 1
 
     stretch = span / len(node_indices)
 
@@ -135,19 +116,102 @@ def compute_stretch_jump(contacted_nodes):
 
     return stretch, jump
 
-def compute_summary(results):
+def prepare_result(results, placement_type):
     """
-    Berechnet die restlichen Metriken.
+    Converts workload results into tabular rows.
+    """
+    rows = []
+
+    for result in results:
+
+        execution_nodes = get_operation_nodes(result, "execution_nodes", fallback_field="contacted_nodes")
+
+        searched_nodes = get_operation_nodes(result, "searched_nodes")
+
+        if result["operation"] == "FRAGMENT_SELECT":
+
+            stretch, jump = compute_stretch_jump(execution_nodes)
+
+        else:
+            stretch, jump = None, None
+
+        rows.append({
+            "run_label": result["run_label"],
+            "repeat_id": result["repeat_id"],
+            "placement_type": placement_type,
+            "operation_id": result["operation_id"],
+            "operation": result["operation"],
+            "item_id": result["item_id"],
+            "runtime_seconds": result["runtime_seconds"],
+            "execution_node_count": len(execution_nodes),
+            "execution_nodes": ",".join(execution_nodes),
+            "searched_node_count": len(searched_nodes),
+            "searched_nodes": ",".join(searched_nodes),
+            "available_nodes": get_available_nodes(result),
+            "fragment_count": get_fragment_ids_amount(result),
+            "stretch": stretch,
+            "jump": jump
+            }
+        )
+
+    return rows
+
+def all_results(dataset, evaluation_config, database_config):
+    """
+    Loads and combines results of all placement methods.
     """
 
-    summary = (results.groupby(["placement_type", "operation"]).agg(
-            operation_count=("operation", "count"),
-            total_runtime_seconds=("runtime_seconds", "sum"),
-            average_runtime_seconds=("runtime_seconds", "mean"),
-            minimum_runtime_seconds=("runtime_seconds", "min"),
-            maximum_runtime_seconds=("runtime_seconds", "max"),
-            median_runtime_seconds=("runtime_seconds", "median"),
-            average_operation_nodes=("operation_nodes", "mean"),
+    all_rows = []
+
+    for placement_type in database_config["placements"]:
+        try:
+            results = load_results(placement_type, dataset, evaluation_config)
+        except FileNotFoundError as err:
+            print(f"Skipping {placement_type}: {err}")
+            continue
+
+        rows = prepare_result(results, placement_type)
+
+        all_rows.extend(rows)
+
+    if not all_rows:
+        raise FileNotFoundError(f"The workload result files were not available for the evaluation.")
+
+    return pd.DataFrame(all_rows)
+
+def compute_per_operation(results):
+    """
+    Aggregates repeated measurements of the same workload operation.
+    """
+
+    return (results.groupby(["placement_type", "operation_id", "operation"], dropna=False)
+            .agg(item_id=("item_id", "first"),
+                 repeat_count=("repeat_id", "nunique"),
+                 median_runtime_seconds=("runtime_seconds", "median"),
+                 mean_runtime_seconds=("runtime_seconds", "mean"),
+                 runtime_standard_deviation=("runtime_seconds", "std"),
+                 execution_node_count=("execution_node_count", "mean"),
+                 searched_node_count=("searched_node_count", "mean"),
+                 available_nodes=("available_nodes", "mean"),
+                 fragment_count=("fragment_count", "mean"),
+                 stretch=("stretch", "median"),
+                 jump=("jump", "median")).reset_index())
+
+def compute_summary(per_operation_results):
+    """
+    Computes workload metrics.
+    """
+
+    summary = (per_operation_results.groupby(["placement_type", "operation"]).agg(
+            operation_count=("operation_id", "count"),
+            repeat_count=("repeat_count", "min"),
+            total_median_runtime_seconds=("median_runtime_seconds", "sum"),
+            average_median_runtime_seconds=("median_runtime_seconds", "mean"),
+            minimum_median_runtime_seconds=("median_runtime_seconds", "min"),
+            maximum_median_runtime_seconds=("median_runtime_seconds", "max"),
+            median_runtime_seconds=("median_runtime_seconds", "median"),
+            average_execution_nodes=("execution_node_count", "mean"),
+            average_searched_nodes=("searched_node_count", "mean"),
             average_available_nodes=("available_nodes", "mean"),
             average_amount_of_fragment_ids=("fragment_count", "mean"),
             average_stretch = ("stretch", "mean"),
@@ -163,38 +227,64 @@ def compute_summary(results):
 
     return summary
 
-def save(results, summary, dataset, config):
+def save(results, per_operation_results, summary, dataset, config):
+    """
+    Saves the metrics as CSV files.
+    """
 
     output_directory = config["output_directory"]
     output_directory.mkdir(parents=True, exist_ok=True)
 
-    results.to_csv(output_directory/f"{dataset}_workload_operations.csv", index=False)
+    operations_output_path = output_directory/f"{dataset}_workload_operations.csv"
 
-    summary.to_csv(output_directory/f"{dataset}_workload_summary.csv", index=False)
+    per_operation_output_path = (output_directory / f"{dataset}_workload_per_operation.csv")
+
+    summary_output_path = output_directory/f"{dataset}_workload_summary.csv"
+
+    results.to_csv(operations_output_path, index=False)
+
+    per_operation_results.to_csv(per_operation_output_path, index=False)
+
+    summary.to_csv(summary_output_path, index=False)
+
+    print(f"Detailed workload metrics saved to: {operations_output_path}")
+
+    print(f"Repeated operation medians saved to: {per_operation_output_path}")
+
+    print(f"Workload summary saved to: {summary_output_path}")
+
+
 
 def process_compute_workload_metrics(dataset, evaluation_config, database_config):
+    """
+    Loads, computes, and saved the evaluation metrics.
+    """
 
     results = all_results(dataset, evaluation_config, database_config)
 
-    summary = compute_summary(results)
+    per_operation_results = compute_per_operation(results)
 
-    save(results, summary, dataset, evaluation_config)
+    summary = compute_summary(per_operation_results)
 
-    return results, summary
+    save(results, per_operation_results, summary, dataset, evaluation_config)
+
+    return results, per_operation_results, summary
 
 def main():
     if DATASET not in EVALUATION_CONFIGS:
-        raise ValueError(f"Unbekannter Datensatz in Evaluations Konfiguration: {DATASET}")
+        raise ValueError(f"Unknown dataset in evaluation configuration: {DATASET}")
 
     if DATASET not in CONFIGS:
-        raise ValueError(f"Unbekannter Datensatz in Datenbank Konfiguration: {DATASET}")
+        raise ValueError(f"Unknown dataset in database configuration: {DATASET}")
 
     evaluation_config = EVALUATION_CONFIGS[DATASET]
     database_config = CONFIGS[DATASET]
 
-    results, summary = process_compute_workload_metrics(dataset=DATASET, evaluation_config=evaluation_config, database_config=database_config)
+    results, per_operation_results, summary = process_compute_workload_metrics(dataset=DATASET, 
+                                                        evaluation_config=evaluation_config, 
+                                                        database_config=database_config)
 
-    print("Geladene Operationen:")
+    print("\nLoaded operations per placement method:")
     print(results.groupby("placement_type").size())
 
     print("\nSummary")

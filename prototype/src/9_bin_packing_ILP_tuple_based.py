@@ -5,6 +5,8 @@ from pathlib import Path
 import math
 import highspy
 from placement_capacity import calculate_node_capacity
+from experiment_config import experiment_path
+
 
 DATASETS = {
     "mesh": {
@@ -12,22 +14,22 @@ DATASETS = {
         "num_nodes": 10,
         "node_capacity": None, # If value is None then the capacity is calculated automatically using capacity buffer
         "capacity_buffer": 0.50, # capacity buffer of 50%
-        "capacity_reference_path": Path("prototype/output/processed/mesh_fragments_sample.csv"),
+        "capacity_reference_path": experiment_path("processed/mesh_fragments_sample.csv"),
         "replication_factor": 3,
 
         "modes": {
                 "baseline": {
-                    "fragments_path": Path("prototype/output/processed/mesh_fragments_sample.csv"),
-                    "assignment_output_path": Path("prototype/output/processed/mesh_fragment_assignment_tuple_ilp.csv"),
-                    "loads_output_path": Path("prototype/output/results/mesh/tuple_ilp/node_loads.csv"),
-                    "solver_result_path": Path("prototype/output/processed/mesh/mesh_baseline_solver_result_tuple_ilp.csv")
+                    "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
+                    "assignment_output_path": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
+                    "loads_output_path": experiment_path("results/mesh/tuple_ilp/node_loads.csv"),
+                    "solver_result_path": experiment_path("processed/mesh/mesh_baseline_solver_result_tuple_ilp.csv")
 
                 },
                 "updates": {
-                    "fragments_path": Path("prototype/output/reoptimization/mesh_fragments_sample_updates.csv"),
-                    "assignment_output_path": Path("prototype/output/reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
-                    "loads_output_path": Path("prototype/output/reoptimization/mesh/tuple_ilp/node_loads_updated.csv"),
-                    "solver_result_path": Path("prototype/output/processed/mesh/mesh_updates_solver_result_tuple_ilp.csv")
+                    "fragments_path": experiment_path("reoptimization/mesh_fragments_sample_updates.csv"),
+                    "assignment_output_path": experiment_path("reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
+                    "loads_output_path": experiment_path("reoptimization/mesh/tuple_ilp/node_loads_updated.csv"),
+                    "solver_result_path": experiment_path("processed/mesh/mesh_updates_solver_result_tuple_ilp.csv")
                 },
             
             },
@@ -39,21 +41,21 @@ DATASETS = {
         "num_nodes": 10,
         "node_capacity": None, # If value is None then the capacity is calculated automatically using capacity buffer
         "capacity_buffer": 0.50,
-        "capacity_reference_path": Path("prototype/output/processed/imdb_fragments.csv"),
+        "capacity_reference_path": experiment_path("processed/imdb_fragments.csv"),
         "replication_factor": 3,
 
         "modes": {
             "baseline": {
-                "fragments_path": Path("prototype/output/processed/imdb_fragments.csv"),
-                "assignment_output_path": Path("prototype/output/processed/imdb_fragment_assignment_tuple_ilp.csv"),
-                "loads_output_path": Path("prototype/output/results/imdb/tuple_ilp/node_loads.csv"),
-                "solver_result_path": Path("prototype/output/processed/imdb/imdb_baseline_solver_result_tuple_ilp.csv")
+                "fragments_path": experiment_path("processed/imdb_fragments.csv"),
+                "assignment_output_path": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
+                "loads_output_path": experiment_path("results/imdb/tuple_ilp/node_loads.csv"),
+                "solver_result_path": experiment_path("processed/imdb/imdb_baseline_solver_result_tuple_ilp.csv")
             },
             "updates": {
-                "fragments_path": Path("prototype/output/reoptimization/imdb_fragments_updates.csv"),
-                "assignment_output_path": Path("prototype/output/reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"),
-                "loads_output_path": Path("prototype/output/reoptimization/imdb/tuple_ilp/node_loads_updated.csv"),
-                "solver_result_path": Path("prototype/output/processed/imdb/imdb_updates_solver_result_tuple_ilp.csv")
+                "fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
+                "assignment_output_path": experiment_path("reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"),
+                "loads_output_path": experiment_path("reoptimization/imdb/tuple_ilp/node_loads_updated.csv"),
+                "solver_result_path": experiment_path("processed/imdb/imdb_updates_solver_result_tuple_ilp.csv")
 
             },
         },
@@ -92,7 +94,7 @@ def load_fragments(fragments_path, item_ids_column):
     """
 
     if not fragments_path.exists():
-        raise FileNotFoundError(f"Fragmentdatei nicht gefunden in folgendem Pfad: {fragments_path}")
+        raise FileNotFoundError(f"Fragment file not found under path: {fragments_path}")
 
     fragments_df = pd.read_csv(fragments_path)
 
@@ -115,7 +117,6 @@ def load_fragments(fragments_path, item_ids_column):
 
 def item_to_fragments(fragment_item_ids):
     """
-    Creates dictionary for Constraint 5.
     Input fragment_item_ids dictionary maps every fragment to its contained items.
     Output dictionary maps every item to the list of fragments that contain that item.
 
@@ -136,7 +137,7 @@ def item_to_fragments(fragment_item_ids):
     for fragment_id, item_ids in fragment_item_ids.items():
         for item_id in item_ids:
 
-            # if item is not item_fragments, then an empty list is created for its
+            # if item has not been encountered before, then an empty list is created for its
             # fragment memberships
             if item_id not in item_fragments:
                 item_fragments[item_id] = []
@@ -147,7 +148,7 @@ def item_to_fragments(fragment_item_ids):
 
 def check_replication_feasibility(item_fragments, replication_factor):
     """
-    Checks whether every tuple is in atleast "replication_factor" amount of fragments,
+    Checks whether every item is in atleast "replication_factor" amount of fragments,
     because otherwise replication is not possible, because every fragment is assigned to exactly one node.
     """
 
@@ -161,7 +162,7 @@ def check_replication_feasibility(item_fragments, replication_factor):
         raise ValueError(f"Replication factor m = {replication_factor} cannot be achieved for "
                          f"{len(insufficient_items)} items.")
     
-    print(f"All items occur in atleast {replication_factor} fragments.")
+    print(f"All items occur in at least {replication_factor} fragments.")
 
 def assignments(fragment_ids, fragment_weights, node_ids, x):
     """
@@ -596,7 +597,7 @@ def process_tuple_ilp(config, mode):
 
 def main():
     if DATASET not in DATASETS:
-        raise ValueError(f"Unbekannter Datensatz: {DATASET}")
+        raise ValueError(f"Unknown dataset: {DATASET}")
 
     config = DATASETS[DATASET]
     process_tuple_ilp(config, MODE)

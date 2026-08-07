@@ -1,17 +1,29 @@
 from pathlib import Path
+import json
+from itertools import combinations, product
+
 import pandas as pd
-from itertools import combinations
+
+from experiment_config import REOPTIMIZATION_INSERT_COUNT, experiment_path
 
 CONFIGS = {
     "mesh": {
-        "fragments_path": Path("prototype/output/processed/mesh_fragments_sample.csv"),
-        "updated_fragments_path": Path("prototype/output/reoptimization/mesh_fragments_sample_updates.csv"),
+        "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
+        "updated_fragments_path": experiment_path("reoptimization/mesh_fragments_sample_updates.csv"),
+        "items_path": experiment_path("processed/mesh_descriptors_sample.csv"),
+        "updated_items_path": experiment_path("reoptimization/mesh_descriptors_sample_updates.csv"),
 
         "fragment_id": "fragment_id",
         "item_ids": "descriptor_ids",
         "fragment_size": "fragment_size",
+        "item_id": "descriptor_ui",
+        "item_name": "descriptor_name",
 
-        "new_item_id": "D_RE_001",
+        "new_item_prefix": "D_RE_",
+        "new_item_name_prefix": "Reoptimization Descriptor",
+        "insert_count": REOPTIMIZATION_INSERT_COUNT,
+        "prefer_new_conflicts": False,
+
         "expected_schemes": [
             "top_category",
             "branch_code",
@@ -26,42 +38,50 @@ CONFIGS = {
 
         "assignment_paths": {
             "tuple_ilp":{
-                "baseline": Path("prototype/output/processed/mesh_fragment_assignment_tuple_ilp.csv"),
-                "updates": Path("prototype/output/reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv")
+                "baseline": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
+                "updates": experiment_path("reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv")
             },
 
             "conflict_locality_ilp":{
-                "baseline": Path("prototype/output/processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
-                "updates": Path("prototype/output/reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv")
+                "baseline": experiment_path("processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
+                "updates": experiment_path("reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv")
             }
         },
 
-        "comparison_path": Path("prototype/output/reoptimization/mesh_reoptimization_compared.csv"),
-        "changed_comparison_path": Path("prototype/output/reoptimization/mesh_reoptimization_changed.csv"),
-        "summary_comparison_path": Path("prototype/output/reoptimization/mesh_reoptimization_summary.csv"),
-        "node_load_summary_path": Path("prototype/output/reoptimization/mesh_reoptimization_node_load_summary.csv"),
+        "comparison_path": experiment_path("reoptimization/mesh_reoptimization_compared.csv"),
+        "changed_comparison_path": experiment_path("reoptimization/mesh_reoptimization_changed.csv"),
+        "summary_comparison_path": experiment_path("reoptimization/mesh_reoptimization_summary.csv"),
+        "node_load_summary_path": experiment_path("reoptimization/mesh_reoptimization_node_load_summary.csv"),
 
         "node_load_paths": {
             "tuple_ilp":{
-                "baseline": Path("prototype/output/results/mesh/tuple_ilp/node_loads.csv"),
-                "updates": Path("prototype/output/reoptimization/mesh/tuple_ilp/node_loads_updated.csv")
+                "baseline": experiment_path("results/mesh/tuple_ilp/node_loads.csv"),
+                "updates": experiment_path("reoptimization/mesh/tuple_ilp/node_loads_updated.csv")
             },
             "conflict_locality_ilp": {
-                "baseline": Path("prototype/output/results/mesh/conflict_locality_ilp/node_loads.csv"),
-                "updates": Path("prototype/output/reoptimization/mesh/conflict_locality_ilp/node_loads_updated.csv")
+                "baseline": experiment_path("results/mesh/conflict_locality_ilp/node_loads.csv"),
+                "updates": experiment_path("reoptimization/mesh/conflict_locality_ilp/node_loads_updated.csv")
             }
         }
     },
 
     "imdb": {
-        "fragments_path": Path("prototype/output/processed/imdb_fragments.csv"),
-        "updated_fragments_path": Path("prototype/output/reoptimization/imdb_fragments_updates.csv"),
+        "fragments_path": experiment_path("processed/imdb_fragments.csv"),
+        "updated_fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
+        "items_path": experiment_path("processed/imdb_titles.csv"),
+        "updated_items_path": experiment_path("reoptimization/imdb_titles_updates.csv"),
 
         "fragment_id": "fragment_id",
         "item_ids": "title_ids",
         "fragment_size": "fragment_size",
+        "item_id": "title_id",
+        "item_name": "primary_title",
 
-        "new_item_id": "tt_RE_001",
+        "new_item_prefix": "T_RE_",
+        "new_item_name_prefix": "Reoptimization Title",
+        "insert_count": REOPTIMIZATION_INSERT_COUNT,
+        "prefer_new_conflicts": True,
+
         "expected_schemes": [
             "title_type",
             "decade",
@@ -76,170 +96,403 @@ CONFIGS = {
 
         "assignment_paths": {
             "tuple_ilp":{
-                "baseline": Path("prototype/output/processed/imdb_fragment_assignment_tuple_ilp.csv"),
-                "updates": Path("prototype/output/reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv")
+                "baseline": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
+                "updates": experiment_path("reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv")
             },
 
             "conflict_locality_ilp":{
-                "baseline": Path("prototype/output/processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
-                "updates": Path("prototype/output/reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv")
+                "baseline": experiment_path("processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
+                "updates": experiment_path("reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv")
             }
         },
 
-        "comparison_path": Path("prototype/output/reoptimization/imdb_reoptimization_compared.csv"),
-        "changed_comparison_path": Path("prototype/output/reoptimization/imdb_reoptimization_changed.csv"),
-        "summary_comparison_path": Path("prototype/output/reoptimization/imdb_reoptimization_summary.csv"),
-        "node_load_summary_path": Path("prototype/output/reoptimization/imdb_reoptimization_node_load_summary.csv"),
+        "comparison_path": experiment_path("reoptimization/imdb_reoptimization_compared.csv"),
+        "changed_comparison_path": experiment_path("reoptimization/imdb_reoptimization_changed.csv"),
+        "summary_comparison_path": experiment_path("reoptimization/imdb_reoptimization_summary.csv"),
+        "node_load_summary_path": experiment_path("reoptimization/imdb_reoptimization_node_load_summary.csv"),
 
         "node_load_paths": {
             "tuple_ilp":{
-                "baseline": Path("prototype/output/results/imdb/tuple_ilp/node_loads.csv"),
-                "updates": Path("prototype/output/reoptimization/imdb/tuple_ilp/node_loads_updated.csv")
+                "baseline": experiment_path("results/imdb/tuple_ilp/node_loads.csv"),
+                "updates": experiment_path("reoptimization/imdb/tuple_ilp/node_loads_updated.csv")
             },
             "conflict_locality_ilp": {
-                "baseline": Path("prototype/output/results/imdb/conflict_locality_ilp/node_loads.csv"),
-                "updates": Path("prototype/output/reoptimization/imdb/conflict_locality_ilp/node_loads_updated.csv")
+                "baseline": experiment_path("results/imdb/conflict_locality_ilp/node_loads.csv"),
+                "updates": experiment_path("reoptimization/imdb/conflict_locality_ilp/node_loads_updated.csv")
             }
         }
     }
 }
 
 DATASET = "imdb"
-MODE = "prepare" # prepare oder evaluate
+MODE = "prepare" # prepare or evaluate
 
-def load_fragments(path):
+def load_fragments(path, config):
     """
-    Lädt die Fragmente.
+    Loads fragment data used for preparing the update
     """
 
     if not path.exists():
-        raise FileNotFoundError(f"Datei {path} wurde nicht gefunden.")
+        raise FileNotFoundError(f"Fragment file not found: {path}")
 
     fragments_df = pd.read_csv(path)
 
+    fragment_id_column = config["fragment_id"]
+    item_ids_column = config["item_ids"]
+    fragment_size_column = config["fragment_size"]
+
+    required_columns = {fragment_id_column, item_ids_column, fragment_size_column, "scheme"}
+
+    missing_columns = required_columns - set(fragments_df.columns)
+
+    if missing_columns:
+        raise ValueError(f"The missing columns in fragment file {path} are: {sorted(missing_columns)}")
+
+    # reads fragment ids as string
+    fragments_df[fragment_id_column] = (fragments_df[fragment_id_column].astype("string"))
+
     return fragments_df
 
+def parse_item_ids(value):
+    """
+    Converts a comma-separated item-ID field into a list.
+    """
+
+    if pd.isna(value) or str(value).strip() == "":
+        return []
+
+    return [item_id.strip() for item_id in str(value).split(",") if item_id.strip()]
+
+def validate_target_fragments(fragments_df, target_fragments, config):
+    """
+    Verifies that exactly one target fragment is selected per scheme.
+    """
+
+    fragment_id_column = config["fragment_id"]
+    expected_schemes = set(config["expected_schemes"])
+    target_fragments = list(dict.fromkeys(target_fragments))
+
+    existing_fragments = set(fragments_df[fragment_id_column])
+    target_fragment_set = set(target_fragments)
+
+    missing_fragments = target_fragment_set - existing_fragments
+
+    if missing_fragments:
+        raise ValueError(
+            f"Following fragments were not found: "
+            f"{sorted(missing_fragments)}"
+        )
+
+    target_rows = fragments_df[
+        fragments_df[fragment_id_column].isin(target_fragment_set)
+    ]
+
+    actual_schemes = set(target_rows["scheme"])
+
+    if (actual_schemes != expected_schemes or len(target_rows) != len(expected_schemes)):
+        raise ValueError(
+            "The new item must be assigned to exactly one fragment of every scheme. "
+            f"Expected schemes: {sorted(expected_schemes)}, "
+            f"Found schemes: {sorted(actual_schemes)}."
+        )
+
+    return target_fragments
+
+def choose_target_fragments(fragments_df, config):
+    """
+    Selects update targets.
+
+    For IMDb, a deterministic combination with no previous pairwise overlap is
+    preferred. If the baseline conflict assignment is available, a combination
+    containing a colocated pair is preferred because the new conflicts then force
+    a placement change. MeSH retains a valid hierarchical target combination.
+    """
+
+    configured_targets = config.get("target_fragments", [])
+
+    if not config.get("prefer_new_conflicts", False):
+        try:
+            return validate_target_fragments(
+                fragments_df,
+                configured_targets,
+                config,
+            )
+        except ValueError:
+            item_memberships = {}
+
+            for _, row in fragments_df.iterrows():
+                for item_id in parse_item_ids(row[config["item_ids"]]):
+                    item_memberships.setdefault(item_id, {})[
+                        row["scheme"]
+                    ] = row[config["fragment_id"]]
+
+            candidates = [
+                [memberships[scheme] for scheme in config["expected_schemes"]]
+                for memberships in item_memberships.values()
+                if all(
+                    scheme in memberships
+                    for scheme in config["expected_schemes"]
+                )
+            ]
+
+            if not candidates:
+                raise ValueError(
+                    "No valid existing fragment combination was found."
+                )
+
+            fallback = sorted(candidates)[0]
+            print(
+                "Configured MeSH targets are unavailable in this instance; "
+                f"using {fallback}."
+            )
+            return validate_target_fragments(
+                fragments_df,
+                fallback,
+                config,
+            )
+
+    fragment_id_column = config["fragment_id"]
+    item_ids_column = config["item_ids"]
+    expected_schemes = config["expected_schemes"]
+
+    fragment_sets = {
+        row[fragment_id_column]: set(parse_item_ids(row[item_ids_column]))
+        for _, row in fragments_df.iterrows()
+    }
+
+    fragments_by_scheme = {
+        scheme: sorted(
+            fragments_df.loc[
+                fragments_df["scheme"] == scheme,
+                fragment_id_column,
+            ].astype(str)
+        )
+        for scheme in expected_schemes
+    }
+
+    baseline_path = config["assignment_paths"][
+        "conflict_locality_ilp"
+    ]["baseline"]
+    baseline_nodes = {}
+
+    if baseline_path.exists():
+        baseline_df = pd.read_csv(baseline_path)
+        baseline_nodes = dict(zip(
+            baseline_df["fragment_id"].astype(str),
+            baseline_df["node_id"].astype(str),
+        ))
+
+    best_candidate = None
+    best_score = None
+
+    for candidate in product(
+        *(fragments_by_scheme[scheme] for scheme in expected_schemes)
+    ):
+        if any(
+            fragment_sets[fragment_i] & fragment_sets[fragment_j]
+            for fragment_i, fragment_j in combinations(candidate, 2)
+        ):
+            continue
+
+        candidate_nodes = [
+            baseline_nodes.get(fragment_id)
+            for fragment_id in candidate
+        ]
+        known_nodes = [node_id for node_id in candidate_nodes if node_id]
+        colocation_score = (
+            len(known_nodes) - len(set(known_nodes))
+            if known_nodes
+            else 0
+        )
+        size_score = -sum(
+            len(fragment_sets[fragment_id])
+            for fragment_id in candidate
+        )
+        score = (colocation_score, size_score, tuple(candidate))
+
+        if best_score is None or score > best_score:
+            best_candidate = list(candidate)
+            best_score = score
+
+    if best_candidate is None:
+        print(
+            "No previously non-overlapping target combination was found; "
+            "using the configured target fragments."
+        )
+        best_candidate = configured_targets
+
+    return validate_target_fragments(
+        fragments_df,
+        best_candidate,
+        config,
+    )
+
+def create_new_item_ids(config):
+    """
+    Creates deterministic IDs for the synthetic update batch.
+    """
+
+    return [
+        f"{config['new_item_prefix']}{index:04d}"
+        for index in range(1, config["insert_count"] + 1)
+    ]
 
 def apply_inserts(
     fragments_df,
-    new_item_id,
+    new_item_ids,
     target_fragments,
     config
 ):
     """
-    Fügt ein neues Item genau einem Fragment pro Schema hinzu.
+    Adds all synthetic items to one fragment of each fragmentation scheme.
     """
 
     fragment_id_column = config["fragment_id"]
     item_ids_column = config["item_ids"]
     fragment_size_column = config["fragment_size"]
-    expected_schemes = set(config["expected_schemes"])
 
     update_df = fragments_df.copy()
 
-    target_fragments = set(target_fragments)
-    existing_fragments = set(update_df[fragment_id_column])
-
-    missing_fragments = target_fragments - existing_fragments
-
-    if missing_fragments:
-        raise ValueError(
-            f"Folgende Fragmente wurden nicht gefunden: "
-            f"{sorted(missing_fragments)}"
-        )
-
-    target_rows = update_df[
-        update_df[fragment_id_column].isin(target_fragments)
-    ]
-
-    actual_schemes = set(target_rows["scheme"])
-
-    if (
-        actual_schemes != expected_schemes
-        or len(target_fragments) != len(expected_schemes)
-    ):
-        raise ValueError(
-            "Das neue Item muss genau einem Fragment jedes Schemas "
-            f"zugeordnet werden. Erwartet: {sorted(expected_schemes)}, "
-            f"gefunden: {sorted(actual_schemes)}."
-        )
+    target_fragments = validate_target_fragments(fragments_df, target_fragments, config)
 
     mask = update_df[fragment_id_column].isin(target_fragments)
 
-    def append_new_item(value):
-        if pd.isna(value) or value == "":
-            current_item_ids = []
-        else:
-            current_item_ids = [
-                item_id.strip()
-                for item_id in str(value).split(",")
-                if item_id.strip()
-            ]
+    def append_new_items(value):
+        """
+        Adds update items without creating duplicate memberships
+        """
 
-        if new_item_id not in current_item_ids:
-            current_item_ids.append(new_item_id)
+        curr_item_ids = parse_item_ids(value)
+        existing_item_ids = set(curr_item_ids)
 
-        return ",".join(current_item_ids)
+        curr_item_ids.extend(item_id for item_id in new_item_ids if item_id not in existing_item_ids)
 
-    update_df.loc[mask, item_ids_column] = (
-        update_df.loc[mask, item_ids_column]
-        .apply(append_new_item)
-    )
+        return ",".join(curr_item_ids)
 
-    update_df.loc[mask, fragment_size_column] = (
-        update_df.loc[mask, item_ids_column]
-        .apply(
-            lambda value: len([
-                item_id
-                for item_id in str(value).split(",")
-                if item_id.strip()
-            ])
-        )
-    )
+    # adds new item to selected fragments
+    # Applies the function to selected rows and writes updated values back
+    update_df.loc[mask, item_ids_column] = (update_df.loc[mask, item_ids_column]
+                                            .apply(append_new_items))
+
+    # Recalculates the fragment sizes after an insert
+    update_df.loc[mask, fragment_size_column] = (update_df.loc[mask, item_ids_column]
+                                                 .apply(lambda value: len(set(parse_item_ids(value)))))
 
     return update_df
+
+def create_update_items(items_df, new_item_ids, target_fragments, config):
+    """
+    Adds synthetic item rows used by node creation and recovery.
+    """
+
+    item_id_column = config["item_id"]
+    item_name_column = config["item_name"]
+    existing_item_ids = set(items_df[item_id_column].astype(str))
+
+    collisions = existing_item_ids & set(new_item_ids)
+
+    if collisions:
+        raise ValueError(f"Item ids already exist: {sorted(collisions)[:10]}")
+
+    rows = []
+
+    for index, item_id in enumerate(new_item_ids, start=1):
+        item_name = f"{config['new_item_name_prefix']} {index}"
+
+        metadata_json = json.dumps({"synthetic_reoptimization_item": True,
+                                    "target_fragments": target_fragments},
+                                    ensure_ascii=False,
+                                    separators=(",", ":"))
+
+        item_size_bytes = len((item_id + item_name + metadata_json).encode("utf-8"))
+
+        rows.append({item_id_column: item_id,
+                     item_name_column: item_name,
+                     "metadata_json": metadata_json,
+                     "item_size_bytes": item_size_bytes})
+
+    return pd.concat([items_df, pd.DataFrame(rows)],
+                     ignore_index=True, sort=False)
 
 
 def save(updated_df, path):
     """
-    Speichert update Fragmentzustand.
+    Saves updated fragment state.
     """
+
     path.parent.mkdir(parents=True, exist_ok=True)
 
     updated_df.to_csv(path, index=False)
 
-    print(f"Aktualisierte Fragmente sind hier gespeichert {path}")
+    print(f"Updated fragments saved to: {path}")
 
 
 def load_assignment(path):
     """
-    Lädt ein Fragment Assignment
+    Loads baseline or updated fragment assignment
     """
 
     if not path.exists():
-        raise FileNotFoundError(f"Die Datei im Pfad {path} wurde nicht gefunden.")
+        raise FileNotFoundError(f"Assignment file not found: {path}")
 
     assignment_df = pd.read_csv(path)
+
+    required_columns = {"fragment_id", "node_id"}
+
+    missing_columns = (required_columns - set(assignment_df.columns))
+
+    if missing_columns:
+        raise ValueError(f"Following columns are missing from the assignment file {path}: "
+                         f"{sorted(missing_columns)}")
+
+    assignment_df["fragment_id"] = (assignment_df["fragment_id"].astype("string"))
+
+    duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
+
+    if duplicate_fragments.any():
+        duplicated_ids = sorted(assignment_df.loc[duplicate_fragments, "fragment_id"].unique())
+
+        raise ValueError(f"There are duplicate fragments in assignment file {path}: {duplicated_ids}")
 
     return assignment_df
 
 def compare(placement_type, baseline, updated):
     """
-    Zum Vergleichen der Werte zwischen der Baseline und dem reoptimierten Assignments eines Placement-Typs.
+    Compares pairwise relationships before and after reoptimization for a placement type.
     """
-    
+
+    # Maps every fragment to its baseline node
     baseline_nodes = dict(zip(baseline["fragment_id"], baseline["node_id"]))
+
+    # Maps every fragment to its updated node
     updated_nodes = dict(zip(updated["fragment_id"], updated["node_id"]))
 
-    fragment_ids = sorted(set(baseline_nodes.keys()) & set(updated_nodes.keys()))
+    baseline_fragments_ids = set(baseline_nodes)
+
+    updated_fragments_ids = set(updated_nodes)
+
+    # insertion changes fragment contents, but does not create or remove fragments.
+    # Therefore fragment ids need to be the same:
+    if baseline_fragments_ids != updated_fragments_ids:
+        missing_updated = sorted(baseline_fragments_ids - updated_fragments_ids)
+        missing_baseline = sorted(updated_fragments_ids - baseline_fragments_ids)
+
+        raise ValueError(f"Baseline and updated assignments contain different fragments:"
+                         f"Placement Type: {placement_type} "
+                         f"Missing in updated assignment: {missing_updated} "
+                         f"Missing in baseline assignment: {missing_baseline}")
+
+    fragment_ids = sorted(baseline_fragments_ids)
 
     comparison_rows = []
 
+    # compares every unordered fragment pair
     for fragment_i, fragment_j in combinations(fragment_ids, 2):
         same_before_node = baseline_nodes[fragment_i] == baseline_nodes[fragment_j]
         same_after_node = updated_nodes[fragment_i] == updated_nodes[fragment_j]
 
-        locality_relation_changed = same_before_node != same_after_node
+        # calculates relationship changes
+        locality_relation_changed = (same_before_node != same_after_node)
 
         comparison_rows.append({
             "placement_type": placement_type,
@@ -256,12 +509,19 @@ def compare(placement_type, baseline, updated):
 
 def compare_assignments(config):
     """
-    Vergleicht die Placements der Fragmenten vor und nach einer Neuoptimierung
+    Compares baseline and updated assignments for a placement type.
     """
 
     comparison = []
 
     for placement_type, paths in config["assignment_paths"].items():
+        missing_paths = [path for path in paths.values() if not path.exists()]
+
+        if missing_paths:
+            print(f"Skipping {placement_type} assignment comparison as following files are missing: "
+                  f"{missing_paths}")
+            continue
+
         baseline_df = load_assignment(paths["baseline"])
 
         updated_df = load_assignment(paths["updates"])
@@ -270,9 +530,15 @@ def compare_assignments(config):
 
         comparison.append(comparison_df)
 
-
+    if not comparison:
+        raise FileNotFoundError("No placement has both baseline and updated assignments.")
+    
+    # Combines results from all placement types
     complete_comparison = pd.concat(comparison, ignore_index=True)
+
+    # Selects pairs whose relationship changed
     changed = complete_comparison[complete_comparison["locality_relation_changed"]].copy()
+
     total_pairs = complete_comparison.groupby("placement_type").size()
 
     amount_changed = changed.groupby("placement_type").size().reindex(total_pairs.index, fill_value=0)
@@ -290,27 +556,36 @@ def compare_assignments(config):
 
 def load_node_loads(path):
     """
-    Lädt die Node-Auslastungsdateien
+    Loads node-load result file
     """
     if not path.exists():
-        raise FileNotFoundError(f"Der Pfad {path} wurde nicht gefunden.")
+        raise FileNotFoundError(f"File for node load not found: {path}")
 
     node_load = pd.read_csv(path)
+
+    required_columns = {"used", "node_load", "remaining_capacity"}
+
+    missing_columns = required_columns - set(node_load.columns)
+
+    if missing_columns:
+        raise ValueError(f"Following columns are missing from the node-load file {path}: "
+                         f"{sorted(missing_columns)}")
 
     return node_load
 
 def summarize_node_loads(placement_type, mode, node_loads):
     """
-    Berechnet die Kennzahlen der Node Auslastungen
+    Calculates node-load metrics for a placement type and an optimization mode
     """
 
     if mode not in {"baseline", "updates"}:
-        raise ValueError(f"Falscher Modus: {mode}")
+        raise ValueError(f"Unknown mode: {mode}")
 
+    # statistics are calculated only for nodes that are used by the placement
     used_nodes = node_loads[node_loads["used"] == 1].copy()
 
     if used_nodes.empty:
-        raise ValueError(f"Es gibt keine verwendeten Nodes für {placement_type} im Modus {mode}.")
+        raise ValueError(f"There are no nodes used for {placement_type} in mode {mode}.")
 
     return {
         "placement_type": placement_type,
@@ -326,22 +601,36 @@ def summarize_node_loads(placement_type, mode, node_loads):
 
 def compare_loads(config):
     """
-    Erstellt die Zusammenfassung für alle Node-Load Dateien auf ihren Placements und den Modes
+    Creates summaries for all placement types and optimization modes
     """
 
     summary_rows = []
 
     for placement_type, paths in config["node_load_paths"].items():
+        missing_paths = [path for path in paths.values() if not path.exists()]
+
+        if missing_paths:
+            print(f"Skipping {placement_type} node-load comparison because there are missing files: "
+                  f"{missing_paths}")
+            continue
+
+
         for mode, path in paths.items():
             node_loads_df = load_node_loads(path)
             summary_row = summarize_node_loads(placement_type, mode, node_loads_df)
             summary_rows.append(summary_row)
 
+    if not summary_rows:
+        raise FileNotFoundError(f"There is no placement that has node-load files for both modes.")
+    
     node_load_summary = pd.DataFrame(summary_rows)
 
     return node_load_summary
 
 def save_assignment_comparison(complete_comparison, changed, summary, config):
+    """
+    Saves complete, changed, and summarized assignment comparison results.
+    """
     comparison_path = config["comparison_path"]
     changed_path = config["changed_comparison_path"]
     summary_path = config["summary_comparison_path"]
@@ -351,65 +640,100 @@ def save_assignment_comparison(complete_comparison, changed, summary, config):
     changed.to_csv(changed_path, index=False)
     summary.to_csv(summary_path, index=False)
 
+    print(f"Complete assignment comparison saved to: {comparison_path}")
+    print(f"Changed colocation relationships saved to: {changed_path}")
+    print(f"Reoptimization summary saved to: {summary_path}")
+
+def save_node_load_summary(node_load_summary, config):
+    """
+    Saves the combined node-load summary.
+    """
+
+    node_load_path = config["node_load_summary_path"]
+
+    node_load_path.parent.mkdir(parents=True, exist_ok=True,)
+
+    node_load_summary.to_csv(node_load_path, index=False,)
+
+    print(f"Node-load summary saved to: {node_load_path}")
+
+    return node_load_path
+
 
 def process_prepare_reoptimization(config):
-    fragments_df = load_fragments(config["fragments_path"])
+    """
+    Creates and saves updated fragment state.
+    """
+    fragments_df = load_fragments(path=config["fragments_path"], config=config)
 
-    update_df = apply_inserts(fragments_df=fragments_df,
-                              new_item_id=config["new_item_id"],
-                              target_fragments=config["target_fragments"],
-                              config=config)
+    items_df = pd.read_csv(config["items_path"])
+
+    target_fragments = choose_target_fragments(fragments_df, config)
+
+    new_item_ids = create_new_item_ids(config)
+
+    update_df = apply_inserts(
+        fragments_df=fragments_df,
+        new_item_ids=new_item_ids,
+        target_fragments=target_fragments,
+        config=config
+        )
+
+    updated_items_df = create_update_items(items_df, new_item_ids, target_fragments, config)
 
     save(update_df, config["updated_fragments_path"])
 
-    return update_df
+    save(updated_items_df, config["updated_items_path"])
+
+    return update_df, updated_items_df, target_fragments, new_item_ids
 
 def process_evaluate_reoptimization(config):
+    """
+    Evaluates assignment changes and node loads after the reoptimization
+    """
     complete_comparison, changed, summary = compare_assignments(config)
 
     save_assignment_comparison(complete_comparison, changed, summary, config)
 
     node_load_summary = compare_loads(config)
 
-    node_load_path = config["node_load_summary_path"]
-    node_load_path.parent.mkdir(parents=True, exist_ok=True)
-
-    node_load_summary.to_csv(node_load_path, index=False)
+    save_node_load_summary(node_load_summary, config)
 
     return complete_comparison, changed, summary, node_load_summary
 
 
 def main():
     if DATASET not in CONFIGS:
-        raise ValueError(f"Unbekannter Datensatz {DATASET}")
+        raise ValueError(f"Unknown dataset: {DATASET}")
 
     config = CONFIGS[DATASET]
 
     if MODE == "prepare":
-        update_df = process_prepare_reoptimization(config)
+        update_df, updated_items_df, target_fragments, new_item_ids = process_prepare_reoptimization(config)
 
         columns = [config["fragment_id"], config["fragment_size"], config["item_ids"]]
 
-        target_rows = update_df[update_df[config["fragment_id"]].isin(config["target_fragments"])]
+        target_rows = update_df[update_df[config["fragment_id"]].isin(target_fragments)]
+
+        print(f"Inserted items: {len(new_item_ids)}")
+        print(f"Target fragments: {target_fragments}")
 
         print(target_rows[columns])
 
     elif MODE == "evaluate":
         complete_comparison, changed, summary, node_load_summary = process_evaluate_reoptimization(config)
 
-        print("\nVergleich nach der Reoptimierung")
+        print("\nReoptimization comparison:")
         print(summary)
 
-        print("\nVergleich der Node Auslastungen")
+        print("\nNode-load comparison")
         print(node_load_summary)
 
-        print("\nAnzahl geänderter Paar Beziehungen:")
+        print("\nNumber of changed colocation relationships:")
         print(len(changed))
 
     else:
-        raise ValueError(f"Unbekannter Modus: {MODE}")
+        raise ValueError(f"Unknown mode: {MODE}")
 
-
-    
 if __name__ == "__main__":
     main()

@@ -1,15 +1,17 @@
 from pathlib import Path
 import pandas as pd
+from experiment_config import experiment_path
+
 
 CONFIGS = {
     "mesh": {
-        "input_path": Path("prototype/output/processed/mesh_fragments_sample.csv"),
-        "output_path": Path("prototype/output/processed/mesh_fragment_assignment_round_robin.csv")
+        "input_path": experiment_path("processed/mesh_fragments_sample.csv"),
+        "output_path": experiment_path("processed/mesh_fragment_assignment_round_robin.csv")
     },
 
     "imdb": {
-        "input_path": Path("prototype/output/processed/imdb_fragments.csv"),
-        "output_path": Path("prototype/output/processed/imdb_fragment_assignment_round_robin.csv")
+        "input_path": experiment_path("processed/imdb_fragments.csv"),
+        "output_path": experiment_path("processed/imdb_fragment_assignment_round_robin.csv")
     }
 }
 

@@ -1,13 +1,15 @@
 from pathlib import Path
 import copy
 import xml.etree.ElementTree as ET
+from experiment_config import MESH_MAX_RECORDS, experiment_path
+
 
 # Input and output paths for original and reduced MeSH datasets
 INPUT_PATH = Path("prototype/data/raw/mesh/desc2026.xml")
-OUTPUT_PATH = Path("prototype/data/raw/mesh/desc2026_sample.xml")
+OUTPUT_PATH = experiment_path("prepared/mesh/desc2026_sample.xml")
 
 # Sets the maximum number of elements included in the sample
-MAX_RECORDS = 1000
+MAX_RECORDS = MESH_MAX_RECORDS
 
 def create_sample_xml(input_path: Path, output_path: Path, max_records: int):
     """

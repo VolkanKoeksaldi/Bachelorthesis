@@ -1,11 +1,12 @@
 from pathlib import Path
+from experiment_config import experiment_path
 import xml.etree.ElementTree as ET
 import pandas as pd
 import json
 
-INPUT_PATH = Path("prototype/data/raw/mesh/desc2026_sample.xml")
+INPUT_PATH = experiment_path("prepared/mesh/desc2026_sample.xml")
 
-OUTPUT_PATH = Path("prototype/output/processed/mesh_descriptors_sample.csv")
+OUTPUT_PATH = experiment_path("processed/mesh_descriptors_sample.csv")
 
 def extract_tree_levels(tree_number: str):
     """
@@ -117,7 +118,8 @@ def parse_mesh_descriptors(xml_path: Path):
             metadata_json = json.dumps(metadata, ensure_ascii=False, separators=(",", ":"))
 
             # Approximates the item size as the uTF-8 size of its ID, name and metadata
-            item_size_bytes = len(((descriptor_ui or "") + (descriptor_name or "") + metadata_json).encode("utf-8"))
+            item_size_bytes = len(((descriptor_ui or "") + (descriptor_name or "") 
+                                   + metadata_json).encode("utf-8"))
 
             tree_numbers = sorted({
                 tree_elem.text.strip()
@@ -130,13 +132,10 @@ def parse_mesh_descriptors(xml_path: Path):
                 elem.clear()
                 continue
 
-            # deterministic choice:
             # sets the first tree_number as the primary tree_number
             tree_number = tree_numbers[0]
 
-            top_category, branch_code, subbranch_code = extract_tree_levels(
-                tree_number
-            )
+            top_category, branch_code, subbranch_code = extract_tree_levels(tree_number)
 
             rows.append({
                 "descriptor_ui": descriptor_ui,
@@ -144,6 +143,7 @@ def parse_mesh_descriptors(xml_path: Path):
                 "metadata_json": metadata_json,
                 "item_size_bytes": item_size_bytes,
                 "tree_number": tree_number,
+                "all_tree_numbers": "|".join(tree_numbers),
                 "tree_number_count": len(tree_numbers),
                 "top_category": top_category,
                 "branch_code": branch_code,
@@ -174,7 +174,8 @@ def process_mesh_descriptors(input_path: Path, output_path: Path):
         )
 
         raise ValueError(
-            f"The deterministic tree number selection has generated a duplicated descriptor with {duplicate_ids[:10]}"
+            f"The deterministic tree number selection has generated a duplicated "
+            f"descriptor with {duplicate_ids[:10]}"
         )
 
     # statistics for validation:

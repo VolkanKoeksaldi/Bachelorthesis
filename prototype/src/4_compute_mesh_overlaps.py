@@ -1,14 +1,16 @@
 from pathlib import Path
 from itertools import combinations
+from experiment_config import experiment_path
+
 
 import pandas as pd
 
-INPUT_PATH = Path("prototype/output/processed/mesh_fragments_sample.csv")
+INPUT_PATH = experiment_path("processed/mesh_fragments_sample.csv")
 
-OUTPUT_PATH = Path("prototype/output/processed/mesh_overlaps_sample.csv")
+OUTPUT_PATH = experiment_path("processed/mesh_overlaps_sample.csv")
 
-UPDATED_INPUT_PATH = Path("prototype/output/reoptimization/mesh_fragments_sample_updates.csv")
-UPDATED_OUTPUT_PATH = Path("prototype/output/reoptimization/mesh_overlaps_sample_updates.csv")
+UPDATED_INPUT_PATH = experiment_path("reoptimization/mesh_fragments_sample_updates.csv")
+UPDATED_OUTPUT_PATH = experiment_path("reoptimization/mesh_overlaps_sample_updates.csv")
 
 MODES = {
     "baseline": (INPUT_PATH, OUTPUT_PATH),

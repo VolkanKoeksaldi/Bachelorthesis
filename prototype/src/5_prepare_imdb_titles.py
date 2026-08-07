@@ -1,10 +1,12 @@
 from pathlib import Path
 import json
 import pandas as pd
+from experiment_config import IMDB_MAX_TITLES, experiment_path
+
 
 basics_path = Path("prototype/data/raw/imdb/title.basics.tsv")
 ratings_path = Path("prototype/data/raw/imdb/title.ratings.tsv")
-output_path = Path("prototype/output/processed/imdb_titles.csv")
+output_path = experiment_path("processed/imdb_titles.csv")
 
 # Columns required from title.basics.tsv
 basics_column = [
@@ -26,7 +28,7 @@ ratings_column = [
     "numVotes"
 ]
 
-MAX_TITLES = 1000
+MAX_TITLES = IMDB_MAX_TITLES
 
 # Ensures that same sample is selected in repeated executions
 RANDOM_SEED = 42

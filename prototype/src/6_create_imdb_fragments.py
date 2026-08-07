@@ -1,10 +1,12 @@
 from pathlib import Path
 import pandas as pd
+from experiment_config import experiment_path
 
-input_path = Path("prototype/output/processed/imdb_titles.csv")
-membership_output_path = Path("prototype/output/processed/imdb_fragment_memberships.csv")
 
-fragment_output_path = Path("prototype/output/processed/imdb_fragments.csv")
+input_path = experiment_path("processed/imdb_titles.csv")
+membership_output_path = experiment_path("processed/imdb_fragment_memberships.csv")
+
+fragment_output_path = experiment_path("processed/imdb_fragments.csv")
 
 def create_memberships(titles_df):
     """
