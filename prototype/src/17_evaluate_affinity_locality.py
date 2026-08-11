@@ -36,7 +36,7 @@ AFFINITY_LOCALITY_CONFIGS = {
     }
 }
 
-DATASET = "imdb"
+DATASET = "mesh"
 
 def load_affinities(path):
     """
@@ -48,10 +48,7 @@ def load_affinities(path):
 
     # Fragment ids are read as strings so that they have the same data type as the ids
     # in the assignment file
-    affinity_df = pd.read_csv(path, dtype={
-        "fragment_i": "string",
-        "fragment_j": "string"
-    })
+    affinity_df = pd.read_csv(path, dtype={"fragment_i": "string", "fragment_j": "string"})
 
     required_columns = {"fragment_i", "fragment_j", "affinity",}
 
@@ -85,10 +82,9 @@ def load_assignment(assignment_path):
     missing_columns = required_columns - set(assignment_df.columns)
 
     if missing_columns:
-        raise ValueError(f"There are missing columns in assignment file: "
-                         f"{assignment_path}: {sorted(missing_columns)}")
+        raise ValueError(f"There are missing columns in assignment file: {assignment_path}: {sorted(missing_columns)}")
 
-    # checks that each fragment must occur only once, otherwise duplicates are marked
+    # checks that each fragment must occur only once, otherwise duplicates are marked as True
     # and an Error message is shown
     duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
 

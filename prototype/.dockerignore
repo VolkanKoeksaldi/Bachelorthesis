@@ -1,0 +1,8 @@
+data/
+output/
+docker_results/
+__pycache__/
+*.pyc
+.git/
+.vscode/
+.idea/

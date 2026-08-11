@@ -1,16 +1,17 @@
-from pathlib import Path
 from itertools import combinations
-from experiment_config import experiment_path
-
+from pathlib import Path
 
 import pandas as pd
 
-INPUT_PATH = experiment_path("processed/mesh_fragments_sample.csv")
+from clustering_utils import parse_item_ids
+from experiment_config import experiment_path
 
-OUTPUT_PATH = experiment_path("processed/mesh_overlaps_sample.csv")
+INPUT_PATH = experiment_path("processed/mesh_fragments.csv")
 
-UPDATED_INPUT_PATH = experiment_path("reoptimization/mesh_fragments_sample_updates.csv")
-UPDATED_OUTPUT_PATH = experiment_path("reoptimization/mesh_overlaps_sample_updates.csv")
+OUTPUT_PATH = experiment_path("processed/mesh_overlaps.csv")
+
+UPDATED_INPUT_PATH = experiment_path("reoptimization/mesh_fragments_updates.csv")
+UPDATED_OUTPUT_PATH = experiment_path("reoptimization/mesh_overlaps_updates.csv")
 
 MODES = {
     "baseline": (INPUT_PATH, OUTPUT_PATH),
@@ -19,62 +20,48 @@ MODES = {
 
 MODE = "baseline"
 
-def parse_item_ids(item_ids_string):
-    """
-    Converts a item identifier string separated by commas from the CSV file into a python set.
-    """
-
-    # Missing or empty values represent here an empty item set
-    if pd.isna(item_ids_string) or item_ids_string=="":
-        return set()
-    
-    return set(item_ids_string.split(","))
-
-def compute_overlaps(fragments_df, item_ids_column, overlap_ids_column):
+def compute_overlaps(fragments_df):
     """
     Computes the overlaps between fragments belonging to different schemes.
     Here only pairs with at least one shared item are included in the resulting table.
     """
 
+    prepared = [{"fragment_id": row.fragment_id,
+                 "scheme": row.scheme,
+                 "value": row.value,
+                 "item_ids": parse_item_ids(row.tuple_ids)}
+                 for row in fragments_df.itertuples(index=False)]
+    
     overlap_rows = []
-
-    # Converts columns into dictionaries and sets to simplify overlap calculation
-    fragments = []
-
-    for _, row in fragments_df.iterrows():
-        fragments.append({
-            "fragment_id": row["fragment_id"],
-            "scheme": row["scheme"],
-            "value": row["value"],
-            "item_ids": parse_item_ids(row[item_ids_column])
-        })
     
     # Examines every unordered pair of fragments
-    for f1, f2 in combinations(fragments, 2):
+    for f1, f2 in combinations(prepared, 2):
 
         # if fragments are from the same scheme, they are not compared
         if f1["scheme"] == f2["scheme"]:
             continue
         
-        # determines the overlap by calculating intersection of item identifiers
-        overlap = f1["item_ids"].intersection(f2["item_ids"])
+        # determines the overlap by calculating intersection of item ids
+        overlap = f1["item_ids"] & f2["item_ids"]
+
+        if not overlap:
+            continue
 
         # Stores only pairs with intersections that are not empty
-        if overlap:
-            overlap_rows.append({
-                "fragment_1": f1["fragment_id"],
-                "scheme_1": f1["scheme"],
-                "value_1": f1["value"],
-                "fragment_2": f2["fragment_id"],
-                "scheme_2": f2["scheme"],
-                "value_2": f2["value"],
-                "overlap_size": len(overlap),
-                overlap_ids_column: ",".join(sorted(overlap))
-            })
+        overlap_rows.append({
+            "fragment_1": f1["fragment_id"],
+            "scheme_1": f1["scheme"],
+            "value_1": f1["value"],
+            "fragment_2": f2["fragment_id"],
+            "scheme_2": f2["scheme"],
+            "value_2": f2["value"],
+            "overlap_size": len(overlap),
+            "overlap_tuple_ids": ",".join(sorted(overlap))
+        })
 
     return pd.DataFrame(overlap_rows)
 
-def process_overlaps(input_path: Path, output_path: Path, item_ids_column: str, overlap_ids_column: str):
+def process_overlaps(input_path: Path, output_path: Path):
     """
     Loads the fragment definitions and then computes their overlaps.
     The results are then stored as a CSV file.
@@ -82,7 +69,14 @@ def process_overlaps(input_path: Path, output_path: Path, item_ids_column: str, 
 
     fragments_df = pd.read_csv(input_path)
 
-    overlaps_df = compute_overlaps(fragments_df, item_ids_column, overlap_ids_column)
+    required = {"fragment_id", "scheme", "value", "tuple_ids"}
+
+    # checks whether every required column is included in fragments
+    missing = required - set(fragments_df.columns)
+    if missing:
+        raise ValueError(f"Fragment file is missing: {sorted(missing)}")
+
+    overlaps_df = compute_overlaps(fragments_df)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -90,6 +84,7 @@ def process_overlaps(input_path: Path, output_path: Path, item_ids_column: str, 
 
     print("Input fragments:", len(fragments_df))
     print("Computed overlaps:", len(overlaps_df))
+    print(f"Sum of pairwise overlap sizes: {overlaps_df['overlap_size'].sum()}")
     print(f"Saved to; {output_path}")
 
     return overlaps_df
@@ -101,7 +96,7 @@ def main():
 
     input_path, output_path = MODES[MODE]
     print("\nMode: ", MODE)
-    overlaps_df = process_overlaps(input_path, output_path, item_ids_column="descriptor_ids", overlap_ids_column="overlap_descriptor_ids")
+    process_overlaps(input_path, output_path)
 
     
 

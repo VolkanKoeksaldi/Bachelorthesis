@@ -7,24 +7,17 @@ from copy import deepcopy
 
 from experiment_config import RUN_LABEL, experiment_path
 
-from database_operations import(
-    DATASETS as CONFIGS,
-    select_item,
-    select_fragments,
-    insert_item,
-    update_item,
-    delete_item,
-    find_item_nodes
-)
+from database_operations import DATASETS as CONFIGS, select_item, select_fragments, insert_item, update_item, delete_item, find_item_nodes
+
 
 WORKLOAD_CONFIGS = {
     "mesh": {
         "workload_path": experiment_path("workloads/mesh_workload.json"),
         "result_output": experiment_path("mesh/workload_results"),
 
-        "item_id_column": "descriptor_ui",
-        "item_name_column": "descriptor_name",
-        "new_item_name": "new_descriptor_name",
+        "item_id_column": "tuple_id",
+        "item_name_column": "mesh_term",
+        "new_item_name": "new_mesh_term",
     },
 
     "imdb": {
@@ -37,11 +30,9 @@ WORKLOAD_CONFIGS = {
     }
 }
 
-DATASET = "imdb"
-PLACEMENT = "round_robin"
+DATASET = "mesh"
+PLACEMENT = "conflict_locality_ilp"
 REPETITIONS = 5
-WARM_UP_RUNS = 1
-
 
 def load_workload(workload_path):
     """
@@ -71,47 +62,26 @@ def execute_operation(operation, placement_type, workload_config, config):
     item_name_column = workload_config["item_name_column"]
     new_item_name = workload_config["new_item_name"]
 
+    # FRAGMENT_SELECT operations do not necessarily contain an individual item id
     item_id = operation.get(item_id_column)
 
     start_time = time.perf_counter()
 
     if operation_type == "SELECT":
-        result = select_item(
-            item_id=item_id,
-            placement_type=placement_type,
-            config=config
-        )
+        result = select_item(item_id=item_id, placement_type=placement_type, config=config)
 
     elif operation_type == "FRAGMENT_SELECT":
-        result = select_fragments(
-            fragment_ids=operation["fragment_ids"],
-            placement_type=placement_type,
-            config=config,
-        )
+        result = select_fragments(fragment_ids=operation["fragment_ids"], placement_type=placement_type, config=config)
 
     elif operation_type == "INSERT":
-        result = insert_item(
-            item_id=item_id,
-            item_name=operation[item_name_column],
-            fragment_ids=operation["fragment_ids"],
-            placement_type=placement_type,
-            config=config
-        )
+        result = insert_item(item_id=item_id, item_name=operation[item_name_column], fragment_ids=operation["fragment_ids"],
+                             placement_type=placement_type, config=config)
 
     elif operation_type == "UPDATE":
-        result = update_item(
-            item_id=item_id,
-            update_item_name=operation[new_item_name],
-            placement_type=placement_type,
-            config=config
-        )
+        result = update_item(item_id=item_id, update_item_name=operation[new_item_name], placement_type=placement_type, config=config)
 
     elif operation_type == "DELETE":
-        result = delete_item(
-            item_id=item_id,
-            placement_type=placement_type,
-            config=config
-        )
+        result = delete_item(item_id=item_id, placement_type=placement_type, config=config)
 
     else:
         raise ValueError(f"Unknown workload operation: {operation_type}")
@@ -128,14 +98,13 @@ def execute_operation(operation, placement_type, workload_config, config):
 
 def execute_workload(workload, placement_type, workload_config, config):
     """
-    Executes database operations in the workload.
+    Executes all database operations in the workload.
     """
     results = []
 
     # executes the operations one after another starting with index 1.
     for operation_id, operation in enumerate(workload, start=1):
-        print(f"Operation {operation_id} of {len(workload)}: "
-              f"{operation['operation']}")
+        print(f"Operation {operation_id} of {len(workload)}: {operation['operation']}")
 
         op_result = execute_operation(operation=operation, placement_type=placement_type, 
                                       workload_config=workload_config, config=config)
@@ -162,6 +131,7 @@ def save(results, placement_type, dataset, config):
 
     print(f"Results saved to: {output_path}")
 
+
 def copy_node_databases(node_directory, target_directory):
     """
     Copies initial nodes for one independent benchmark repitition.
@@ -171,7 +141,7 @@ def copy_node_databases(node_directory, target_directory):
 
     if not node_files:
         raise FileNotFoundError(f"No node databases were found in {node_directory}. "
-                                f"First file 11 needs to be run before executing the workload.")
+                                "First file 11 needs to be run before executing the workload.")
 
     target_directory.mkdir(parents=True, exist_ok=True)
 
@@ -185,7 +155,9 @@ def create_repeated_config(database_config, placement_type, node_directory):
     Returns the database configurations pointing to a copy of the benchmark nodes.
     """
 
+    # Creates an independent copy to avoid modifying original configurations
     repeat_config = deepcopy(database_config)
+    # Redirects selected placement to the directory that contains the copied nodes
     repeat_config["placements"][placement_type]["node_output"] = node_directory
 
     return repeat_config
@@ -196,14 +168,12 @@ def verify_deleted_items(workload, placement_type, workload_config, database_con
     """
     item_id_column = workload_config["item_id_column"]
 
-    deleted_item_ids = [
-        operation[item_id_column]
-        for operation in workload
-        if operation["operation"] == "DELETE"
-        ]
+    # Extracts ids of all items targeted by DELETE
+    deleted_item_ids = [operation[item_id_column] for operation in workload if operation["operation"] == "DELETE"]
 
     remaining_items = {}
 
+    # Checks all nodes because an item can be stored on multiple nodes
     for item_id in deleted_item_ids:
         remaining_nodes = find_item_nodes(item_id, placement_type, database_config)
 
@@ -211,18 +181,14 @@ def verify_deleted_items(workload, placement_type, workload_config, database_con
             remaining_items[item_id] = remaining_nodes
 
     if remaining_items:
-        details = "; ".join(f"{item_id}: {nodes}"
-                            for item_id, nodes in remaining_items.items())
+        details = "; ".join(f"{item_id}: {nodes}" for item_id, nodes in remaining_items.items())
 
-        raise RuntimeError("The following items still exist in node databases, even though they "
-                           f"should be deleted: {details}")
+        raise RuntimeError(f"The following items still exist in node databases, even though they should be deleted: {details}")
 
-    print("All items that were supposed to be deleted using DELETE operations, were removed from "
-          "every node.")
+    print("All items that were supposed to be deleted using DELETE operations, were removed from every node.")
 
 
-def process_execute_workload(dataset, placement_type, workload_config, database_config, 
-                             repetitions=REPETITIONS, warm_up_runs=WARM_UP_RUNS):
+def process_execute_workload(dataset, placement_type, workload_config, database_config, repetitions=REPETITIONS):
     """
     Loads, executes, verifies and saves the workload.
     """
@@ -232,43 +198,34 @@ def process_execute_workload(dataset, placement_type, workload_config, database_
     if repetitions < 1:
         raise ValueError("REPETITIONS must be at least 1.")
 
-    if warm_up_runs < 0:
-        raise ValueError("WARM_UP_RUNS cannot be negative.")
-
     source_node_directory = database_config["placements"][placement_type]["node_output"]
 
     results = []
-
-    total_runs = warm_up_runs + repetitions
+    total_runs = repetitions
 
     for run_number in range(1, total_runs + 1):
-        is_warm_up = run_number <= warm_up_runs
-        measured_repeat = run_number - warm_up_runs
-        run_kind = "warm-up" if is_warm_up else f"repeat {measured_repeat}"
+        run_kind = f"repeat {run_number}"
 
         print(f"\nStarting {run_kind} of {placement_type}...")
 
-        with tempfile.TemporaryDirectory(
-            prefix=f"{dataset}_{placement_type}_") as temp_directory:
+        # Uses temporary node directory
+        # Every repetition then starts from the same unchanged database node state.
+        with tempfile.TemporaryDirectory(prefix=f"{dataset}_{placement_type}_") as temp_directory:
             repeat_node_directory = Path(temp_directory) / "nodes"
-            copy_node_databases(source_node_directory, repeat_node_directory,)
+            copy_node_databases(source_node_directory, repeat_node_directory)
 
-            repeat_database_config = create_repeated_config(database_config, 
-                                                            placement_type, repeat_node_directory)
+            repeat_database_config = create_repeated_config(database_config, placement_type, repeat_node_directory)
 
-            repeat_results = execute_workload(workload, placement_type, 
-                                              workload_config, repeat_database_config)  
+            repeat_results = execute_workload(workload=workload, placement_type=placement_type, workload_config=workload_config,
+                                              config=repeat_database_config)
 
             verify_deleted_items(workload, placement_type, workload_config, repeat_database_config)
 
-        if is_warm_up:
-            continue
-
         for result in repeat_results:
             result["run_label"] = RUN_LABEL
-            result["repeat_id"] = measured_repeat
+            result["repeat_id"] = run_number
 
-        results.extend(repeat_results)   
+        results.extend(repeat_results)
 
     save(results=results, placement_type=placement_type, dataset=dataset, config=workload_config)
 
@@ -285,9 +242,9 @@ def main():
     workload_config = WORKLOAD_CONFIGS[DATASET]
     database_config = CONFIGS[DATASET]
 
-    results = process_execute_workload(dataset=DATASET, placement_type=PLACEMENT, 
-                             workload_config=workload_config, database_config=database_config,
-                             repetitions=REPETITIONS, warm_up_runs=WARM_UP_RUNS)
+    results = process_execute_workload(dataset=DATASET, placement_type=PLACEMENT, workload_config=workload_config,
+                                       database_config=database_config, repetitions=REPETITIONS)
+
 
     print(f"Executed database operations: {len(results)}")
 

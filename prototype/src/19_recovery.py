@@ -1,8 +1,9 @@
 from pathlib import Path
+from experiment_config import experiment_path
 import sqlite3
 import time
 import pandas as pd
-from experiment_config import experiment_path
+from contextlib import closing
 
 from database_operations import DATASETS as DATABASE_CONFIGS
 
@@ -11,7 +12,7 @@ RECOVERY_CONFIGS = {
         "failed_node_id": "node_1",
 
         "baseline": {
-            "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
+            "fragments_path": experiment_path("processed/mesh_fragments.csv"),
             "assignment_paths": {
                         "round_robin": experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
                         "tuple_ilp": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
@@ -20,7 +21,7 @@ RECOVERY_CONFIGS = {
         },
 
         "updates": {
-            "fragments_path": experiment_path("reoptimization/mesh_fragments_sample_updates.csv"),
+            "fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
             "assignment_paths": {
                         "round_robin": experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
                         "tuple_ilp": experiment_path("reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
@@ -28,7 +29,7 @@ RECOVERY_CONFIGS = {
             }
         },
         
-        "fragment_item_ids": "descriptor_ids",
+        "fragment_item_ids": "tuple_ids",
         "recovery_directory": experiment_path("recovery"),
         "recovery_output_path": experiment_path("recovery/mesh_recovery_results.csv")
     },
@@ -61,7 +62,7 @@ RECOVERY_CONFIGS = {
 }
 
 DATASET = "imdb"
-MODE = "baseline" # baseline or updates
+MODE = "updates" # baseline or updates
 
 
 def find_nodes(placement_type, database_config, mode):
@@ -70,33 +71,21 @@ def find_nodes(placement_type, database_config, mode):
     """
 
     if placement_type not in database_config["placements"]:
-        raise ValueError(
-            f"Unknown placement type: {placement_type}"
-        )
+        raise ValueError(f"Unknown placement type: {placement_type}")
 
-    baseline_directory = (
-        database_config["placements"][placement_type]["node_output"]
-    )
+    baseline_directory = (database_config["placements"][placement_type]["node_output"])
 
     if mode == "baseline":
         placement_directory = baseline_directory
-
     elif mode == "updates":
-        placement_directory = (
-            baseline_directory.parent
-            / "updates"
-            / placement_type
-        )
+        placement_directory = (baseline_directory.parent / "updates" / placement_type)
     else:
         raise ValueError(f"Unknown recovery mode: {mode}")
 
     node_files = sorted(placement_directory.glob("node_*.db"))
 
     if not node_files:
-        raise FileNotFoundError(
-            f"No SQLite nodes were found in {placement_directory}. "
-            f"First run file 11 in {mode}."
-        )
+        raise FileNotFoundError(f"No SQLite nodes were found in {placement_directory}. First run file 11 in {mode}.")
 
     return node_files
 
@@ -113,26 +102,27 @@ def find_failed_node(node_files, failed_node_id):
 
 def load_failed_items(node_file, database_config):
     """
-    Loads item ids affected by node failure.
+    Loads item ids of all items affected by node failure.
     """
 
     item_table = database_config["item_table"]
     item_id = database_config["item_id_column"]
 
     with sqlite3.connect(node_file) as conn:
-        cur = conn.cursor()
-        cur.execute(f"""
-            SELECT {item_id}
-            FROM {item_table}
-        """)
+        with closing(conn.cursor()) as cur:
+            cur.execute(f"""
+                SELECT {item_id}
+                FROM {item_table}
+            """)
 
-        rows = cur.fetchall()
+            rows = cur.fetchall()
+
     return {row[0] for row in rows}
 
 
 def find_copies(node_files, failed_node, failed_items, database_config):
     """
-    Finds surviving nodes that contain copies of deleted items.
+    Finds surviving nodes containing copies of items from the failed node.
     """
     item_table = database_config["item_table"]
     item_id_column = database_config["item_id_column"]
@@ -140,18 +130,18 @@ def find_copies(node_files, failed_node, failed_items, database_config):
     recovery_items = {item_id: [] for item_id in failed_items}
 
     for node_file in node_files:
-        # Failed node must not be used as a recovery source
+        # Excludes failed node from possible recovery nodes
         if node_file == failed_node:
             continue
 
         with sqlite3.connect(node_file) as conn:
-            cur = conn.cursor()
-            cur.execute(f"""
-                SELECT {item_id_column}
-                FROM {item_table}
-            """)
+            with closing(conn.cursor()) as cur:
+                cur.execute(f"""
+                    SELECT {item_id_column}
+                    FROM {item_table}
+                """)
 
-            available_items = {row[0] for row in cur.fetchall()}
+                available_items = {row[0] for row in cur.fetchall()}
 
         found_items = (failed_items & available_items)
 
@@ -186,12 +176,9 @@ def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, m
     """
 
     assignment = pd.read_csv(mode_config["assignment_paths"][placement_type], 
-                             dtype={"fragment_id": "string",
-                                    "node_id": "string",
-                                    },)
+                             dtype={"fragment_id": "string", "node_id": "string"})
 
-    fragments_df = pd.read_csv(mode_config["fragments_path"],
-                               dtype={"fragment_id": "string",},)
+    fragments_df = pd.read_csv(mode_config["fragments_path"], dtype={"fragment_id": "string"})
 
     item_ids_column = recovery_config["fragment_item_ids"]
 
@@ -209,20 +196,21 @@ def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, m
     if missing_fragments_columns:
         raise ValueError(f"Missing columns in fragment file: {sorted(missing_fragments_columns)}")
 
-    # fragment ids from failed node are extracted
-    failed_fragments_ids = set(assignment.loc[assignment["node_id"] == failed_node_id, "fragment_id"])
+    # retains fragments assigned to the failed node
+    failed_fragment_ids = set(assignment.loc[assignment["node_id"] == failed_node_id, "fragment_id"])
 
-    missing_fragment_ids = (failed_fragments_ids - set(fragments_df["fragment_id"]))
+    missing_fragment_ids = (failed_fragment_ids - set(fragments_df["fragment_id"]))
 
     if missing_fragment_ids:
         raise ValueError(f"Fragments assigned to {failed_node_id} are missing from the fragments path. "
                          f"{sorted(missing_fragment_ids)}")
     
-    failed_fragments = fragments_df.loc[fragments_df["fragment_id"].isin(failed_fragments_ids)].copy()
+    failed_fragments = fragments_df.loc[fragments_df["fragment_id"].isin(failed_fragment_ids)].copy()
 
     fragment_rows = list(failed_fragments[["fragment_id", "scheme", "value", 
                                            "fragment_size"]].itertuples(index=False, name=None))
 
+    # reconstructs fragment member relationships of failed node
     fragment_membership_rows = []
 
     for row in failed_fragments.itertuples(index=False):
@@ -250,6 +238,8 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 
     node_file_id = {node_file.stem: node_file for node_file in node_files}
 
+    # groups recoverable items by their selected source node, thus reducing the number of database
+    # connections and queries needed for recovery.
     items_recoverable = {}
 
     for item_id, source_id in selected_nodes.items():
@@ -267,26 +257,32 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
     for node_id, item_ids in items_recoverable.items():
         path = node_file_id[node_id]
 
-        placeholders = ", ".join("?" for _ in item_ids)
-
         with sqlite3.connect(path) as conn:
-            cur = conn.cursor()
+            # SQLite limits the number of bound variables in one SQL statement.
+            # For large recovery requests these are divided into smaller batch sizes of 10.000 size.
+            sql_variable_limit = conn.getlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER)
+            batch_size = min(sql_variable_limit, 10_000)
 
-            cur.execute(f"""
-                SELECT {", ".join(item_columns)}
-                FROM {item_table}
-                WHERE {item_id_column} IN ({placeholders})
-            """, item_ids)
+            with closing(conn.cursor()) as cur:
+                for start in range(0, len(item_ids), batch_size):
+                    item_batch = item_ids[start:start + batch_size]
+                    placeholders = ", ".join("?" for _ in item_batch)
 
-            recovered_rows.extend(cur.fetchall())
+                    cur.execute(f"""
+                        SELECT {", ".join(item_columns)}
+                        FROM {item_table}
+                        WHERE {item_id_column} IN ({placeholders})
+                    """, item_batch)
+
+                    recovered_rows.extend(cur.fetchall())
 
     recovered_item_ids = {row[0] for row in recovered_rows}
 
+    # recalculates fragment sizes in case some items were unrecoverable
     recovered_fragment_sizes = {}
 
-    fragment_membership_rows = [membership
-                                for membership in fragment_membership_rows
-                                if membership[1] in recovered_item_ids]
+    # retains memberships whose items were successfully recovered
+    fragment_membership_rows = [membership for membership in fragment_membership_rows if membership[1] in recovered_item_ids]
 
     for fragment_id, item_id in fragment_membership_rows:
         recovered_fragment_sizes[fragment_id] = recovered_fragment_sizes.get(fragment_id, 0) + 1
@@ -308,53 +304,53 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
     with sqlite3.connect(recover_path) as conn:
         # Enables foreign keys to match the node database schema from file 11
         conn.execute("PRAGMA foreign_keys=ON")
+        with closing(conn.cursor()) as cur:
+            cur = conn.cursor()
 
-        cur = conn.cursor()
+            # Creates the recovered item table
+            cur.execute(f"""
+                CREATE TABLE {item_table} (
+                    {", ".join(item_column_def)}
+                    )
+            """)
 
-        # Creates the recovered item table
-        cur.execute(f"""
-            CREATE TABLE {item_table} (
-                {", ".join(item_column_def)}
-                )
-        """)
+            # Inserts recovered item rows into the table
+            cur.executemany(f"""
+                INSERT INTO {item_table} ({", ".join(item_columns)}) VALUES({item_placeholders})
+            """, recovered_rows)
 
-        # Inserts recovered item rows into the table
-        cur.executemany(f"""
-            INSERT INTO {item_table} ({", ".join(item_columns)}) VALUES({item_placeholders})
-        """, recovered_rows)
+            conn.commit()
 
-        conn.commit()
+            # Creates the fragments table
+            cur.execute("""
+                CREATE TABLE fragments(
+                    fragment_id TEXT PRIMARY KEY,
+                    scheme TEXT NOT NULL,
+                    value TEXT NOT NULL,
+                    fragment_size INTEGER NOT NULL
+                    )
+            """)
 
-        # Creates the fragments table
-        cur.execute("""
-            CREATE TABLE fragments(
-                fragment_id TEXT PRIMARY KEY,
-                scheme TEXT NOT NULL,
-                value TEXT NOT NULL,
-                fragment_size INTEGER NOT NULL
-                )
-        """)
+            # Inserts recovered fragment metadata
+            cur.executemany("""
+                INSERT INTO fragments(fragment_id, scheme, value, fragment_size) VALUES(?, ?, ?, ?)
+            """, fragment_rows)
 
-        # Inserts recovered fragment metadata
-        cur.executemany("""
-            INSERT INTO fragments(fragment_id, scheme, value, fragment_size) VALUES(?, ?, ?, ?)
-        """, fragment_rows)
+            conn.commit()
 
-        conn.commit()
+            # Creates the fragment-membership table
+            cur.execute(f"""
+                CREATE TABLE fragment_members(
+                    fragment_id TEXT NOT NULL,
+                    {membership_item_column} TEXT NOT NULL,
+                    PRIMARY KEY (fragment_id, {membership_item_column}))
+            """)
 
-        # Creates the fragment-membership table
-        cur.execute(f"""
-            CREATE TABLE fragment_members(
-                fragment_id TEXT NOT NULL,
-                {membership_item_column} TEXT NOT NULL,
-                PRIMARY KEY (fragment_id, {membership_item_column}))
-        """)
-
-        # Inserts recovered fragment-member relationships
-        cur.executemany(f"""
-            INSERT INTO fragment_members(fragment_id, {membership_item_column}) VALUES(?, ?)
-        """, fragment_membership_rows)
-        conn.commit()
+            # Inserts recovered fragment-member relationships
+            cur.executemany(f"""
+                INSERT INTO fragment_members(fragment_id, {membership_item_column}) VALUES(?, ?)
+            """, fragment_membership_rows)
+            conn.commit()
 
     return recovered_rows, fragment_rows, fragment_membership_rows
 
@@ -390,10 +386,11 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
             print(f"Skipping {placement_type}: {error}")
             continue
 
-        # Defines which items are affected
+        # Loads all affected items by the node failure
         failed_items = load_failed_items(failed_node, database_config)
         recovery_time_start = time.perf_counter()
         recovery = find_copies(node_files, failed_node, failed_items, database_config)
+        # distinguishes between recoverable items from failed node and unrecoverable nodes
         recoverable = {item_id: nodes for item_id, nodes in recovery.items() if nodes}
         unrecoverable = {item_id: nodes for item_id, nodes in recovery.items() if not nodes}
         source_nodes = {node_id for nodes in recoverable.values() for node_id in nodes}
@@ -426,7 +423,7 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
             "amount_recovered_items": len(recovered_items),
             "amount_unrecoverable_items": len(unrecoverable),
             "recovery_rate": recovery_rate,
-            "available_nodes": len(source_nodes),
+            "available_recovery_nodes": len(source_nodes),
             "selected_recovery_nodes": len(recovery_node),
             "recovery_time_sec": recovery_time,
             "amount_affected_fragments": len(recovered_fragments),

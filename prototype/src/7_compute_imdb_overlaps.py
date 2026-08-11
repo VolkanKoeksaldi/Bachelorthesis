@@ -1,6 +1,7 @@
 from pathlib import Path
 from itertools import combinations
-from experiment_config import experiment_path
+from experiment_config import IMDB_FRAGMENTATION_SCHEMES, experiment_path
+from clustering_utils import parse_item_ids, validate_fragmentation_memberships
 
 
 import pandas as pd
@@ -18,114 +19,175 @@ MODES = {
     "updates": (UPDATED_INPUT_PATH, UPDATED_OUTPUT_PATH),
 }
 
-MODE = "baseline"
+MODE = "baseline" # baseline or updates
 
 item_ids_column = "title_ids"
 
-# If set as True, then fragments belonging to the same scheme are compared.
-# Since fragments within each IMDb scheme are disjoint, this should not produce additional overlaps.
-# If set as False, then only fragments from different schemes are compared.
-compare_same_scheme = False
-
-def parse_title_ids(value):
-    """
-    Converts a title id string into a set
-    """
-
-    if pd.isna(value) or value == "":
-        return set()
-
-    return {
-        title_id.strip() for title_id in str(value).split(",") if title_id.strip()
-    }
+# Defines columns for non-empty overlaps. Also ensures that a valid CSV file with headers is always created
+OUTPUT_COLUMNS = ["fragment_1", "scheme_1", "value_1", "fragment_2", "scheme_2", "value_2", "overlap_size", "overlap_title_ids"]
 
 def prepare_fragments(fragments_df):
     """
-    Prepares the fragments for calculating overlaps by converting their title id strings into sets.
+    Prepares the fragments for calculating overlaps by converting
+    their comma-separated title ID strings into sets.
     """
 
-    prepared = []
+    prepared_fragments = []
 
-    # iterates over all fragments without including the index from the DataFrame
+    # Iterates over all fragments without including the DataFrame index.
     for row in fragments_df.itertuples(index=False):
 
-        # getattr() reads the attribute of item_ids_column in row.
-        # it corresponds to row.title_ids
-        title_ids = parse_title_ids(getattr(row, item_ids_column))
+        # getattr() reads the title id in row column by item_ids_column.
+        # then parses those title ids into a set
+        title_ids = parse_item_ids(getattr(row, item_ids_column))
 
-        prepared.append({
-            "fragment_id": row.fragment_id,
-            "scheme": row.scheme,
-            "value": row.value,
-            "fragment_size": row.fragment_size,
-            "title_ids": title_ids
+        # Ensures that the stored fragment size agrees with the number
+        # of unique title IDs contained in the fragment.
+        if len(title_ids) != int(row.fragment_size):
+            raise ValueError(f"Fragment {row.fragment_id} has fragment_size {row.fragment_size}, but contains "
+                             f"{len(title_ids)} unique title IDs.")
+
+        prepared_fragments.append({
+            "fragment_id": str(row.fragment_id),
+            "scheme": str(row.scheme),
+            "value": str(row.value),
+            "title_ids": title_ids,
         })
 
-    return prepared
+    return prepared_fragments
 
-def compute_overlaps(prepared, compare_same_scheme):
+
+def compute_overlaps(prepared_fragments):
     """
-    Compares fragment pairs and returns the pairs that have an overlap.
+    Compares fragment pairs from different fragmentation schemes and
+    returns all pairs that have a non-empty overlap.
     """
 
     overlap_rows = []
-    
-    # Generates every unordered pair of distinct fragments once.
-    for f1, f2 in combinations(prepared, 2):
 
-        # Skips pairs from same fragmentation scheme
-        if (not compare_same_scheme and f1["scheme"] == f2["scheme"]):
+    # Generates every unordered pair of distinct fragments exactly once.
+    for fragment_1, fragment_2 in combinations(prepared_fragments, 2):
+
+        # Fragments within the same fragmentation scheme are
+        # disjoint. Therefore they are skipped.
+        if fragment_1["scheme"] == fragment_2["scheme"]:
             continue
-        
-        # Calculates overlap of two title id sets
-        overlap = f1["title_ids"].intersection(f2["title_ids"])
 
-        if overlap:
-            overlap_rows.append({
-                "fragment_1": f1["fragment_id"],
-                "scheme_1": f1["scheme"],
-                "value_1": f1["value"],
-                "fragment_2": f2["fragment_id"],
-                "scheme_2": f2["scheme"],
-                "value_2": f2["value"],
-                "overlap_size": len(overlap),
-                "overlap_title_ids": ",".join(sorted(overlap))
-            })
+        # Calculates the intersection of the two title ID sets.
+        overlap = fragment_1["title_ids"] & fragment_2["title_ids"]
 
-    return pd.DataFrame(overlap_rows)
+        # Fragment pairs without shared titles are not stored.
+        if not overlap:
+            continue
+
+        overlap_rows.append({
+            "fragment_1": fragment_1["fragment_id"],
+            "scheme_1": fragment_1["scheme"],
+            "value_1": fragment_1["value"],
+            "fragment_2": fragment_2["fragment_id"],
+            "scheme_2": fragment_2["scheme"],
+            "value_2": fragment_2["value"],
+            "overlap_size": len(overlap),
+            "overlap_title_ids": ",".join(sorted(overlap))
+        })
+
+    # Specifying the columns ensures that in case there are no overlaps the CSV still has
+    # the correct headers
+    return pd.DataFrame(overlap_rows, columns=OUTPUT_COLUMNS)
 
 
-def process_imdb_overlaps(input_path, output_path, compare_same_scheme):
+def process_imdb_overlaps(input_path: Path, output_path: Path):
     """
-    Loads fragments and then validates the required columns.
-    Afterwards, computes their overlaps and stores the result as a CSV.
+    Loads the IMDb fragments and validates their required columns and
+    fragmentation structure.
+
+    Afterwards, the overlaps between fragments from different schemes
+    are calculated and stored as a CSV file.
     """
 
-    fragments_df = pd.read_csv(input_path)
+    if not input_path.exists():
+        raise FileNotFoundError(f"IMDb fragment file was not found: {input_path}")
 
-    required_columns = {"fragment_id", "scheme", "value", "fragment_size", "title_ids"}
+    fragments_df = pd.read_csv(input_path, dtype={"fragment_id": "string", "title_ids": "string"})
 
-    missing = (required_columns - set(fragments_df.columns))
+    required_columns = {
+        "fragment_id",
+        "scheme",
+        "value",
+        "fragment_size",
+        item_ids_column
+    }
 
-    if missing:
-        raise ValueError(f"These columns from fragment file are still missing: {sorted(missing)}")
+    missing_columns = (required_columns - set(fragments_df.columns))
+
+    if missing_columns:
+        raise ValueError(f"The IMDb fragment file is missing the following columns: {sorted(missing_columns)}")
+
+    if fragments_df.empty:
+        raise ValueError(f"The IMDb fragment file is empty: {input_path}")
+
+    # Checks whether every fragment id is unique
+    if not fragments_df["fragment_id"].is_unique:
+        raise ValueError("The IMDb fragment file contains duplicate fragment IDs.")
+
+    expected_schemes = set(IMDB_FRAGMENTATION_SCHEMES)
+
+    actual_schemes = set(fragments_df["scheme"].astype(str))
+
+    # Checks whether every expected scheme is generated
+    if actual_schemes != expected_schemes:
+        raise ValueError(
+            f"Unexpected IMDb fragmentation schemes. Expected: {sorted(expected_schemes)}, found: {sorted(actual_schemes)}."
+        )
 
     prepared_fragments = prepare_fragments(fragments_df)
 
-    overlaps_df = compute_overlaps(prepared_fragments, compare_same_scheme)
+    # Collects all physical title IDs stored in the fragments.
+    expected_title_ids = set()
+
+    # Collects unique title ids from all fragments into expected_title_ids
+    # Then for each fragment adds its title_ids into the expected_title_ids set
+    for fragment in prepared_fragments:expected_title_ids.update(fragment["title_ids"])
+
+    if not expected_title_ids:
+        raise ValueError("The IMDb fragments do not contain any title IDs.")
+
+    # Validates that each physical title belongs to exactly one fragment
+    # in each of the three configured fragmentation schemes.
+    validate_fragmentation_memberships(fragments_df, expected_item_ids=expected_title_ids, expected_schemes=IMDB_FRAGMENTATION_SCHEMES,
+                                       item_ids_column=item_ids_column)
+
+    overlaps_df = compute_overlaps(prepared_fragments)
+
+    # each title contributes to one overlap in every unordered scheme pair, because fragmentations are disjoint internally
+    number_of_schemes = len(IMDB_FRAGMENTATION_SCHEMES)
+
+    # calculates number of all possible scheme pairs
+    scheme_pair_count = (number_of_schemes * (number_of_schemes - 1) // 2)
+
+    # calculates the expected overlap sum
+    expected_overlap_sum = (len(expected_title_ids) * scheme_pair_count)
+
+    # calculates the real overlap sum
+    if not overlaps_df.empty:
+        actual_overlap_sum = int(overlaps_df["overlap_size"].sum())
+    else: 0
+
+    if actual_overlap_sum != expected_overlap_sum:
+        raise ValueError(f"A total of {actual_overlap_sum} overlaps were found, but {expected_overlap_sum} were expected.")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     overlaps_df.to_csv(output_path, index=False)
 
+    print(f"Number of titles: {len(expected_title_ids)}")
     print(f"Number of fragments: {len(fragments_df)}")
-    print(f"NUmber of overlap pairs in fragments: {len(overlaps_df)}")
+    print(f"Number of overlap pairs: {len(overlaps_df)}")
+    print(f"Sum of pairwise overlap sizes: {actual_overlap_sum}")
 
     if not overlaps_df.empty:
-        print(f"Sum of overlap sizes: {overlaps_df['overlap_size'].sum()}")
-
-        print("Largest overlap:")
-        # sorts overlap pairs by descreasing overlap size and then prints the ten largest values
+        print("Largest overlaps:")
+        # Sorts overlap pairs by decreasing overlap size and then prints the ten largest pairs.
         print(overlaps_df.sort_values("overlap_size", ascending=False).head(10))
 
     print(f"Output saved to: {output_path}")
@@ -140,11 +202,7 @@ def main():
 
     print(f"Mode: {MODE}")
 
-    process_imdb_overlaps(
-        selected_input_path,
-        selected_output_path,
-        compare_same_scheme
-    )
+    process_imdb_overlaps(selected_input_path, selected_output_path)
 
 if __name__ == "__main__":
     main()

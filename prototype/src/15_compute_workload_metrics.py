@@ -16,7 +16,7 @@ EVALUATION_CONFIGS = {
     }
 }
 
-DATASET = "mesh"
+DATASET = "imdb"
 
 
 def load_results(placement_type, dataset, config):
@@ -41,17 +41,21 @@ def load_results(placement_type, dataset, config):
     
     return results
 
+
 def get_operation_nodes(result, field_name, fallback_field=None):
     """
-    Returns unique node IDs from one operation-result field.
+    Returns unique node IDs from one operation result field.
+    If the requested field is unavailable, an optional fallback field is used.
     """
     operation_result = result.get("result", {})
 
     if not isinstance(operation_result, dict):
-        raise ValueError(f"Result of a workload operation must be an object.")
+        raise ValueError(f"Result of a workload operation must be an dictionary.")
 
     node_ids = operation_result.get(field_name)
 
+    # fallback_field only used in case field_name is not in operation result
+   # Because some operations may store relevant nodes in a different result field
     if node_ids is None and fallback_field is not None:
         node_ids = operation_result.get(fallback_field, [])
 
@@ -96,6 +100,7 @@ def compute_stretch_jump(contacted_nodes):
     Node ids are interpreted as positions in a linear node order.
     """
 
+    # node numbers are extracted
     node_indices = sorted({int(node_id.rsplit("_", 1)[-1]) for node_id in contacted_nodes})
 
     if not node_indices:
@@ -104,12 +109,15 @@ def compute_stretch_jump(contacted_nodes):
     if len(node_indices) == 1:
         return 1.0, 1
 
+    # calculates span by subtracting biggest node id from first node id + 1
     span = node_indices[-1] - node_indices[0] + 1
 
+    # then divides span by total length of used nodes.
     stretch = span / len(node_indices)
 
     jump = 1
 
+    # calculates how often node indices only have 1 as difference between them
     for pre, cur in zip(node_indices, node_indices[1:]):
         if cur > pre + 1:
             jump += 1

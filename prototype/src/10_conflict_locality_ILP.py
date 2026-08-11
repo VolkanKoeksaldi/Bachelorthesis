@@ -2,29 +2,28 @@ import pulp
 import time
 import pandas as pd
 from pathlib import Path
+from experiment_config import CAPACITY_BUFFER, NUM_NODES, experiment_path
 import math
 import highspy
 from itertools import combinations
 from placement_capacity import calculate_node_capacity
-from experiment_config import experiment_path
 
 
 DATASETS = {
     "mesh": {
-        "item_ids_column": "descriptor_ids",
+        "item_ids_column": "tuple_ids",
         "affinity_path": experiment_path("workload_affinities/mesh_workload_affinities.csv"),
-        "num_nodes": 10,
+        "num_nodes": NUM_NODES,
         "node_capacity": None, # If value is None then the capacity is 
                                # calculated automatically using capacity buffer
-        "capacity_buffer": 0.50,
-        "replication_factor": 3,
-        "capacity_reference_path": experiment_path("processed/mesh_fragments_sample.csv"),
+        "capacity_buffer": CAPACITY_BUFFER,
+        "capacity_reference_path": experiment_path("processed/mesh_fragments.csv"),
 
 
         "modes": {
             "baseline": {
-                "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
-                "overlaps_path": experiment_path("processed/mesh_overlaps_sample.csv"),
+                "fragments_path": experiment_path("processed/mesh_fragments.csv"),
+                "overlaps_path": experiment_path("processed/mesh_overlaps.csv"),
                 "assignment_output_path": experiment_path("processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
                 "loads_output_path": experiment_path("results/mesh/conflict_locality_ilp/node_loads.csv"),
                 "solver_result_path": experiment_path("processed/mesh/mesh_baseline_solver_result_conflict_locality_ilp.csv")
@@ -32,8 +31,8 @@ DATASETS = {
             },
 
             "updates": {
-                "fragments_path": experiment_path("reoptimization/mesh_fragments_sample_updates.csv"),
-                "overlaps_path": experiment_path("reoptimization/mesh_overlaps_sample_updates.csv"),
+                "fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
+                "overlaps_path": experiment_path("reoptimization/mesh_overlaps_updates.csv"),
                 "assignment_output_path": experiment_path("reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv"),
                 "loads_output_path": experiment_path("reoptimization/mesh/conflict_locality_ilp/node_loads_updated.csv"),
                 "solver_result_path": experiment_path("processed/mesh/mesh_updates_solver_result_conflict_locality_ilp.csv")
@@ -45,11 +44,10 @@ DATASETS = {
     "imdb": {
         "item_ids_column": "title_ids",
         "affinity_path": experiment_path("workload_affinities/imdb_workload_affinities.csv"),
-        "num_nodes": 10,
+        "num_nodes": NUM_NODES,
         "node_capacity": None, # If value is None then the capacity is
                                # calculated automatically using capacity buffer
-        "capacity_buffer": 0.50,
-        "replication_factor": 3,
+        "capacity_buffer": CAPACITY_BUFFER,
         "capacity_reference_path": experiment_path("processed/imdb_fragments.csv"),
 
 
@@ -73,8 +71,8 @@ DATASETS = {
     }
 }
 
-MODE = "baseline"
-DATASET = "mesh"
+MODE = "updates" # baseline or updates
+DATASET = "imdb"
 
 def parse_item_ids(item_ids_string):
     """
@@ -97,7 +95,7 @@ def load_fragments(fragments_path, item_ids_column):
 
     return:
         - fragments_df as a DataFrame with the additional item_id_set column
-        - fragment_descriptor_ids as a dictionary mapping every fragment id
+        - fragment_tuple_ids as a dictionary mapping every fragment id
           to the set of items that contains it
         - fragment_weights as a dictionary mapping every fragment id to its weight.
           Weight equals the number of contained items in fragment.
@@ -135,20 +133,14 @@ def load_fragments(fragments_path, item_ids_column):
     
     return fragments_df, fragment_item_ids, fragment_weights
 
-def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes, replication_factor):
+def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes):
     """
     Validates the loaded conflict pairs. These need to cover every item overlap.
-    First maps items to all fragments that contain that item.
-    Then checks whether items appear in at least replication factor amount of fragments.
-    Then verifies the overlap file.
+    First maps items to all fragments that contain that item.  The number of
+    memberships is the item's implicit replication count.
+    The function then verifies that every implied conflict pair occurs in
+    the overlap file.
     """
-
-    if replication_factor < 1:
-        raise ValueError("Replication factor m must be at least 1.")
-
-    if replication_factor > num_nodes:
-        raise ValueError(f"Replication factor m={replication_factor} is greater than "
-                         f"the available number of nodes {num_nodes}.")
 
     item_fragments = {}
 
@@ -157,34 +149,15 @@ def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes, replication
         for item_id in item_ids:
             item_fragments.setdefault(item_id, set()).add(fragment_id)
 
-    # Determines maximum amount of possible memberships by calculating biggest fragments containing same item
-    max_memberships = max(
-        (len(fragments) for fragments in item_fragments.values()),
-        default=0
-    )
+    min_memberships = min((len(fragments) for fragments in item_fragments.values()), default=0)
 
-    # Checks whether there are memberships of fragment to item, where item is not stored
-    # on at least replication factor amount of fragments.
-    invalid_memberships = {
-        item_id: sorted(fragments)
-        for item_id, fragments in item_fragments.items()
-        if len(fragments) < replication_factor
-    }
-
-    if invalid_memberships:
-        raise ValueError(
-            f"{len(invalid_memberships)} items occur in fewer than "
-            f"{replication_factor} fragments. The first ten violations are as follows:"
-            f"{list(invalid_memberships.items())[:10]}"
-        )
+    # Determines the largest implicit item replication count.
+    max_memberships = max((len(fragments) for fragments in item_fragments.values()), default=0)
 
     # Checks that if fragment memberships is greater than number of nodes, then
     # there have to be overlaps in a single node between fragments that are stored in that node
     if max_memberships > num_nodes:
-        raise ValueError(
-            f"Conflict model infeasible: one item belongs to "
-            f"{max_memberships} fragments, but only {num_nodes} nodes exist."
-        )
+        raise ValueError(f"Conflict model infeasible: one item belongs to {max_memberships} fragments, but only {num_nodes} nodes exist.")
 
     # Generates fragment pairs that should be a conflict according to item memberships in fragment file
     expected_pairs = set()
@@ -194,38 +167,30 @@ def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes, replication
 
     # normalizes order of loaded pair ids.
     # this means that pair: (i, l) and (l, i) are treated as same conflict pair.
-    loaded_pairs = {
-        tuple(sorted((fragment_i, fragment_j)))
-        for fragment_i, fragment_j in conflict_pairs
-        if fragment_i != fragment_j
-    }
+    loaded_pairs = {tuple(sorted((fragment_i, fragment_j))) for fragment_i, fragment_j in conflict_pairs
+                    if fragment_i != fragment_j}
 
     # Conflict pairs only reference fragments when they are part of the model
     known_fragments = set(fragment_item_ids)
-    unknown_pairs = {pair for pair in loaded_pairs
-                    if pair[0] not in known_fragments or
-                    pair[1] not in known_fragments}
+    unknown_pairs = {pair for pair in loaded_pairs if pair[0] not in known_fragments or pair[1] not in known_fragments}
 
     if unknown_pairs:
-        raise ValueError(f"Overlap file references number of {len(unknown_pairs)} conflict pairs "
+        raise ValueError(f"Overlap file references {len(unknown_pairs)} conflict pairs "
                          "that contain unknown or empty fragments.")
 
     # Overlaps implied by fragment file must also occur in overlap file
     missing_pairs = expected_pairs - loaded_pairs
 
     if missing_pairs:
-        raise ValueError(
-            f"Overlap file is incomplete: {len(missing_pairs)} "
-            "conflict pairs are missing."
-        )
+        raise ValueError(f"Overlap file is incomplete: {len(missing_pairs)} conflict pairs are missing.")
 
     unexpected_pairs = loaded_pairs - expected_pairs
 
     if unexpected_pairs:
-        raise ValueError(f"Overlap file contains {len(unexpected_pairs)} conflict pairs "
-                         "whose fragments do not actually overlap.")
+        raise ValueError(f"Overlap file contains {len(unexpected_pairs)} conflict pairs that actually should not overlap.")
 
-    return max_memberships
+    return min_memberships, max_memberships
+
 
 def assignments(fragment_ids, fragment_weights, node_ids, x):
     """
@@ -238,10 +203,7 @@ def assignments(fragment_ids, fragment_weights, node_ids, x):
     # Finds all nodes where fragment was assigned
     # Using Constraint 11 should have made this list contain exactly one node for each fragment
     for fragment_id in fragment_ids:
-        assigned_nodes = [node_id
-                          for node_id in node_ids
-                          if pulp.value(x[fragment_id][node_id]) > 0.5
-                          ]
+        assigned_nodes = [node_id for node_id in node_ids if pulp.value(x[fragment_id][node_id]) > 0.5]
 
         # Checks whether fragment is stored on multiple nodes or not at all
         if len(assigned_nodes) != 1:
@@ -252,6 +214,7 @@ def assignments(fragment_ids, fragment_weights, node_ids, x):
                                 "fragment_weight": fragment_weights[fragment_id]})
         
     return pd.DataFrame(assignment_rows)
+
 
 def compute_loads(fragment_ids, fragment_weights, node_ids, x, y, node_capacity):
     """
@@ -265,8 +228,7 @@ def compute_loads(fragment_ids, fragment_weights, node_ids, x, y, node_capacity)
 
     for node_id in node_ids:
         # Determines which fragments were assigned to node_id.
-        assigned_fragments = [fragment_id
-                              for fragment_id in fragment_ids
+        assigned_fragments = [fragment_id for fragment_id in fragment_ids
                               if pulp.value(x[fragment_id][node_id]) > 0.5]
 
         # Adds weight of every assigned node as node_load
@@ -418,9 +380,7 @@ def process_conflict_locality_ilp(config, mode):
     overlaps_df, conflict_pairs = load_overlap_pairs(overlaps_path)
 
     # Validates memberships and verifies overlap file
-    max_memberships = validate_conflicts(fragment_item_ids, 
-                                         conflict_pairs, 
-                                         num_nodes, config["replication_factor"])
+    min_memberships, max_memberships = validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes)
 
     total_fragment_weight = sum(fragment_weights.values())
 
@@ -441,7 +401,7 @@ def process_conflict_locality_ilp(config, mode):
     print("--------------------------------")
     print(f"Number of fragments: {len(fragment_ids)}")
     print(f"Total fragment weight: {total_fragment_weight}")
-    print(f"Minimum required replication factor: {config["replication_factor"]}")
+    print("Implicit item replication range: "f"{min_memberships} to {max_memberships} fragment memberships")
 
     # Every fragment must fit completely on one node, so calculating max_fragment_weight
     # ensures that node_capacity cannot be smaller than largest fragment weight
@@ -452,10 +412,7 @@ def process_conflict_locality_ilp(config, mode):
     average_node_weight = total_fragment_weight / num_nodes
 
     # Combines max_fragment_weight and average_node_weight as lower bounds
-    min_capacity = max(
-        max_fragment_weight,
-        math.ceil(average_node_weight)
-    )
+    min_capacity = max(max_fragment_weight, math.ceil(average_node_weight))
 
     # Calculates node capacity according to configuration.
     # Baseline fragment file is here used as common capacity reference for baseline and updates mode.
@@ -471,14 +428,12 @@ def process_conflict_locality_ilp(config, mode):
 
     # checks whether capacity is smaller than lower bound
     if node_capacity < min_capacity:
-        raise ValueError(f"Configured node capacity {node_capacity} "
-                         f"is smaller than minimum node capacity {min_capacity}.")
+        raise ValueError(f"Configured node capacity {node_capacity} is smaller than minimum node capacity {min_capacity}.")
 
     # checks whether enough nodes for both total fragment weight and largest
     # pairwise conflicting fragments are in feasible solution.
-    # Represents a lower bound that does not exclude any feasible placement.
-    min_used_nodes = max(math.ceil(total_fragment_weight / node_capacity), 
-                         max_memberships)
+    # Represents a lower bound
+    min_used_nodes = max(math.ceil(total_fragment_weight / node_capacity), max_memberships)
 
 
     print(f"Largest fragment weight: {max_fragment_weight}")
@@ -494,14 +449,14 @@ def process_conflict_locality_ilp(config, mode):
 
     print("\nLoaded affinities:")
 
-    # Displays short preview
-    affinity_preview_limit = 10
+    # Displays short preview of 10 affinity pairs
+    affinity_preview = 10
 
-    for pair, affinity in list(affinities.items())[:affinity_preview_limit]:
+    for pair, affinity in list(affinities.items())[:affinity_preview]:
         print(f"{pair}: {affinity}")
 
-    if len(affinities) > affinity_preview_limit:
-        print(f"... There are {len(affinities) - affinity_preview_limit} additional affinity pairs.")
+    if len(affinities) > affinity_preview:
+        print(f"... There are {len(affinities) - affinity_preview} additional affinity pairs.")
 
     # Create ILP model with minimization objective
     model = pulp.LpProblem("Conflict_Locality_Based", pulp.LpMinimize)
@@ -660,8 +615,7 @@ def process_conflict_locality_ilp(config, mode):
 
     # Checks whether solver has proven optimality if it reports optimal status with
     # remaining MIP gap <= 1e-9
-    is_optimal = (is_feasible_sol and
-                  highs_status == highspy.HighsModelStatus.kOptimal and highs_info.mip_gap <= 1e-9)
+    is_optimal = (is_feasible_sol and highs_status == highspy.HighsModelStatus.kOptimal)
 
     solver_result = pd.DataFrame([{
         "dataset": DATASET,

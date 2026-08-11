@@ -8,21 +8,22 @@ from experiment_config import REOPTIMIZATION_INSERT_COUNT, experiment_path
 
 CONFIGS = {
     "mesh": {
-        "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
-        "updated_fragments_path": experiment_path("reoptimization/mesh_fragments_sample_updates.csv"),
-        "items_path": experiment_path("processed/mesh_descriptors_sample.csv"),
-        "updated_items_path": experiment_path("reoptimization/mesh_descriptors_sample_updates.csv"),
+        "dataset": "mesh",
+        "fragments_path": experiment_path("processed/mesh_fragments.csv"),
+        "updated_fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
+        "items_path": experiment_path("processed/mesh_terms.csv"),
+        "updated_items_path": experiment_path("reoptimization/mesh_terms_updates.csv"),
 
         "fragment_id": "fragment_id",
-        "item_ids": "descriptor_ids",
+        "item_ids": "tuple_ids",
         "fragment_size": "fragment_size",
-        "item_id": "descriptor_ui",
-        "item_name": "descriptor_name",
+        "item_id": "tuple_id",
+        "item_name": "mesh_term",
 
-        "new_item_prefix": "D_RE_",
-        "new_item_name_prefix": "Reoptimization Descriptor",
+        "new_item_prefix": "MT_RE_",
+        "new_item_name_prefix": "Reoptimization MeSH Term",
         "insert_count": REOPTIMIZATION_INSERT_COUNT,
-        "prefer_new_conflicts": False,
+        "prefer_new_conflicts": False, # new overlaps from items cannot be generated, only already known overlaps are increased
 
         "expected_schemes": [
             "top_category",
@@ -66,6 +67,7 @@ CONFIGS = {
     },
 
     "imdb": {
+        "dataset": "imdb",
         "fragments_path": experiment_path("processed/imdb_fragments.csv"),
         "updated_fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
         "items_path": experiment_path("processed/imdb_titles.csv"),
@@ -80,7 +82,7 @@ CONFIGS = {
         "new_item_prefix": "T_RE_",
         "new_item_name_prefix": "Reoptimization Title",
         "insert_count": REOPTIMIZATION_INSERT_COUNT,
-        "prefer_new_conflicts": True,
+        "prefer_new_conflicts": True, # new overlaps can be generated
 
         "expected_schemes": [
             "title_type",
@@ -124,6 +126,7 @@ CONFIGS = {
     }
 }
 
+
 DATASET = "imdb"
 MODE = "prepare" # prepare or evaluate
 
@@ -149,7 +152,7 @@ def load_fragments(path, config):
         raise ValueError(f"The missing columns in fragment file {path} are: {sorted(missing_columns)}")
 
     # reads fragment ids as string
-    fragments_df[fragment_id_column] = (fragments_df[fragment_id_column].astype("string"))
+    fragments_df[fragment_id_column] = fragments_df[fragment_id_column].astype("string")
 
     return fragments_df
 
@@ -178,21 +181,15 @@ def validate_target_fragments(fragments_df, target_fragments, config):
     missing_fragments = target_fragment_set - existing_fragments
 
     if missing_fragments:
-        raise ValueError(
-            f"Following fragments were not found: "
-            f"{sorted(missing_fragments)}"
-        )
+        raise ValueError(f"Following fragments were not found: {sorted(missing_fragments)}")
 
-    target_rows = fragments_df[
-        fragments_df[fragment_id_column].isin(target_fragment_set)
-    ]
+    target_rows = fragments_df[fragments_df[fragment_id_column].isin(target_fragment_set)]
 
     actual_schemes = set(target_rows["scheme"])
 
-    if (actual_schemes != expected_schemes or len(target_rows) != len(expected_schemes)):
+    if actual_schemes != expected_schemes or len(target_rows) != len(expected_schemes):
         raise ValueError(
-            "The new item must be assigned to exactly one fragment of every scheme. "
-            f"Expected schemes: {sorted(expected_schemes)}, "
+            f"The new item must be assigned to exactly one fragment of every scheme. Expected schemes: {sorted(expected_schemes)}, "
             f"Found schemes: {sorted(actual_schemes)}."
         )
 
@@ -203,146 +200,101 @@ def choose_target_fragments(fragments_df, config):
     Selects update targets.
 
     For IMDb, a deterministic combination with no previous pairwise overlap is
-    preferred. If the baseline conflict assignment is available, a combination
-    containing a colocated pair is preferred because the new conflicts then force
-    a placement change. MeSH retains a valid hierarchical target combination.
+    preferred.
+    If the baseline conflict-locality assignment is available, a combination
+    containing a colocated pair is preferred because the new conflicts force
+    a placement change.
     """
 
     configured_targets = config.get("target_fragments", [])
 
+    # Tries fragment combination specified in configuration, in case dataset does not have conflict-oriented target selections.
     if not config.get("prefer_new_conflicts", False):
         try:
-            return validate_target_fragments(
-                fragments_df,
-                configured_targets,
-                config,
-            )
+            return validate_target_fragments(fragments_df, configured_targets, config)
         except ValueError:
             item_memberships = {}
 
+            # Reconstructs fragment combination of every existing item
             for _, row in fragments_df.iterrows():
                 for item_id in parse_item_ids(row[config["item_ids"]]):
-                    item_memberships.setdefault(item_id, {})[
-                        row["scheme"]
-                    ] = row[config["fragment_id"]]
+                    # maps item id to scheme: fragment_id, thereby collecting item memberships for every scheme
+                    item_memberships.setdefault(item_id, {})[row["scheme"]] = row[config["fragment_id"]]
 
-            candidates = [
-                [memberships[scheme] for scheme in config["expected_schemes"]]
-                for memberships in item_memberships.values()
-                if all(
-                    scheme in memberships
-                    for scheme in config["expected_schemes"]
-                )
-            ]
+            # Retains combinations containing one fragment from every expected scheme
+            candidates = [[memberships[scheme] for scheme in config["expected_schemes"]]
+                          for memberships in item_memberships.values()
+                          if all(scheme in memberships for scheme in config["expected_schemes"])]
 
             if not candidates:
-                raise ValueError(
-                    "No valid existing fragment combination was found."
-                )
+                raise ValueError("No valid existing fragment combination was found.")
 
             fallback = sorted(candidates)[0]
-            print(
-                "Configured MeSH targets are unavailable in this instance; "
-                f"using {fallback}."
-            )
-            return validate_target_fragments(
-                fragments_df,
-                fallback,
-                config,
-            )
+            print(f"Configured MeSH targets are unavailable in this instance; using {fallback}.")
+            return validate_target_fragments(fragments_df, fallback, config)
 
     fragment_id_column = config["fragment_id"]
     item_ids_column = config["item_ids"]
     expected_schemes = config["expected_schemes"]
 
-    fragment_sets = {
-        row[fragment_id_column]: set(parse_item_ids(row[item_ids_column]))
-        for _, row in fragments_df.iterrows()
-    }
+    # Stores memberships as sets for pairwise overlap checks
+    fragment_sets = {row[fragment_id_column]: set(parse_item_ids(row[item_ids_column])) for _, row in fragments_df.iterrows()}
 
-    fragments_by_scheme = {
-        scheme: sorted(
-            fragments_df.loc[
-                fragments_df["scheme"] == scheme,
-                fragment_id_column,
-            ].astype(str)
-        )
-        for scheme in expected_schemes
-    }
+    # builds dictionary that maps from every scheme to the fragment_ids contained in scheme
+    fragments_by_scheme = {scheme: sorted(fragments_df.loc[fragments_df["scheme"] == scheme, fragment_id_column].astype(str))
+                           for scheme in expected_schemes}
 
-    baseline_path = config["assignment_paths"][
-        "conflict_locality_ilp"
-    ]["baseline"]
+    # loads baseline placement so that colocated fragment pairs can be preferred as targets for new conflicts
+    baseline_path = config["assignment_paths"]["conflict_locality_ilp"]["baseline"]
     baseline_nodes = {}
 
     if baseline_path.exists():
         baseline_df = pd.read_csv(baseline_path)
-        baseline_nodes = dict(zip(
-            baseline_df["fragment_id"].astype(str),
-            baseline_df["node_id"].astype(str),
-        ))
+        baseline_nodes = dict(zip(baseline_df["fragment_id"].astype(str), baseline_df["node_id"].astype(str)))
 
     best_candidate = None
     best_score = None
 
-    for candidate in product(
-        *(fragments_by_scheme[scheme] for scheme in expected_schemes)
-    ):
-        if any(
-            fragment_sets[fragment_i] & fragment_sets[fragment_j]
-            for fragment_i, fragment_j in combinations(candidate, 2)
-        ):
+    # examines candidate combinations containing one fragment from each scheme.
+    for candidate in product(*(fragments_by_scheme[scheme] for scheme in expected_schemes)):
+        # Skips combinations from fragments whose overlap is already in the baseline assignment.
+        if any(fragment_sets[fragment_i] & fragment_sets[fragment_j] for fragment_i, fragment_j in combinations(candidate, 2)):
             continue
 
-        candidate_nodes = [
-            baseline_nodes.get(fragment_id)
-            for fragment_id in candidate
-        ]
+        candidate_nodes = [baseline_nodes.get(fragment_id) for fragment_id in candidate]
         known_nodes = [node_id for node_id in candidate_nodes if node_id]
-        colocation_score = (
-            len(known_nodes) - len(set(known_nodes))
-            if known_nodes
-            else 0
-        )
-        size_score = -sum(
-            len(fragment_sets[fragment_id])
-            for fragment_id in candidate
-        )
-        score = (colocation_score, size_score, tuple(candidate))
 
+        # calculates how many candidate fragments are on the same baseline node.
+        # Meaning it calculates how redundant fragments are copied
+        colocation = len(known_nodes) - len(set(known_nodes)) if known_nodes else 0
+
+        # calculates negative sum of fragment weight. Therefore smaller fragments are prefered later on.
+        size_score = -sum(len(fragment_sets[fragment_id]) for fragment_id in candidate)
+
+        # fragment id tuple provides tie breaker, by comparing tuples lexicographically.
+        # In case of a tie breaker the fragnet id tuple id decides.
+        score = (colocation, size_score, tuple(candidate))
+
+        # calculates best candidate
         if best_score is None or score > best_score:
             best_candidate = list(candidate)
             best_score = score
 
     if best_candidate is None:
-        print(
-            "No previously non-overlapping target combination was found; "
-            "using the configured target fragments."
-        )
+        print("No previously non-overlapping target combination was found; using the configured target fragments.")
+
         best_candidate = configured_targets
 
-    return validate_target_fragments(
-        fragments_df,
-        best_candidate,
-        config,
-    )
+    return validate_target_fragments(fragments_df, best_candidate, config)
 
 def create_new_item_ids(config):
     """
     Creates deterministic IDs for the synthetic update batch.
     """
 
-    return [
-        f"{config['new_item_prefix']}{index:04d}"
-        for index in range(1, config["insert_count"] + 1)
-    ]
+    return [f"{config['new_item_prefix']}{index:04d}" for index in range(1, config["insert_count"] + 1)]
 
-def apply_inserts(
-    fragments_df,
-    new_item_ids,
-    target_fragments,
-    config
-):
+def apply_inserts(fragments_df, new_item_ids, target_fragments, config):
     """
     Adds all synthetic items to one fragment of each fragmentation scheme.
     """
@@ -351,15 +303,17 @@ def apply_inserts(
     item_ids_column = config["item_ids"]
     fragment_size_column = config["fragment_size"]
 
+    # works on a copy to preserve baseline fragment
     update_df = fragments_df.copy()
 
     target_fragments = validate_target_fragments(fragments_df, target_fragments, config)
 
+    # Restricts insertion batch to selected target_fragments
     mask = update_df[fragment_id_column].isin(target_fragments)
 
     def append_new_items(value):
         """
-        Adds update items without creating duplicate memberships
+        Adds synthetic items without creating duplicate memberships
         """
 
         curr_item_ids = parse_item_ids(value)
@@ -371,8 +325,7 @@ def apply_inserts(
 
     # adds new item to selected fragments
     # Applies the function to selected rows and writes updated values back
-    update_df.loc[mask, item_ids_column] = (update_df.loc[mask, item_ids_column]
-                                            .apply(append_new_items))
+    update_df.loc[mask, item_ids_column] = (update_df.loc[mask, item_ids_column].apply(append_new_items))
 
     # Recalculates the fragment sizes after an insert
     update_df.loc[mask, fragment_size_column] = (update_df.loc[mask, item_ids_column]
@@ -389,6 +342,7 @@ def create_update_items(items_df, new_item_ids, target_fragments, config):
     item_name_column = config["item_name"]
     existing_item_ids = set(items_df[item_id_column].astype(str))
 
+    # prevents item ids from rewriting already existing items
     collisions = existing_item_ids & set(new_item_ids)
 
     if collisions:
@@ -411,13 +365,12 @@ def create_update_items(items_df, new_item_ids, target_fragments, config):
                      "metadata_json": metadata_json,
                      "item_size_bytes": item_size_bytes})
 
-    return pd.concat([items_df, pd.DataFrame(rows)],
-                     ignore_index=True, sort=False)
+    return pd.concat([items_df, pd.DataFrame(rows)], ignore_index=True, sort=False)
 
 
 def save(updated_df, path):
     """
-    Saves updated fragment state.
+    Saves updated dataframe to a CSV
     """
 
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -447,12 +400,12 @@ def load_assignment(path):
 
     assignment_df["fragment_id"] = (assignment_df["fragment_id"].astype("string"))
 
+    # checks that every fragment must have exactly one assignment
     duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
 
     if duplicate_fragments.any():
-        duplicated_ids = sorted(assignment_df.loc[duplicate_fragments, "fragment_id"].unique())
 
-        raise ValueError(f"There are duplicate fragments in assignment file {path}: {duplicated_ids}")
+        raise ValueError(f"There are duplicate fragments in assignment file {path}.")
 
     return assignment_df
 
@@ -486,7 +439,8 @@ def compare(placement_type, baseline, updated):
 
     comparison_rows = []
 
-    # compares every unordered fragment pair
+    # compares colocation relationships instead of the node ids because equivalent solver situations
+    # may use different node labels
     for fragment_i, fragment_j in combinations(fragment_ids, 2):
         same_before_node = baseline_nodes[fragment_i] == baseline_nodes[fragment_j]
         same_after_node = updated_nodes[fragment_i] == updated_nodes[fragment_j]
@@ -509,7 +463,7 @@ def compare(placement_type, baseline, updated):
 
 def compare_assignments(config):
     """
-    Compares baseline and updated assignments for a placement type.
+    Compares baseline and updated assignments for all configured placement types.
     """
 
     comparison = []
@@ -582,6 +536,7 @@ def summarize_node_loads(placement_type, mode, node_loads):
         raise ValueError(f"Unknown mode: {mode}")
 
     # statistics are calculated only for nodes that are used by the placement
+    # excludes unused nodes from the load distribution statistics
     used_nodes = node_loads[node_loads["used"] == 1].copy()
 
     if used_nodes.empty:
@@ -672,12 +627,8 @@ def process_prepare_reoptimization(config):
 
     new_item_ids = create_new_item_ids(config)
 
-    update_df = apply_inserts(
-        fragments_df=fragments_df,
-        new_item_ids=new_item_ids,
-        target_fragments=target_fragments,
-        config=config
-        )
+    update_df = apply_inserts(fragments_df=fragments_df, new_item_ids=new_item_ids,
+                              target_fragments=target_fragments, config=config)
 
     updated_items_df = create_update_items(items_df, new_item_ids, target_fragments, config)
 

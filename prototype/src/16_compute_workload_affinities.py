@@ -8,7 +8,7 @@ AFFINITY_CONFIGS = {
     "mesh": {
         "workload_path": experiment_path("workloads/mesh_workload.json"),
         "output_directory": experiment_path("workload_affinities"),
-        "overlap_path": experiment_path("processed/mesh_overlaps_sample.csv"),
+        "overlap_path": experiment_path("processed/mesh_overlaps.csv"),
 
         "overlap_fragment_1": "fragment_1",
         "overlap_fragment_2": "fragment_2"
@@ -24,7 +24,7 @@ AFFINITY_CONFIGS = {
     }
 }
 
-DATASET = "imdb"
+DATASET = "mesh"
 
 def load_workload(path):
     """
@@ -134,20 +134,13 @@ def compare_affinity_conflict(affinity, config):
     missing_columns = required_columns - set(overlap_df.columns)
 
     if missing_columns:
-        raise ValueError(f"There are missing columns in the overlap file {overlap_path}: "
-                         f"{sorted(missing_columns)}")
+        raise ValueError(f"There are missing columns in the overlap file {overlap_path}: {sorted(missing_columns)}")
 
     # Fragment pairs that occur together in a FRAGMENT_SELECT query.
-    affinity_pairs = {
-        normalize_pair(row["fragment_i"], row["fragment_j"])
-        for _, row in affinity.iterrows()
-    }
+    affinity_pairs = {normalize_pair(row["fragment_i"], row["fragment_j"]) for _, row in affinity.iterrows()}
 
     # Every fragment pair in overlap file represents a hard conflict -> conflict_pairs
-    conflict_pairs = {
-        normalize_pair(row[fragment_1], row[fragment_2])
-        for _, row in overlap_df.iterrows()
-    }
+    conflict_pairs = {normalize_pair(row[fragment_1], row[fragment_2]) for _, row in overlap_df.iterrows()}
 
     # affine fragments that overlap but cannot be assigned to the same node
     affinity_conflicts = affinity_pairs & conflict_pairs
@@ -204,8 +197,7 @@ def main():
 
     config = AFFINITY_CONFIGS[DATASET]
 
-    affinity_df, comparison, non_conflict_affinities = process_compute_workload_affinities(dataset=DATASET, 
-                                                                                           config=config)
+    affinity_df, comparison, non_conflict_affinities = process_compute_workload_affinities(dataset=DATASET, config=config)
 
     print("\nNumber of different affinity pairs: ", len(affinity_df))
 
@@ -219,7 +211,7 @@ def main():
     print("\nNon-Conflict pairs:", comparison["amount_non_conflict_affinities"])
     
     for pair in sorted(non_conflict_affinities):
-        print("\n Paare:", pair)
+        print("\n Pair:", pair)
 
 
 if __name__ == "__main__":

@@ -3,19 +3,20 @@ import pandas as pd
 import json
 import random
 from experiment_config import experiment_path
+from itertools import combinations
 
 
 DATASETS = {
     "mesh": {
-        "items_path": experiment_path("processed/mesh_descriptors_sample.csv"),
-        "fragments_path": experiment_path("processed/mesh_fragments_sample.csv"),
+        "items_path": experiment_path("processed/mesh_terms.csv"),
+        "fragments_path": experiment_path("processed/mesh_fragments.csv"),
         "output_path": experiment_path("workloads/mesh_workload.json"),
-        "item_id_column": "descriptor_ui",
-        "item_name_column": "descriptor_name",
-        "new_item_name": "new_descriptor_name",
-        "generated_id_prefix": "D_WORKLOAD_",
-        "generated_name_prefix": "Workload Generated Descriptor",
-        "updated_name_prefix": "Updated Workload Generated Descriptor",
+        "item_id_column": "tuple_id",
+        "item_name_column": "mesh_term",
+        "new_item_name": "new_mesh_term",
+        "generated_id_prefix": "MT_WORKLOAD_",
+        "generated_name_prefix": "Workload Generated MeSH Term",
+        "updated_name_prefix": "Updated Workload Generated MeSH Term",
         "fragmentation_schemes": [
             "top_category",
             "branch_code",
@@ -41,10 +42,13 @@ DATASETS = {
     },
 }
 
-DATASET = "mesh"
+DATASET = "imdb"
 
 random_seed = 42
-number_blocks_operations = 20
+number_blocks_operations = 200
+number_fragment_selects = 500
+
+number_affinity_pairs = 30
 
 def load_workload_inputs(config):
     """
@@ -63,21 +67,56 @@ def load_workload_inputs(config):
 
     return item_ids, fragments_by_scheme
 
+def select_affinity_pairs(fragments_by_scheme, required_schemes, number_affinity_pairs, rng):
+    """
+    Selects a random set of fragment pairs from different schemes.
+    """
+    possible_pairs = []
 
-def generate_workload(item_ids, fragments_by_scheme, config, number_blocks_operations=number_blocks_operations, seed=random_seed):
+    # considers every unordered combination of two different schemes
+    for scheme_i, scheme_j in combinations(required_schemes, 2):
+        # generates all possible fragment pairs for each scheme_i and scheme_j
+        for fragment_i in fragments_by_scheme[scheme_i]:
+
+            for fragment_j in fragments_by_scheme[scheme_j]:
+                
+                possible_pairs.append((fragment_i, fragment_j))
+
+    # Ensures that enough distinct fragment pairs are in the array of possible_pairs
+    if len(possible_pairs) < number_affinity_pairs:
+        raise ValueError(f"Only {len(possible_pairs)} fragment pairs are available, but {number_affinity_pairs} are required.")
+
+    # Then selects a random sample of unique pairs
+    return rng.sample(possible_pairs, number_affinity_pairs)    
+
+def generate_fragment_select(affinity_pairs, number_fragment_selects, rng):
+    """
+    Generates the random FRAGMENT_SELECT operation for calculating affinity from the selected affinity pairs.
+    """
+
+    fragment_selects = []
+    for _ in range(number_fragment_selects):
+        fragment_pair = rng.choice(affinity_pairs)
+
+        fragment_selects.append({"operation": "FRAGMENT_SELECT", "fragment_ids": list(fragment_pair)})
+
+    return fragment_selects
+
+def generate_workload(item_ids, fragments_by_scheme, config, number_blocks_operations=number_blocks_operations,
+                      number_fragment_selects=number_fragment_selects, number_affinity_pairs=number_affinity_pairs, seed=random_seed):
     """
     Generates a reproducible mixed workload.
     Each workload block contains:
-    SELECT, INSERT, SELECT, UPDATE, DELETE, and FRAGMENT SELECT
+    SELECT, INSERT, SELECT, UPDATE, and DELETE.
 
-    Every inserted item is assigned to exactly one fragment from each configured fragmentation scheme.
-    FRAGMENT_SELECT operations are used later to derive workload-based fragment affinities.
+    FRAGMENT_SELECT operations are generated using a separate function and used to derive fragment affinities.
     """
 
     if not item_ids:
         raise ValueError(f"No item ids were provided.")
     
-    rng = random.Random(seed)
+    block_rng = random.Random(seed)
+    affinity_rng = random.Random(seed + 1)
 
     workload = []
 
@@ -94,15 +133,12 @@ def generate_workload(item_ids, fragments_by_scheme, config, number_blocks_opera
     
     for num in range(1, number_blocks_operations + 1):
         # Chooses a random element
-        existing_item = rng.choice(item_ids)
+        existing_item = block_rng.choice(item_ids)
 
         new_item = f"{config['generated_id_prefix']}{num:03d}"
 
         # Assigns the new item to exactly one fragment from each scheme.
-        assigned_fragments = [rng.choice(fragments_by_scheme[scheme]) for scheme in required_schemes]
-
-        # Selects two assigned fragments for workload-based affinity generation
-        selected_fragments = rng.sample(assigned_fragments, 2)
+        assigned_fragments = [block_rng.choice(fragments_by_scheme[scheme]) for scheme in required_schemes]
 
         workload.append({"operation": "SELECT", config["item_id_column"]: existing_item})
 
@@ -119,7 +155,17 @@ def generate_workload(item_ids, fragments_by_scheme, config, number_blocks_opera
 
         workload.append({"operation": "DELETE", config["item_id_column"]: new_item})
 
-        workload.append({"operation": "FRAGMENT_SELECT", "fragment_ids": selected_fragments})
+    # selects the ranom affinity pairs
+    affinity_pairs = select_affinity_pairs(fragments_by_scheme, required_schemes, number_affinity_pairs, affinity_rng)
+    # generates fragment select operations
+    fragment_selects = generate_fragment_select(affinity_pairs, number_fragment_selects, affinity_rng)
+
+    workload.extend(fragment_selects)
+
+    expected_operations = number_blocks_operations * 5 + number_fragment_selects
+
+    if len(workload) != expected_operations:
+        raise ValueError(f"There were only generated {len(workload)} operations, however {expected_operations} were expected.")
 
     output_path = config["output_path"]
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -140,6 +186,8 @@ def main():
 
     workload = generate_workload(item_ids=item_ids, fragments_by_scheme=fragments_by_scheme,
                                  config=config, number_blocks_operations=number_blocks_operations,
+                                 number_fragment_selects=number_fragment_selects,
+                                 number_affinity_pairs=number_affinity_pairs,
                                  seed=random_seed)
     
     print("Number of operations:", len(workload))

@@ -6,14 +6,25 @@ from experiment_config import experiment_path
 
 DATASETS = {
     "mesh": {
-        "item_table": "descriptors",
-        "item_id_column": "descriptor_ui",
-        "item_name_column": "descriptor_name",
-        "membership_item_column": "descriptor_ui",
+        "item_table": "ill",
+        "item_id_column": "tuple_id",
+        "item_name_column": "mesh_term",
+        "membership_item_column": "tuple_id",
 
         "additional_item_columns": {
+            "patient_id": "TEXT",
+            "term_ui": "TEXT",
+            "concept_ui": "TEXT",
+            "descriptor_ui": "TEXT",
+            "descriptor_name": "TEXT",
+            "tree_number": "TEXT",
+            "all_tree_numbers": "TEXT",
+            "top_category": "TEXT",
+            "branch_code": "TEXT",
+            "subbranch_code": "TEXT",
             "metadata_json": "TEXT",
-            "item_size_bytes": "INTEGER"
+            "item_size_bytes": "INTEGER",
+            "copy_number": "INTEGER",
         },
 
         "placements": {
@@ -38,8 +49,14 @@ DATASETS = {
         "membership_item_column": "title_id",
 
         "additional_item_columns": {
+            "source_title_id": "TEXT",
+            "title_type": "TEXT",
+            "decade": "TEXT",
+            "primary_genre": "TEXT",
+            "genres": "TEXT",
             "metadata_json": "TEXT",
-            "item_size_bytes": "INTEGER"
+            "item_size_bytes": "INTEGER",
+            "copy_number": "INTEGER",
         },
 
         "placements": {
@@ -137,6 +154,8 @@ def select(search, config, node_id, placement_type, table, where=None, parameter
     except sqlite3.Error as error:
         raise RuntimeError(f"Error executing query: {query}") from error
 
+    conn.close()
+
     return rows
 
 
@@ -223,6 +242,7 @@ def insert_into_node(item_id, item_name, fragment_ids, node_id, placement_type, 
                     (fragment_id,)
                 )
 
+    conn.close()
     return inserted_membership
 
 
@@ -331,6 +351,7 @@ def update(node_id, config, placement_type, table, updates, where=None, paramete
     except sqlite3.Error as error:
         raise RuntimeError(f"Error with executing query: {query}") from error
 
+    conn.close()
     return updated_rows
 
 def validate_delete(table, where, config):
@@ -430,6 +451,7 @@ def delete(node_id, config, placement_type, table, where=None, parameters=(), de
     except sqlite3.Error as error:
         raise RuntimeError(f"Error executing query: {query}") from error
 
+    conn.close()
     return deleted_rows
 
 def delete_membership_from_node(fragment_id, item_id, node_id, placement_type, config):
@@ -467,6 +489,8 @@ def delete_membership_from_node(fragment_id, item_id, node_id, placement_type, c
                 """,
                 (fragment_id,)
             )
+
+    conn.close()
     return deleted_rows
 
 
@@ -692,6 +716,8 @@ def select_fragments(fragment_ids, placement_type, config):
 
             selected_item_ids.update(row[0] for row in cur.fetchall())
 
+        conn.close()
+
     # Collects distinct item IDs returned by all relevant nodes
     execution_nodes = sorted(
         fragments_in_node,
@@ -744,7 +770,7 @@ def select_item(item_id, placement_type, config):
         where=f"{item_id_column} = ?",
         parameters=(item_id,)
     )
-
+    
     return {"rows": result, "contacted_nodes": [selected_node],  "execution_nodes": [selected_node],
             "searched_nodes": searched_nodes, "available_nodes": item_nodes, "fragment_ids": fragment_ids}
 

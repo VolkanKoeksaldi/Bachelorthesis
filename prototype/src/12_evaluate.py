@@ -1,21 +1,22 @@
 from pathlib import Path
 import sqlite3
-from experiment_config import experiment_path
+from contextlib import closing
+from experiment_config import CAPACITY_BUFFER, NUM_NODES, REPLICATION_FACTOR, experiment_path
 import pandas as pd
 from placement_capacity import calculate_node_capacity
 
 DATASETS = {
     "mesh": {
-        "items_path": experiment_path("processed/mesh_descriptors_sample.csv"),
+        "items_path": experiment_path("processed/mesh_terms.csv"),
         
-        "overlaps_path": experiment_path("processed/mesh_overlaps_sample.csv"),
-        "item_table": "descriptors",
-        "item_id_column": "descriptor_ui",
-        "fragment_item_ids_column": "descriptor_ids",
-        "capacity_reference_path": experiment_path("processed/mesh_fragments_sample.csv"),
-        "num_nodes": 10,
-        "capacity_buffer": 0.50,
-        "replication_factor": 3,
+        "overlaps_path": experiment_path("processed/mesh_overlaps.csv"),
+        "item_table": "ill",
+        "item_id_column": "tuple_id",
+        "fragment_item_ids_column": "tuple_ids",
+        "capacity_reference_path": experiment_path("processed/mesh_fragments.csv"),
+        "num_nodes": NUM_NODES,
+        "capacity_buffer": CAPACITY_BUFFER,
+        "replication_factor": REPLICATION_FACTOR,
 
         "placements":{
             "round_robin": {
@@ -46,8 +47,8 @@ DATASETS = {
         "item_name_column": "primary_title",
         "fragment_item_ids_column": "title_ids",
         "capacity_reference_path": experiment_path("processed/imdb_fragments.csv"),
-        "num_nodes": 10,
-        "capacity_buffer": 0.50,
+        "num_nodes": NUM_NODES,
+        "capacity_buffer": CAPACITY_BUFFER,
         "membership_item_column": "title_id",
 
         "additional_item_columns": {
@@ -55,7 +56,7 @@ DATASETS = {
             "item_size_bytes": "INTEGER"
         },
 
-        "replication_factor": 3,
+        "replication_factor": REPLICATION_FACTOR,
 
         "placements": {
             "round_robin": {
@@ -80,8 +81,8 @@ DATASETS = {
     }
 }
 
-DATASET = "imdb"
-PLACEMENT = "round_robin"
+DATASET = "mesh"
+PLACEMENT = "conflict_locality_ilp"
 
 def count_table_rows(db_path, table_name):
     """
@@ -89,10 +90,10 @@ def count_table_rows(db_path, table_name):
     """
 
     with sqlite3.connect(db_path) as conn:
-        cur = conn.cursor()
-        cur.execute(f"SELECT COUNT(*) FROM {table_name}")
-        count = cur.fetchone()[0]
-
+        with closing(conn.cursor()) as cur:
+        
+            cur.execute(f"SELECT COUNT(*) FROM {table_name}")
+            count = cur.fetchone()[0]
     return count
 
 def collect_node_metrics(node_output, item_table):
@@ -135,8 +136,7 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
     """
 
     if not assignment_df["fragment_id"].is_unique:
-        raise ValueError(f"Assignment contains more than one node assignment for "
-                         "the same fragment_id.")
+        raise ValueError(f"Assignment contains more than one node assignment for the same fragment_id.")
 
     # Maps every fragment to its assigned node for efficient pair lookups
     fragment_to_node = assignment_df.set_index("fragment_id")["node_id"].to_dict()
@@ -161,7 +161,7 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
             "overlap_size": int(row["overlap_size"]),
             "node_1": node_1,
             "node_2": node_2,
-            "same_node": same_node,
+            "same_node": same_node
         })
 
     # If overlap table is empty, then columns are generated with empty values
@@ -176,16 +176,10 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
 def replication_metrics(items_df, node_output, item_table, item_id_column):
     """
     Calculates number of distinct nodes storing each original item.
-    Initializing the mapping from original item table also retains items that are
-    missing from every node, for which the replication count is zero.
     """
 
-    # Original items are initialized with empty sets
-    item_to_nodes = {
-        item_id: set()
-        for item_id
-        in items_df[item_id_column].dropna().unique()
-    }
+    # Original items are initialized as sets
+    item_to_nodes = {item_id: set() for item_id in items_df[item_id_column].dropna().unique()}
 
     for db in sorted(node_output.glob("node_*.db")):
         # extracts file name
@@ -193,9 +187,9 @@ def replication_metrics(items_df, node_output, item_table, item_id_column):
 
         # SQL query is executed. Result is a node_items DataFrame with the item_id_column from item_table
         with sqlite3.connect(db) as conn:
-            node_items_df = pd.read_sql_query(f"SELECT {item_id_column} FROM {item_table}",
-                                                            conn)
+            node_items_df = pd.read_sql_query(f"SELECT {item_id_column} FROM {item_table}", conn)
 
+        conn.close()
         # Creates for every item a set
         for item_id in node_items_df[item_id_column]:
             if item_id not in item_to_nodes:
@@ -206,16 +200,12 @@ def replication_metrics(items_df, node_output, item_table, item_id_column):
     replication_rows = []
 
     for item_id, node_ids in item_to_nodes.items():
-        replication_rows.append({
-            item_id_column: item_id,
-            "replication_count": len(node_ids),
-            "nodes": ",".join(sorted(node_ids))
-        })
+        replication_rows.append({item_id_column: item_id, "replication_count": len(node_ids), "nodes": ",".join(sorted(node_ids))})
     
     return pd.DataFrame(replication_rows)
 
-def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, 
-                            item_id_column, replication_metrics_df, replication_factor, node_capacity):
+def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, item_id_column, replication_metrics_df,
+                            replication_factor, node_capacity):
     """
     Aggregates node, overlaps, storage, and replication metrics for a placement.
     """
@@ -235,10 +225,7 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df,
 
     # Sums the overlap size values over filtered overlaps with loc, where same_node = True
     # and only extracts overlap_size.
-    weighted_same_node_overlap = overlap_assignment_df.loc[
-        overlap_assignment_df["same_node"],
-        "overlap_size"
-    ].sum()
+    weighted_same_node_overlap = overlap_assignment_df.loc[overlap_assignment_df["same_node"], "overlap_size"].sum()
 
     weighted_total_overlap = overlap_assignment_df["overlap_size"].sum()
 
@@ -259,12 +246,10 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df,
 
     average_item_replication = replication_metrics_df["replication_count"].mean()
     
-    maximum_replication_deficit = max(0, replication_factor - 
-                                      replication_metrics_df["replication_count"].min())
+    maximum_replication_deficit = max(0, replication_factor - replication_metrics_df["replication_count"].min())
 
     # clip limits that values below 0 are fixed as value 0.
-    total_replication_deficit = (replication_factor - 
-                                 replication_metrics_df["replication_count"]).clip(lower=0).sum()
+    total_replication_deficit = (replication_factor - replication_metrics_df["replication_count"]).clip(lower=0).sum()
     
     all_items_meet_replication = items_below_replication == 0
 
@@ -316,7 +301,7 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df,
         "nodes_exceeding_capacity": int((capacity_excess > 0).sum()),
         "maximum_capacity_excess": int(capacity_excess.max()),
         "total_capacity_excess": int(capacity_excess.sum()),
-        "all_nodes_within_capacity": bool((capacity_excess == 0).all())
+        "all_nodes_within_capacity": bool((capacity_excess == 0).all()),
     }
 
     return pd.DataFrame([
@@ -339,18 +324,18 @@ def process_evaluation(config, placement):
 
     node_metrics_df = collect_node_metrics(placement["node_output"], config["item_table"])
     overlap_assignment_df = compute_overlap_assignment_metrics(overlaps_df, assignment_df)
-    replication_metrics_df = replication_metrics(items_df, placement["node_output"], 
-                                                 config["item_table"], config["item_id_column"])
+    replication_metrics_df = replication_metrics(items_df, placement["node_output"], config["item_table"], config["item_id_column"])
 
-    node_capacity = calculate_node_capacity(reference_fragments_path=config["capacity_reference_path"],
-                                            item_ids_column=config["fragment_item_ids_column"],
-                                            num_nodes=config["num_nodes"],
-                                            capacity_buffer=config["capacity_buffer"],)
-    
+    node_capacity = calculate_node_capacity(
+        reference_fragments_path=config["capacity_reference_path"],
+        item_ids_column=config["fragment_item_ids_column"],
+        num_nodes=config["num_nodes"],
+        capacity_buffer=config["capacity_buffer"],
+    )
+
     summary_metrics_df = compute_summary_metrics(node_metrics_df, overlap_assignment_df, 
-                                                 items_df, config["item_id_column"], 
-                                                 replication_metrics_df, config["replication_factor"],
-                                                 node_capacity)
+                                                 items_df, config["item_id_column"], replication_metrics_df,
+                                                 config["replication_factor"], node_capacity)
     
     node_metrics_df.to_csv(results_output / "node_metrics.csv", index=False)
     overlap_assignment_df.to_csv(results_output / "overlap_assignment_metrics.csv", index=False)
@@ -368,8 +353,6 @@ def process_evaluation(config, placement):
     print(f"Saved results to: {results_output}")
 
     return node_metrics_df, overlap_assignment_df, summary_metrics_df, replication_metrics_df
-
-
 
 def main():
     if DATASET not in DATASETS:
