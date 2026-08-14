@@ -14,39 +14,39 @@ OUTPUT_PATH = experiment_path("prepared/mesh/desc2026_sample.xml")
 
 def iter_eligible_terms(input_path):
     """
-    Iterates through XML and returns unique eligible TermUI values.
+    Iterates through XML and searches for unique eligible TermUI values.
+    By using yield each matching term is returned immediately while parsing the file.
+    The caller can process items one by one without materializing full result set in the memory.
     """
 
     seen_term_ids = set()
 
-    # iterates through every record
-    for _, record in ET.iterparse(input_path, events=("end",)):
-        if record.tag != "DescriptorRecord":
+    # iterates through every descriptor record
+    for _, descriptor_record in ET.iterparse(input_path, events=("end",)):
+        if descriptor_record.tag != "DescriptorRecord":
             continue
 
-        # checks after the tree number and extacts elements that have Tree Numbers
-        has_tree_number = any(
-            element.text and element.text.strip()
-            for element in record.findall("TreeNumberList/TreeNumber")
-        )
+        # checks after the tree number and extracts elements that have Tree Numbers
+        tree_number = any(element.text and element.text.strip() 
+                          for element in descriptor_record.findall("TreeNumberList/TreeNumber"))
 
-        # for terms that have Tree Numbers following information is extracted from the records
-        if has_tree_number:
-            for term in record.findall("ConceptList/Concept/TermList/Term"):
+        # Extracts information from descriptor records with tree number
+        if tree_number:
+            for term in descriptor_record.findall("ConceptList/Concept/TermList/Term"):
                 term_ui = term.findtext("TermUI")
                 term_text = term.findtext("String")
 
-                # if one of the information is missing or TermUI is already extracted, skip
+                # if information is missing or TermUI is already extracted, skip
                 if not term_ui or not term_text or term_ui in seen_term_ids:
                     continue
 
                 seen_term_ids.add(term_ui)
 
-                # Pauses execution and makes the function a generator where it can resume here later on.
+                # Yields one value at a time and pauses until the next value is requested
                 yield term_ui
 
-        # clears the records for storage saving.
-        record.clear()
+        # clears the descriptor records for storage saving.
+        descriptor_record.clear()
 
 def select_term_ids(input_path, required_terms, seed):
     """
@@ -55,37 +55,38 @@ def select_term_ids(input_path, required_terms, seed):
 
     rng = random.Random(seed)
     array = []
-    # counts the eligible item amount
-    eligible_count = 0
+    # counts eligible items
+    count = 0
 
     # iterates through every term_ui from the eligible terms in input file
     for term_ui in iter_eligible_terms(input_path):
-        eligible_count += 1
+        count += 1
 
         # the amount of samples data needs to be as big as the required terms
         if len(array) < required_terms:
             array.append(term_ui)
             continue
 
-        # chooses a random replacement index from 0 to eligible_count - 1
-        replacement_index = rng.randrange(eligible_count)
+        # chooses a random replacement index from 0 to count - 1
+        replacement_index = rng.randrange(count)
 
-        # if the index is in the amount of required_terms, then term_ui is placed in the array of sampled data
-        # in position replacement_index
+        # checks whether index is in required terms
+        # if yes: term_ui is placed in the array of sampled data in position replacement_index
         if replacement_index < required_terms:
             array[replacement_index] = term_ui
 
-    if eligible_count < required_terms:
-        raise ValueError(f"Only {eligible_count} eligible MeSH terms were found, but {required_terms} are required.")
+    if count < required_terms:
+        raise ValueError(f"Only {count} eligible MeSH terms were found, but "
+                         f"{required_terms} are required.")
 
-    return set(array), eligible_count   
+    return set(array), count   
 
 def write_selected_records(input_path, output_path, selected_term_ids):
     """
     Writes complete descriptor context but retains only sampled Term elements.
     """
 
-    # starts parsing and yields element from start to end events, therefore not loading the whole file at once
+    # starts parsing and yields element from start to end events
     context = ET.iterparse(input_path, events=("start", "end"))
     # takes the first event from parser, in order to get original document root
     _, root = next(context)
@@ -96,14 +97,13 @@ def write_selected_records(input_path, output_path, selected_term_ids):
     descriptor_count = 0
     written_term_ids = set()
 
-    for event, record in context:
-        if event != "end" or record.tag != "DescriptorRecord":
+    for event, descriptor_record in context:
+        if event != "end" or descriptor_record.tag != "DescriptorRecord":
             continue
 
         selected_in_record = 0
 
-        # extracts concept information for terms
-        for concept in record.findall("ConceptList/Concept"):
+        for concept in descriptor_record.findall("ConceptList/Concept"):
             term_list = concept.find("TermList")
             if term_list is None:
                 continue
@@ -111,53 +111,53 @@ def write_selected_records(input_path, output_path, selected_term_ids):
             for term in list(term_list.findall("Term")):
                 term_ui = term.findtext("TermUI")
 
-                # TermUI can occur in more than one Record in original XML.
-                # Sample only contains unique TermUI values, meaning only the first occurrence is retained in sample XML
-                if (term_ui not in selected_term_ids or term_ui in written_term_ids):
+                # TermUI can occur in more than one Descriptor Record in the original XML
+                # Sample only containts unqiue TermUI values, by taking only the first occurrence
+                if term_ui not in selected_term_ids or term_ui in written_term_ids:
                     term_list.remove(term)
                 else:
                     written_term_ids.add(term_ui)
                     selected_in_record += 1
 
-        # if there are still DescriptorRecords that still contain any sampled term elements after filtering
+        # checks whether there are remaining sampled term elements after filtering in Records
         if selected_in_record:
-            # deep copy of whole record is stored
-            sample_root.append(copy.deepcopy(record))
+            # deep copy of whole descriptor record is stored
+            sample_root.append(copy.deepcopy(descriptor_record))
             # selected counter increases for every sampled items that were written
             selected_count += selected_in_record
             # counts the amount of descriptors in the sampled data
             descriptor_count += 1
 
-        record.clear()
+        descriptor_record.clear()
 
     # calculates whether there are any missing term ids from the selected term ids
     missing_term_ids = selected_term_ids - written_term_ids
     if selected_count != len(selected_term_ids) or missing_term_ids:
-        raise ValueError(f"Selected {len(selected_term_ids)} term IDs, but {selected_count} were written as unique Term elements. "
-            f"({len(missing_term_ids)} selected IDs are still missing)."
-        )
+        raise ValueError(f"Selected {len(selected_term_ids)} term IDs, "
+                         f"but {selected_count} were written as unique Term elements."
+                         f"({len(missing_term_ids)} selected IDs are still missing)."
+                         )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    # Writes xml file
     ET.ElementTree(sample_root).write(output_path, encoding="utf-8", xml_declaration=True)
     return descriptor_count, selected_count
 
 
 def create_sample_xml(input_path, output_path, required_terms, seed=MESH_SAMPLE_SEED):
     """
-    Creates a reduced MeSH XML file containing at most SOURCE_ROWS elements from the original dataset.
-    This approach samples across the complete source instead of only taking the first DescriptorRecords.
+    Samples a reduced XML file containing at most SOURCE_ROWS elements from the original dataset.
     """
 
-    # samples the selected_term_ids and counts eligible item amount
+    # samples the selected_term_ids and counts eligible items
     selected_term_ids, eligible_count = select_term_ids(input_path, required_terms, seed)
 
-    # writes the record context for selected terms
-    descriptor_count, selected_count = write_selected_records(input_path, output_path, selected_term_ids)
+    # writes the descriptor record context for selected terms
+    descriptor_count, selected_count = write_selected_records(input_path, output_path, 
+                                                              selected_term_ids)
 
     print(f"Eligible terms in original source: {eligible_count}")
     print(f"Sampled terms: {selected_count}")
-    print(f"DescriptorRecords retained: {descriptor_count}")
+    print(f"DescriptorRecords: {descriptor_count}")
     print(f"Sample seed: {seed}")
     print(f"Saved to: {output_path}")    
 

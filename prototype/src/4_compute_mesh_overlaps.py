@@ -6,6 +6,11 @@ import pandas as pd
 from clustering_utils import parse_item_ids
 from experiment_config import experiment_path
 
+
+MODE = "baseline"
+
+
+
 INPUT_PATH = experiment_path("processed/mesh_fragments.csv")
 
 OUTPUT_PATH = experiment_path("processed/mesh_overlaps.csv")
@@ -17,8 +22,6 @@ MODES = {
     "baseline": (INPUT_PATH, OUTPUT_PATH),
     "updates": (UPDATED_INPUT_PATH, UPDATED_OUTPUT_PATH),
 }
-
-MODE = "baseline"
 
 def compute_overlaps(fragments_df):
     """
@@ -34,7 +37,7 @@ def compute_overlaps(fragments_df):
     
     overlap_rows = []
     
-    # Examines every unordered pair of fragments
+    # Examines every pair of fragments
     for f1, f2 in combinations(prepared, 2):
 
         # if fragments are from the same scheme, they are not compared
@@ -97,8 +100,6 @@ def main():
     input_path, output_path = MODES[MODE]
     print("\nMode: ", MODE)
     process_overlaps(input_path, output_path)
-
-    
 
 if __name__ == "__main__":
     main()

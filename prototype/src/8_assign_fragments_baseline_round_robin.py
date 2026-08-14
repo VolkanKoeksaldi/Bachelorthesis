@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 from experiment_config import experiment_path, NUM_NODES
 
+DATASET = "mesh"
 
 CONFIGS = {
     "mesh": {
@@ -15,16 +16,14 @@ CONFIGS = {
     }
 }
 
-DATASET = "mesh"
+
 
 def assign_round_robin(fragments_df, num_nodes):
     """
     Assigns fragments to nodes using round-robin.
+    Represents a simple deterministic baseline for comparisons with the ILP methods.
 
-    This serves as a simple deterministic baseline for comparison with
-    the ILP-based placement methods.
-
-    Example with 4 nodes:
+    Example with 4 nodes for cyclical assignment:
     Fragment 0 -> node_1
     Fragment 1 -> node_2
     Fragment 2 -> node_3
@@ -38,13 +37,14 @@ def assign_round_robin(fragments_df, num_nodes):
     if "node_id" in fragments_df.columns:
         raise ValueError("The fragment input already contains a node_id column.")
 
-    # Creates a copy with a new consecutive index.
+    # Creates a copy with a new index for the assignment DataFrame
     # drop=True prevents the old index from becoming an additional column.
     assignment_df = fragments_df.copy().reset_index(drop=True)
 
     # Assigns fragments cyclically to the available nodes.
     # The modulo operator restarts the assignment after the last node.
-    assignment_df["node_id"] = [f"node_{(index % num_nodes) + 1}" for index in range(len(assignment_df))]
+    assignment_df["node_id"] = [f"node_{(index % num_nodes) + 1}" 
+                                for index in range(len(assignment_df))]
 
     return assignment_df
 
@@ -64,31 +64,33 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
 
     required_columns = {"fragment_id"}
 
-    missing_columns = (required_columns - set(fragments_df.columns))
+    missing_columns = required_columns - set(fragments_df.columns)
 
     if missing_columns:
-        raise ValueError(f"The fragment file is missing the following columns: {sorted(missing_columns)}")
+        raise ValueError(f"The fragment file is missing the following columns: "
+                         f"{sorted(missing_columns)}")
 
     if fragments_df.empty:
         raise ValueError(f"The fragment file is empty: {input_path}")
 
     # Fragment IDs must not be missing or empty.
     fragment_ids = (fragments_df["fragment_id"].astype("string"))
+    # .eq("") checks here whether the fragment_ids still contains empty strings
     invalid_fragment_ids = (fragment_ids.isna()| fragment_ids.str.strip().eq(""))
 
     if invalid_fragment_ids.any():
         raise ValueError("The fragment file contains missing or empty fragment IDs.")
 
-    # Every fragment ID must identify exactly one fragment.
+    # Every Fragment must have a unique fragment id
     if not fragment_ids.is_unique:
-        raise ValueError(
-            "The fragment file contains duplicate fragment IDs.")
+        raise ValueError("The fragment file contains duplicate fragment IDs.")
 
     assignment_df = assign_round_robin(fragments_df, num_nodes)
 
     # The assignment must contain all fragments.
     if len(assignment_df) != len(fragments_df):
-        raise ValueError("The number of assigned fragments does not match the number of input fragments.")
+        raise ValueError("The number of assigned fragments does not match "
+                         f"to the number of input fragments.")
 
     # The output consists of all input columns plus node_id.
     expected_columns = [*fragments_df.columns, "node_id"]
@@ -102,10 +104,12 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
 
     # Displays the number of assigned fragments for every node.
     node_order = [f"node_{node_number}"  for node_number in range(1, num_nodes + 1)]
-    # Counts the assigned fragments per node from node_id column with .value_counts()
-    # then reindexes it to node_order so every node appears and missing nodes get the value 0
-    # then renames the result to fragment_count
-    fragments_per_node = (assignment_df["node_id"].value_counts().reindex(node_order, fill_value=0).rename("fragment_count"))
+
+    # Counts the assigned fragments per node from node_id column
+    # then reindexes it to node_order and gives missing nodes the value 0.
+    # Renames the result to fragment_count
+    fragments_per_node = (assignment_df["node_id"].value_counts()
+                          .reindex(node_order, fill_value=0).rename("fragment_count"))
 
     print(f"Dataset: {DATASET}")
     print(f"Input fragments: {len(fragments_df)}")

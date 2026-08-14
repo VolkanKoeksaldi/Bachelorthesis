@@ -324,7 +324,8 @@ def process_evaluation(config, placement):
 
     node_metrics_df = collect_node_metrics(placement["node_output"], config["item_table"])
     overlap_assignment_df = compute_overlap_assignment_metrics(overlaps_df, assignment_df)
-    replication_metrics_df = replication_metrics(items_df, placement["node_output"], config["item_table"], config["item_id_column"])
+    replication_metrics_df = replication_metrics(items_df, placement["node_output"], 
+                                                 config["item_table"], config["item_id_column"])
 
     node_capacity = calculate_node_capacity(
         reference_fragments_path=config["capacity_reference_path"],

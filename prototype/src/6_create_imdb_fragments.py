@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from experiment_config import IMDB_FRAGMENTATION_SCHEMES, target_rows, experiment_path
-from clustering_utils import(safe_fragment_component, validate_fragmentation_memberships)
+from clustering_utils import safe_fragment_component, validate_fragmentation_memberships
 
 
 input_path = experiment_path("processed/imdb_titles.csv")
@@ -13,7 +13,6 @@ cluster_output_path = experiment_path("processed/imdb_clusters.csv")
 
 
 # Describes how the clusters of each fragmentation scheme are generated.
-# These metadata values make the adapted clustering procedure explicit.
 SCHEME_METADATA = {
     "title_type": {
         "relaxation_attribute": "title_type",
@@ -31,7 +30,8 @@ SCHEME_METADATA = {
 
 def create_memberships(titles_df):
     """
-    Creates fragment memberships for each title based on the title type, decade, and primary genre.
+    Creates fragment memberships for each title based on the title type, 
+    decade, and primary genre.
     Each title then belongs to exactly one fragment in each scheme.
     """
 
@@ -40,11 +40,14 @@ def create_memberships(titles_df):
     # Iterates over all titles without including the DataFrame index.
     for row in titles_df.itertuples(index=False):
 
-        # Creates one membership for every configured fragmentation scheme.
+        # Creates one membership for every fragmentation scheme.
         for scheme in IMDB_FRAGMENTATION_SCHEMES:
+            # gets the value of scheme for every row
+            # and compares with defined scheme
             value = getattr(row, scheme)
 
-            # Missing fragmentation values are assigned to an UNKNOWN cluster.
+            # checks the extracted values and assigns missing fragmentation values to
+            # scheme "UNKNOWN"
             value = "UNKNOWN" if pd.isna(value) else str(value)
 
             # Makes the value safe for use as part of a fragment ID.
@@ -88,7 +91,7 @@ def create_fragments(memberships):
         # extracts all information from fragment keys
         fragment_id, scheme, relaxation_attribute, value, cluster_head, cluster_method = keys
 
-        # Ensures that each title occurs only once within a fragment and then
+        # Ensures that each title occurs only once within a fragment and
         # orders the titles by their IDs.
         unique_titles = group.drop_duplicates(subset=["title_id"]).sort_values("title_id")
 
@@ -117,24 +120,24 @@ def create_fragments(memberships):
     return pd.DataFrame(fragment_rows)
           
 
-def process_imdb_fragments(input_path, membership_output_path, fragment_output_path, cluster_output_path):
+def process_imdb_fragments(input_path, membership_output_path, 
+                           fragment_output_path, cluster_output_path):
     """
     Loads the prepared titles and creates their fragment memberships.
     Afterwards the memberships are grouped into fragments and both result tables are stored.
     """
 
-    # Reads title_id explicitly as a string so that its formatting is kept.
+    # Reads title_id as a string
     titles_df = pd.read_csv(input_path, dtype={"title_id": "string"})
 
     # Ensures that the input contains the expected number of rows.
     if len(titles_df) != target_rows:
         raise ValueError(f"Expected {target_rows} IMDb rows, but found {len(titles_df)}.")
 
-    # Each IMDb row must have one unique title_id.
+    # Each row must have a unique title_id
     if not titles_df["title_id"].is_unique:
         raise ValueError("The prepared IMDb data contains duplicate title_id values.")
 
-    # Checks whether all columns needed for fragment generation exist.
     required_columns = {
         "title_id",
         "primary_title",
@@ -144,14 +147,16 @@ def process_imdb_fragments(input_path, membership_output_path, fragment_output_p
     missing_columns = required_columns - set(titles_df.columns)
 
     if missing_columns:
-        raise ValueError(f"The prepared IMDb file is missing the following columns: {sorted(missing_columns)}")
+        raise ValueError(f"The prepared IMDb file is missing the following columns: "
+                         f"{sorted(missing_columns)}")
 
     memberships_df = create_memberships(titles_df)
     fragments_df = create_fragments(memberships_df)
 
-    # Validates that every title belongs to exactly one fragment in each configured fragmentation scheme.
+    # Validates that every title belongs to exactly one fragment in each fragmentation scheme
     validate_fragmentation_memberships(fragments_df, expected_item_ids=titles_df["title_id"],
-                                       expected_schemes=IMDB_FRAGMENTATION_SCHEMES, item_ids_column="title_ids",)
+                                       expected_schemes=IMDB_FRAGMENTATION_SCHEMES, 
+                                       item_ids_column="title_ids",)
 
     membership_output_path.parent.mkdir(parents=True, exist_ok=True)
     fragment_output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -160,7 +165,7 @@ def process_imdb_fragments(input_path, membership_output_path, fragment_output_p
     memberships_df.to_csv(membership_output_path, index=False)
     fragments_df.to_csv(fragment_output_path, index=False)
 
-    # Stores a separate table containing only the cluster metadata.
+    # Stores a separate table containing only the cluster data
     cluster_columns = [
         "fragment_id",
         "scheme",
@@ -184,7 +189,8 @@ def process_imdb_fragments(input_path, membership_output_path, fragment_output_p
     return memberships_df, fragments_df
 
 def main():
-    process_imdb_fragments(input_path, membership_output_path, fragment_output_path, cluster_output_path)
+    process_imdb_fragments(input_path, membership_output_path, 
+                           fragment_output_path, cluster_output_path)
 
 
 if __name__ == "__main__":

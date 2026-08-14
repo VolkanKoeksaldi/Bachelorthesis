@@ -1,7 +1,8 @@
 from pathlib import Path
 from experiment_config import MESH_FRAGMENTATION_SCHEMES, target_rows, experiment_path
 import pandas as pd
-from clustering_utils import safe_fragment_component, validate_fragmentation_memberships
+from clustering_utils import (safe_fragment_component, 
+                              validate_fragmentation_memberships)
 
 
 INPUT_PATH = experiment_path("processed/mesh_terms.csv")
@@ -27,10 +28,9 @@ SCHEME_METADATA = {
 
 def choose_cluster_head(group):
     """
-    Chooses representative MeSH term for a cluster.
+    Chooses a cluster head for MeSH term cluster.
     Shallow canonical Tree Number is preferred.
     If there is a tie it is resolved by Tree Number, TermUI, and term text.
-    Thus it creates an explicit cluster-head metadata.
     """
 
     # copies the group
@@ -39,7 +39,7 @@ def choose_cluster_head(group):
     # writes the tree depth by counting dots of a tree number
     candidates["tree_depth"] = candidates["tree_number"].astype(str).str.count(r"\.")
 
-    # sorts the values and takes the first (smallest) tree depth as the head because it is the most general
+    # sorts the values and takes the first (smallest) tree depth as the cluster head
     head = candidates.sort_values(["tree_depth", "tree_number", "term_ui", "mesh_term"]).iloc[0]
 
     return head
@@ -58,7 +58,7 @@ def create_fragments(df, fragmentation_schemes):
     for scheme in fragmentation_schemes:
         metadata = SCHEME_METADATA[scheme]
 
-        # Groups terms by value in the scheme.
+        # Groups terms by value in the scheme
         for value, group in df.groupby(scheme, sort=True, dropna=False):
 
             value = "UNKNOWN" if pd.isna(value) else str(value)
@@ -68,13 +68,15 @@ def create_fragments(df, fragmentation_schemes):
 
             # chooses cluster head
             head = choose_cluster_head(group)
+
             # creates a list of unique tuple ids
             tuple_ids = unique_items["tuple_id"].astype(str).tolist()
 
             # adds all tree numbers of a term
-            all_tree_numbers = sorted({tree_number.strip() for stored_values in group["all_tree_numbers"].dropna()
-                                       for tree_number in str(stored_values).split("|") if tree_number.strip()
-                                       })
+            all_tree_numbers = sorted({tree_number.strip() 
+                                       for stored_values in group["all_tree_numbers"].dropna()
+                                       for tree_number in str(stored_values).split("|") 
+                                       if tree_number.strip()})
 
             # adds information to fragments
             fragment_rows.append({
@@ -123,17 +125,18 @@ def process(input_path, output_path, cluster_output_path):
     if len(df) != target_rows or not df["tuple_id"].is_unique:
         raise ValueError(f"Expected {target_rows} rows with unique tuple_id values.")
 
-    # lists the missing scheme values, axis=1 applies the insa() function to every row, detecting any missing values
+    # lists the missing scheme values, axis=1 applies the insa() function to every row, 
+    # detecting any missing values
     missing_scheme_values = df[list(MESH_FRAGMENTATION_SCHEMES)].isna().any(axis=1)
 
     if missing_scheme_values.any():
         raise ValueError(f"{int(missing_scheme_values.sum())} rows are not in a cluster.")
 
-    # creates fragments dataframes according to the differen fragmentation schemes
     fragments_df = create_fragments(df, MESH_FRAGMENTATION_SCHEMES)
 
     # Verifies the completeness of all memberships and the uniqueness of tuple_ids
-    validate_fragmentation_memberships(fragments_df, df["tuple_id"], MESH_FRAGMENTATION_SCHEMES, "tuple_ids")
+    validate_fragmentation_memberships(fragments_df, df["tuple_id"], 
+                                       MESH_FRAGMENTATION_SCHEMES, "tuple_ids")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 

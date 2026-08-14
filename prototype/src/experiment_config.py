@@ -3,17 +3,13 @@ from pathlib import Path
 # Change for new evaluation run
 RUN_ID = "docker_run_01"
 
-# standard evaluation based on wiese et al
-EVALUATION_PROFILE = "wiese"
-
-# Size according to Wiese et al. basis table
 SOURCE_ROWS = 56341
 
 # 0 = 56341
 # 1 = 112682
 # 2 = 225364
 # 3 = 450728
-DUPLICATION_LEVEL = 3
+DUPLICATION_LEVEL = 1
 
 NUM_NODES = 10
 
@@ -45,7 +41,7 @@ IMDB_FRAGMENTATION_SCHEMES = (
 source_dir = Path(__file__).resolve().parent
 prototype_dir = source_dir.parent
 
-RUN_LABEL = (f"{EVALUATION_PROFILE}_"
+RUN_LABEL = (f"wiese_"
              f"base_{SOURCE_ROWS}_"
              f"x{copy_factor}_"
              f"{RUN_ID}")

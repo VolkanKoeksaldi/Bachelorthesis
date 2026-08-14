@@ -12,11 +12,11 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
     """
 
     if copy_factor < 1:
-        raise ValueError("copy_factor must be at least 1.")
+        raise ValueError("Copy factor must be at least 1.")
 
     copies = []
 
-    # Preserves all source attributes and records the coüy associated with each row
+    # Preserves all source attributes and records for the copy associated with each row
     for copy_number in range(copy_factor):
         current_copy = base_df.copy()
         current_copy["copy_number"] = copy_number
@@ -24,12 +24,10 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
 
     result = pd.concat(copies, ignore_index=True)
 
-    # uses zero padded sequential ids for all rows
+    # uses padded sequential ids for all rows
     width = max(9, len(str(len(result))))
-    result[id_column] = [
-        f"{id_prefix}{row_number:0{width}d}"
-        for row_number in range(1, len(result) + 1)
-    ]
+    result[id_column] = [f"{id_prefix}{row_number:0{width}d}" 
+                         for row_number in range(1, len(result) + 1)]
 
     if not result[id_column].is_unique:
         raise ValueError(f"Generated {id_column} values are not unique.")
@@ -50,36 +48,43 @@ def parse_item_ids(value):
 
 def safe_fragment_component(value):
     """
-    Creates a deterministic component for use in fragment ids.
+    Creates a deterministic string for use in fragment ids.
     """
 
     text = str(value).strip() or "UNKNOWN"
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", text)
 
 
-def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected_schemes, item_ids_column):
+def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected_schemes, 
+                                       item_ids_column):
     """
     Requires every expected item to occur in exactly one fragment of every scheme.
-    Overlap is permitted only between different schemes.
+    Overlaps only allowed between different schemes.
     """
 
     expected_item_ids = {str(item_id) for item_id in expected_item_ids}
     expected_schemes = tuple(expected_schemes)
 
     # Initializes one membership set for every expected item-scheme combination
-    memberships = {item_id: {scheme: set() for scheme in expected_schemes} for item_id in expected_item_ids}
+    memberships = {item_id: {scheme: set() for scheme in expected_schemes} 
+                   for item_id in expected_item_ids}
 
+    # iterates through every row in fragment DataFrane
     for row in fragments_df.itertuples(index=False):
         if row.scheme not in expected_schemes:
             continue
 
+        # gets item id for every row
         for item_id in parse_item_ids(getattr(row, item_ids_column)):
-            # Reains unexpected item ids
-            memberships.setdefault(item_id, {scheme: set() for scheme in expected_schemes})[row.scheme].add(row.fragment_id)
+            # Adds fragment_id to scheme set for every scheme in item id
+            memberships.setdefault(item_id, {scheme: set() 
+                                             for scheme 
+                                             in expected_schemes}
+                                             )[row.scheme].add(row.fragment_id)
 
     violations = []
 
-    # Every item must belong to one fragment per scheme
+    # Every item must belong to exactly one fragment per scheme
     for item_id, scheme_memberships in memberships.items():
         for scheme in expected_schemes:
             fragment_ids = scheme_memberships[scheme]
@@ -89,15 +94,16 @@ def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected
     unexpected_items = set(memberships) - expected_item_ids
 
     if violations or unexpected_items:
-        raise ValueError(
-            f"Invalid fragmentation memberships. First violations: {violations[:10]}; unexpected items: {sorted(unexpected_items)[:10]}"
-        )
+        raise ValueError(f"Invalid fragmentation memberships.")
 
     # checks total amount of expected memberships and detected memberships
     expected_memberships = len(expected_item_ids) * len(expected_schemes)
-    actual_memberships = sum(len(parse_item_ids(value)) for value in fragments_df[item_ids_column])
+    actual_memberships = sum(len(parse_item_ids(value)) 
+                             for value in fragments_df[item_ids_column])
 
     if actual_memberships != expected_memberships:
-        raise ValueError(f"Expected {expected_memberships} memberships, but {actual_memberships} found.")
+        raise ValueError(f"Expected {expected_memberships} memberships, "
+                         f"but a total of {actual_memberships} found.")
 
-    print(f"Validated {len(expected_item_ids)} items: exactly one fragment in each of {len(expected_schemes)} schemes.")
+    print(f"Validated a total of {len(expected_item_ids)} items are exactly in "
+          f"one fragment in each of {len(expected_schemes)} schemes.")
