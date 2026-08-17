@@ -36,7 +36,7 @@ These source datasets are available from:
 - [Medical Subject Headings (MeSH)](https://healthdata.gov/NIH/Medical-Subject-Headings-MeSH-/rc3i-uvpj/about_data)
 - [IMDb non-commercial datasets](https://developer.imdb.com/non-commercial-datasets/)
 
-The IMDb downloads are provided as compresses `.tsv.gz` files. Therefore, these need to be decompressed to `.tsv` files beforehand.
+The IMDb downloads are provided as compressed `.tsv.gz` files. Therefore, these need to be decompressed to `.tsv` files beforehand.
 
 ## Docker Execution on Windows Powershell
 Open PowerShell in the `prototype` directory and build the image:
@@ -50,7 +50,7 @@ Then create an Output-Volume. The following example is for an x1 run:
 docker volume create bachelor-x1-output
 ```
 
-Afterwards the container can be started. For different copy-factor runs, the x1 identifiers needs to be changed accordingly:
+Afterwards the container can be started. For different copy-factor runs, the x1 identifiers need to be changed accordingly:
 ```powershell
 docker run --name bachelor-x1 -it `
   --mount "type=bind,source=$($PWD.Path)\src,target=/app/src" `
@@ -111,7 +111,7 @@ For both datasets:
 2. Run `13_generate_workload.py` once.
 3. Run `16_compute_workload_affinities.py` once.
 
-It is important to generate the workload and compute its affinities before the conflict-locality ILP because the formulation requires an affinity as a constraint.
+It is important to generate the workload and compute its affinities before the conflict-locality ILP because the formulation uses the workload-derived affinities in its objective function.
 
 ### 3. Initial ILP Placements
 For both datasets, set `MODE = "baseline"` and run:
