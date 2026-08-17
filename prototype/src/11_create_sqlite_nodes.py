@@ -1,11 +1,9 @@
-from pathlib import Path
 from experiment_config import experiment_path
 import sqlite3
-from contextlib import closing
 import pandas as pd
 
-DATASET = "imdb"
-PLACEMENT = "round_robin"
+DATASET = "imdb" # imdb or mesh
+PLACEMENT = "round_robin" # tuple_ilp, round_robin, or conflict_locality_ilp
 MODE = "updates" # baseline or updates
 
 
@@ -22,7 +20,7 @@ MESH_ADDITIONAL_COLUMNS = {
     "subbranch_code": "TEXT",
     "metadata_json": "TEXT",
     "item_size_bytes": "INTEGER",
-    "copy_number": "INTEGER",
+    "copy_number": "INTEGER"
 }
 
 IMDB_ADDITIONAL_COLUMNS = {
@@ -33,7 +31,7 @@ IMDB_ADDITIONAL_COLUMNS = {
     "genres": "TEXT",
     "metadata_json": "TEXT",
     "item_size_bytes": "INTEGER",
-    "copy_number": "INTEGER",
+    "copy_number": "INTEGER"
 }
 
 DATASETS = {
@@ -66,6 +64,7 @@ DATASETS = {
             }
         }
     },
+
     "imdb": {
         "items_path": experiment_path("processed/imdb_titles.csv"),
         "item_table": "title",
@@ -149,7 +148,13 @@ UPDATE_PLACEMENTS = {
 
 def parse_item_ids(item_ids_string):
     """
-    Parses item ids field from a fragment csv file into a list.
+    Converts comma-separated item ids stored in a CSV field into a set.
+
+    Parameters:
+        item_ids_string: item ids field from CSV
+
+    Returns:
+        Set of item id Strings
     """
 
     if pd.isna(item_ids_string) or item_ids_string == "":
@@ -160,12 +165,14 @@ def parse_item_ids(item_ids_string):
 
 def create_tables(connection, config):
     """
-    Creates tables in node databases.
-    Each node database stores following information:
-    1. fragments: fragment metadata of fragments stored on a node
-    2. dataset-specific item records
-    3. fragment memberships: fragment to item information
-    Dataset-specific tables and column names are obtained from the configurations.
+    Creates required tables in a SQLite node databases.
+
+    Each node database stores:
+        1. fragments: fragment metadata of fragments stored on a node
+        2. dataset-specific item records
+        3. fragment memberships: fragment to item information
+
+    Dataset-specific tables and column names are obtained from the config.
     """
 
     item_columns = [f"{config['item_id_column']} TEXT PRIMARY KEY", 
@@ -229,7 +236,7 @@ def insert_fragment(connection, fragment_row, item_lookup, config):
 
     fragment_values = [fragment_row.get(column) for column in fragment_columns]
 
-    # adds fragment informations into the fragments table
+    # Inserts fragment information into the fragments table.
     connection.execute(
         f"INSERT OR REPLACE INTO fragments ({', '.join(fragment_columns)}) "
         f"VALUES ({', '.join('?' for _ in fragment_columns)})",
@@ -241,10 +248,11 @@ def insert_fragment(connection, fragment_row, item_lookup, config):
     item_columns = [item_id_column, item_name_column, *additional_columns]
     placeholders = ", ".join("?" for _ in item_columns)
 
-    # iterates through every item in fragment
+    # Iterates through every item in fragment
     for item_id in parse_item_ids(fragment_row[config["fragment_item_ids_column"]]):
 
-        # extracts item_id, if not found instead gets the value "UNKNOWN"
+        # Retrieves item_id for the current item.
+        # In case the item is missing from the lookup, it gets the value "UNKNOWN"
         item_data = item_lookup.get(item_id, {item_name_column: "UNKNOWN"})
 
         item_values = [item_id, item_data.get(item_name_column, "UNKNOWN"),
@@ -277,23 +285,21 @@ def create_sqlite_nodes(items_df, assignment_df, config):
 
     item_data_columns = [config["item_name_column"], *config["additional_item_columns"].keys()]
 
-    # creates a lookup dictionary
-    # first removes duplicates, then sets new index as item_id
-    # only contains columns listed item_data_columns
-    # converts DataFrame into a dictionary
-    item_lookup = (items_df.drop_duplicates(config["item_id_column"]).set_index(config["item_id_column"])[item_data_columns]
+    # Creates a lookup dictionary that maps each unique item id to its item data.
+    item_lookup = (items_df.drop_duplicates(config["item_id_column"])
+                   .set_index(config["item_id_column"])[item_data_columns]
                    .to_dict(orient="index"))
 
-    # groups assignment by node id
+    # Groups the assigned fragments by node_id
     for node_id, node_fragments in assignment_df.groupby("node_id"):
         # gets the database paths
         database_path = node_output / f"{node_id}.db"
-        # activates foreign keys and creates a table with the necessary tables
+        # Enables foreign-keys and creates the required tables.
         with sqlite3.connect(database_path) as connection:
             connection.execute("PRAGMA foreign_keys = ON")
             create_tables(connection, config)
             for _, fragment_row in node_fragments.iterrows():
-                # inserts fragment metadata from items into items_table and fragment_members
+                # Inserts the fragment metadata, item records, and memberships
                 insert_fragment(connection, fragment_row, item_lookup, config)
             connection.commit()
 
@@ -302,8 +308,7 @@ def create_sqlite_nodes(items_df, assignment_df, config):
 
 def verify_nodes(config):
     """
-    Reports number of fragments, items, and memberships on each node.
-    Verifies the information and gives out a summary after all nodes have been created.
+    Reports the numbers of fragments, distinct items, and memberships on each node.
     """
 
     print("\nVerification:")
@@ -312,9 +317,11 @@ def verify_nodes(config):
 
             fragment_count = connection.execute("SELECT COUNT(*) FROM fragments").fetchone()[0]
 
-            item_count = connection.execute(f"SELECT COUNT(*) FROM {config['item_table']}").fetchone()[0]
+            item_count = (connection.execute(f"SELECT COUNT(*) FROM {config['item_table']}")
+                          .fetchone()[0])
 
-            membership_count = connection.execute("SELECT COUNT(*) FROM fragment_members").fetchone()[0]
+            membership_count = (connection.execute("SELECT COUNT(*) FROM fragment_members")
+                                .fetchone()[0])
 
         print(f"{database_path.name} | fragments: {fragment_count} | "
               f"items: {item_count} | memberships: {membership_count}")
@@ -322,13 +329,19 @@ def verify_nodes(config):
 
 def add_fragment_information(assignment_df, fragments_df, item_ids_column):
     """
-    Refreshes assignment rows with information from current fragment file.
-    Thus prevents updates mode from accidentally reusing outdated item ids or fragment sizes
-    that may still be present in the baseline assignment file.
+    Replaces potentially outdates fragment information in the assignment with information
+    from the current fragment file.
+    
+    This prevents updates mode from accidentally reusing outdated item ids or fragment sizes
+    that may still be from the baseline assignment.
+
+    Returns:
+        Assignment DataFrame that contains the current fragment information
     """
 
     if not assignment_df["fragment_id"].is_unique:
-        raise ValueError("The assignment contains more than one node assignment for the same fragment_id")
+        raise ValueError("The assignment contains more than one node assignment "
+        "for the same fragment_id")
 
     if not fragments_df["fragment_id"].is_unique:
         raise ValueError("The fragment file contains duplicate fragment_id values.")
@@ -351,21 +364,27 @@ def add_fragment_information(assignment_df, fragments_df, item_ids_column):
 
     # Discards outdated fragment data from assignment file
     # Required columns are dropped from the placement DataFrame and if one or multiple of these
-    # do not exist, then it ignores the errors. Otherwise an error message would interrupt the program.
+    # do not exist, then it ignores the errors.
+    # Otherwise an error message would interrupt the program.
     placement_df = assignment_df.drop(columns=metadata_columns, errors="ignore")
 
-    # Collects all the fragment information that is available using fragment_id and then the elements of
-    # the list required_columns
+    # Collects all the fragment information that is available using 
+    # fragment_id and then the elements of the list required_columns
     current_fragment_information = fragments_df[["fragment_id", *metadata_columns]]
 
     # merges the current fragment information with placement_df on the fragment_id
     # validate="one_to_one" checks whether every fragment_id appears exactly once in both tables
-    return placement_df.merge(current_fragment_information, on="fragment_id", how="left", validate="one_to_one")
+    return placement_df.merge(current_fragment_information, on="fragment_id", 
+                              how="left", validate="one_to_one")
 
 def process_create_sqlite_nodes(config, placement):
     """
-    Loads placement data.
-    Creates node databases and verifies them.
+    Loads item, fragment, and assignment data. Creates the SQLite node databases, and
+    reports their stored record counts.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+        placement: Paths for the selected placement method and execution mode
     """
 
     items_path = placement.get("items_path", config["items_path"])
@@ -374,7 +393,8 @@ def process_create_sqlite_nodes(config, placement):
     assignment_df = pd.read_csv(placement["assignment_path"])
 
     # refreshes assignment with newest fragment information
-    assignment_df = add_fragment_information(assignment_df, fragments_df, config["fragment_item_ids_column"])
+    assignment_df = add_fragment_information(assignment_df, fragments_df, 
+                                             config["fragment_item_ids_column"])
 
     # ** extracts a dictionary and overwrites the value for node_output
     node_config = {**config, "node_output": placement["node_output"]}

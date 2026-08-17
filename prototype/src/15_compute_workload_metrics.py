@@ -1,8 +1,10 @@
-from pathlib import Path
 import json
 import pandas as pd
 from experiment_config import experiment_path
 from database_operations import DATASETS as CONFIGS
+
+DATASET = "imdb" # imdb or mesh
+
 
 EVALUATION_CONFIGS = {
     "mesh": {
@@ -15,9 +17,6 @@ EVALUATION_CONFIGS = {
         "output_directory": experiment_path("workload_evaluation")
     }
 }
-
-DATASET = "imdb"
-
 
 def load_results(placement_type, dataset, config):
     """
@@ -44,8 +43,18 @@ def load_results(placement_type, dataset, config):
 
 def get_operation_nodes(result, field_name, fallback_field=None):
     """
-    Returns unique node IDs from one operation result field.
+    Extracts distinct node ids stored in an operation-result field.
+
     If the requested field is unavailable, an optional fallback field is used.
+    Node ids are returned in an ascending numeric order.
+
+    Parameters:
+        result: Workload-operation result
+        field_name: Is the primary result field that contains the node ids
+        fallback_field: optional alternative result field
+
+    Returns:
+        A sorted list of distingt node ids
     """
     operation_result = result.get("result", {})
 
@@ -54,18 +63,17 @@ def get_operation_nodes(result, field_name, fallback_field=None):
 
     node_ids = operation_result.get(field_name)
 
-    # fallback_field only used in case field_name is not in operation result
-   # Because some operations may store relevant nodes in a different result field
+    # Some operations store relevant nodes in another result field.
     if node_ids is None and fallback_field is not None:
         node_ids = operation_result.get(fallback_field, [])
 
     if node_ids is None:
         return []
     
-    # builds a set of string node_ids in every contacted_nodes. removes duplicate node_ids.
+    # Builds a set of string node_ids in every contacted_nodes.
+    # Removes duplicate node_ids.
     node_ids = {str(node_id) for node_id in node_ids}
 
-    # contacted_nodes are sorted. Sorting by number after "node_".
     return sorted(node_ids, key=lambda node_id: int(node_id.rsplit("_", 1)[-1]))
 
 
@@ -85,7 +93,7 @@ def get_available_nodes(result):
 
 def get_fragment_ids_amount(result):
     """
-    Returns number of fragments containing the item.
+    Returns number of distinct fragments containing the item.
     """
 
     operation_result = result["result"]
@@ -94,14 +102,21 @@ def get_fragment_ids_amount(result):
         return len(set(operation_result["fragment_ids"]))
     return None
 
-def compute_stretch_jump(contacted_nodes):
+def compute_stretch_jump(execution_nodes):
     """
-    Computes stretch and jump metrics for contacted nodes.
+    Computes stretch and jump metrics for execution nodes.
     Node ids are interpreted as positions in a linear node order.
+
+    Parameters:
+        execution_nodes: Node ids that are used by one FRAGMENT_SELECT operation
+
+    Returns:
+        stretch: Span from smallest to largest accessed node divided by number of 
+                 distinct accessed nodes
+        jump: Number of contiguous node-index blocks
     """
 
-    # node numbers are extracted
-    node_indices = sorted({int(node_id.rsplit("_", 1)[-1]) for node_id in contacted_nodes})
+    node_indices = sorted({int(node_id.rsplit("_", 1)[-1]) for node_id in execution_nodes})
 
     if not node_indices:
         return None, None
@@ -109,14 +124,12 @@ def compute_stretch_jump(contacted_nodes):
     if len(node_indices) == 1:
         return 1.0, 1
 
-    # calculates span by subtracting biggest node id from first node id + 1
+    # Calculates span by subtracting biggest node id from first node id + 1
     span = node_indices[-1] - node_indices[0] + 1
-
-    # then divides span by total length of used nodes.
     stretch = span / len(node_indices)
 
+    # Counts the number of separate contiguous node index blocks
     jump = 1
-
     # calculates how often node indices only have 1 as difference between them
     for pre, cur in zip(node_indices, node_indices[1:]):
         if cur > pre + 1:
@@ -132,7 +145,8 @@ def prepare_result(results, placement_type):
 
     for result in results:
 
-        execution_nodes = get_operation_nodes(result, "execution_nodes", fallback_field="contacted_nodes")
+        execution_nodes = get_operation_nodes(result, "execution_nodes", 
+                                              fallback_field="contacted_nodes")
 
         searched_nodes = get_operation_nodes(result, "searched_nodes")
 
@@ -167,6 +181,9 @@ def prepare_result(results, placement_type):
 def all_results(dataset, evaluation_config, database_config):
     """
     Loads and combines results of all placement methods.
+
+    Returns:
+        A DataFrame that contains all individual workload measurements of all methods.
     """
 
     all_rows = []
@@ -183,13 +200,20 @@ def all_results(dataset, evaluation_config, database_config):
         all_rows.extend(rows)
 
     if not all_rows:
-        raise FileNotFoundError(f"The workload result files were not available for the evaluation.")
+        raise FileNotFoundError(f"The workload result files were not "
+                                "available for the evaluation.")
 
     return pd.DataFrame(all_rows)
 
 def compute_per_operation(results):
     """
-    Aggregates repeated measurements of the same workload operation.
+    Aggregates repeated measurements of each individual workload operation.
+
+    Runtime is summarized by using both median and mean across repetitions.
+    Execution-nodes are averaged, while Stretch and Jump are represented by their median.
+
+    Returns:
+        A DataFrame containing one row per placement and operation id
     """
 
     return (results.groupby(["placement_type", "operation_id", "operation"], dropna=False)
@@ -207,7 +231,12 @@ def compute_per_operation(results):
 
 def compute_summary(per_operation_results):
     """
-    Computes workload metrics.
+    Aggregates results for every operation by placement method and operation type.
+    The average runtime reported in the summary is the mean of the median runtimes
+    for every operation.
+
+    Returns:
+        A DataFrame that contains the workload-summary metrics
     """
 
     summary = (per_operation_results.groupby(["placement_type", "operation"]).agg(
@@ -243,9 +272,9 @@ def save(results, per_operation_results, summary, dataset, config):
     output_directory = config["output_directory"]
     output_directory.mkdir(parents=True, exist_ok=True)
 
-    operations_output_path = output_directory/f"{dataset}_workload_operations.csv"
+    operations_output_path = output_directory / f"{dataset}_workload_operations.csv"
 
-    per_operation_output_path = (output_directory / f"{dataset}_workload_per_operation.csv")
+    per_operation_output_path = output_directory / f"{dataset}_workload_per_operation.csv"
 
     summary_output_path = output_directory/f"{dataset}_workload_summary.csv"
 
@@ -265,7 +294,12 @@ def save(results, per_operation_results, summary, dataset, config):
 
 def process_compute_workload_metrics(dataset, evaluation_config, database_config):
     """
-    Loads, computes, and saved the evaluation metrics.
+    Loads workload results, computes the evaluation metrics, and saves the CSV files.
+
+    Returns:
+        results: Contains the detailed results
+        per_operation_results: Results for each operation type
+        summary: The summary metrics.
     """
 
     results = all_results(dataset, evaluation_config, database_config)

@@ -1,9 +1,12 @@
-from pathlib import Path
 import sqlite3
 from contextlib import closing
 from experiment_config import CAPACITY_BUFFER, NUM_NODES, REPLICATION_FACTOR, experiment_path
 import pandas as pd
 from placement_capacity import calculate_node_capacity
+
+DATASET = "mesh" # imdb or mesh
+PLACEMENT = "conflict_locality_ilp" # tuple_ilp, round_robin, or conflict_locality_ilp
+
 
 DATASETS = {
     "mesh": {
@@ -20,19 +23,22 @@ DATASETS = {
 
         "placements":{
             "round_robin": {
-                    "assignment_path": experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
+                    "assignment_path": experiment_path(
+                        "processed/mesh_fragment_assignment_round_robin.csv"),
                     "node_output": experiment_path("nodes/mesh/round_robin"),
                     "results_output": experiment_path("results/mesh/round_robin")
             },
 
             "tuple_ilp": {
-                "assignment_path": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
+                "assignment_path": experiment_path(
+                    "processed/mesh_fragment_assignment_tuple_ilp.csv"),
                 "node_output": experiment_path("nodes/mesh/tuple_ilp"),
                 "results_output": experiment_path("results/mesh/tuple_ilp")
             },
 
             "conflict_locality_ilp": {
-                "assignment_path": experiment_path("processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
+                "assignment_path": experiment_path(
+                    "processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
                 "node_output": experiment_path("nodes/mesh/conflict_locality_ilp"),
                 "results_output": experiment_path("results/mesh/conflict_locality_ilp")
             }
@@ -60,33 +66,40 @@ DATASETS = {
 
         "placements": {
             "round_robin": {
-                "assignment_path": experiment_path("processed/imdb_fragment_assignment_round_robin.csv"),
+                "assignment_path": experiment_path(
+                    "processed/imdb_fragment_assignment_round_robin.csv"),
                 "node_output": experiment_path("nodes/imdb/round_robin"),
                 "results_output": experiment_path("results/imdb/round_robin")
             },
 
             "tuple_ilp": {
-                "assignment_path": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
+                "assignment_path": experiment_path(
+                    "processed/imdb_fragment_assignment_tuple_ilp.csv"),
                 "node_output": experiment_path("nodes/imdb/tuple_ilp"),
                 "results_output": experiment_path("results/imdb/tuple_ilp")
             },
 
             "conflict_locality_ilp": {
-                "assignment_path": experiment_path("processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
+                "assignment_path": experiment_path(
+                    "processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
                 "node_output": experiment_path("nodes/imdb/conflict_locality_ilp"),
                 "results_output": experiment_path("results/imdb/conflict_locality_ilp")
 
-            },
+            }
         }
     }
 }
 
-DATASET = "mesh"
-PLACEMENT = "conflict_locality_ilp"
-
 def count_table_rows(db_path, table_name):
     """
-    Returns number of rows in a table of a SQLite node database.
+    Counts the rows in a table of a node database,
+
+    Parameters:
+        db_path: The path to the SQLite databases
+        table_name: The name of the table to query
+
+    Returns:
+        count: The number of rows stored in the table
     """
 
     with sqlite3.connect(db_path) as conn:
@@ -136,7 +149,8 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
     """
 
     if not assignment_df["fragment_id"].is_unique:
-        raise ValueError(f"Assignment contains more than one node assignment for the same fragment_id.")
+        raise ValueError(f"Assignment contains more than one node "
+                         "assignment for the same fragment_id.")
 
     # Maps every fragment to its assigned node for efficient pair lookups
     fragment_to_node = assignment_df.set_index("fragment_id")["node_id"].to_dict()
@@ -151,7 +165,8 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
         node_2 = fragment_to_node.get(fragment_2)
 
         if node_1 is None or node_2 is None:
-            raise ValueError(f"No complete assignment exists for overlap pair ({fragment_1}, {fragment_2})")
+            raise ValueError(f"No complete assignment exists for overlap pair "
+                             f"({fragment_1}, {fragment_2})")
 
         same_node = node_1 == node_2
 
@@ -175,17 +190,30 @@ def compute_overlap_assignment_metrics(overlaps_df, assignment_df):
 
 def replication_metrics(items_df, node_output, item_table, item_id_column):
     """
-    Calculates number of distinct nodes storing each original item.
+    Calculates the number of distinct nodes storing each original item.
+
+    Items that are not stored on any node remain in the result with a replication count of 0.
+
+    Parameters:
+        items_df: A DataFrame that contains all expected source items
+        node_output: The directory of all SQLite node databases
+        item_table: Name of the item table
+        item_id_column: Name of the item id column
+
+    Returns:
+        A DataFrame that contains each item, its replication count, and the ids of the 
+        nodes on which the item is stored.
     """
 
-    # Original items are initialized as sets
+    # Initializes a set of storing nodes for every expected item.
     item_to_nodes = {item_id: set() for item_id in items_df[item_id_column].dropna().unique()}
 
     for db in sorted(node_output.glob("node_*.db")):
         # extracts file name
         node_id = db.stem
 
-        # SQL query is executed. Result is a node_items DataFrame with the item_id_column from item_table
+        # SQL query is executed. Result is a node_items DataFrame with the
+        # item_id_column from item_table
         with sqlite3.connect(db) as conn:
             node_items_df = pd.read_sql_query(f"SELECT {item_id_column} FROM {item_table}", conn)
 
@@ -200,17 +228,27 @@ def replication_metrics(items_df, node_output, item_table, item_id_column):
     replication_rows = []
 
     for item_id, node_ids in item_to_nodes.items():
-        replication_rows.append({item_id_column: item_id, "replication_count": len(node_ids), "nodes": ",".join(sorted(node_ids))})
+        replication_rows.append({item_id_column: item_id, 
+                                 "replication_count": len(node_ids), 
+                                 "nodes": ",".join(sorted(node_ids))})
     
     return pd.DataFrame(replication_rows)
 
-def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, item_id_column, replication_metrics_df,
+def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, 
+                            item_id_column, replication_metrics_df,
                             replication_factor, node_capacity):
     """
-    Aggregates node, overlaps, storage, and replication metrics for a placement.
+    Aggregates storage, overlap, replication, load-distribution, 
+    and capacity metrics for one placement.
+
+    The node-load imbalance is defined as the difference between maximum and minimum
+    numbers of distinct items on the used nodes.
+
+    Returns:
+        A DataFrame that maps metric names to their values
     """
 
-    # .nunique() counts unique values
+    # With .nunique() counts globally unique items.
     global_unique_items = items_df[item_id_column].nunique()
 
     total_node_item_copies = node_metrics_df["unique_items"].sum()
@@ -223,9 +261,10 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
 
     different_node_overlaps = total_overlaps - same_node_overlaps
 
-    # Sums the overlap size values over filtered overlaps with loc, where same_node = True
-    # and only extracts overlap_size.
-    weighted_same_node_overlap = overlap_assignment_df.loc[overlap_assignment_df["same_node"], "overlap_size"].sum()
+    # Sums the overlap sizes of all overlap pairs colocated on one node 
+    # by filtering overlaps with loc, where same_node = True and extracting the overlap_size.
+    weighted_same_node_overlap = overlap_assignment_df.loc[
+        overlap_assignment_df["same_node"], "overlap_size"].sum()
 
     weighted_total_overlap = overlap_assignment_df["overlap_size"].sum()
 
@@ -234,11 +273,14 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
     else:
         weighted_same_node_overlap_ratio = weighted_same_node_overlap / weighted_total_overlap
 
-    items_below_replication = (replication_metrics_df["replication_count"] < replication_factor).sum()
+    items_below_replication = (replication_metrics_df["replication_count"] 
+                               < replication_factor).sum()
     
-    items_equal_replication = (replication_metrics_df["replication_count"] == replication_factor).sum()
+    items_equal_replication = (replication_metrics_df["replication_count"] 
+                               == replication_factor).sum()
     
-    items_above_replication = (replication_metrics_df["replication_count"] > replication_factor).sum()
+    items_above_replication = (replication_metrics_df["replication_count"] 
+                               > replication_factor).sum()
 
     minimum_item_replication = replication_metrics_df["replication_count"].min()
 
@@ -246,10 +288,13 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
 
     average_item_replication = replication_metrics_df["replication_count"].mean()
     
-    maximum_replication_deficit = max(0, replication_factor - replication_metrics_df["replication_count"].min())
+    maximum_replication_deficit = max(0, replication_factor 
+                                      - replication_metrics_df["replication_count"].min())
 
-    # clip limits that values below 0 are fixed as value 0.
-    total_replication_deficit = (replication_factor - replication_metrics_df["replication_count"]).clip(lower=0).sum()
+    # clip(lower=0) replaces negative deficits with 0.
+    total_replication_deficit = (replication_factor 
+                                 - replication_metrics_df["replication_count"]).clip(
+                                     lower=0).sum()
     
     all_items_meet_replication = items_below_replication == 0
 
@@ -274,8 +319,8 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
         "min_items_per_node": node_metrics_df["unique_items"].min(),
         "max_items_per_node": node_metrics_df["unique_items"].max(),
         "avg_items_per_node": node_metrics_df["unique_items"].mean(),
-        "item_load_imbalance": node_metrics_df["unique_items"].max() - 
-                               node_metrics_df["unique_items"].min(),
+        "item_load_imbalance": (node_metrics_df["unique_items"].max() 
+                                - node_metrics_df["unique_items"].min()),
         "total_overlap_pairs": total_overlaps,
         "same_node_overlap_pairs": same_node_overlaps,
         "different_node_overlap_pairs": different_node_overlaps,
@@ -286,8 +331,8 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
         "minimum_fragment_memberships_per_node": node_metrics_df["fragment_memberships"].min(),
         "maximum_fragment_memberships_per_node": node_metrics_df["fragment_memberships"].max(),
         "average_fragment_memberships": node_metrics_df["fragment_memberships"].mean(),
-        "fragment_membership_load_difference": node_metrics_df["fragment_memberships"].max() - 
-                                               node_metrics_df["fragment_memberships"].min(),
+        "fragment_membership_load_difference": (node_metrics_df["fragment_memberships"].max() 
+                                                - node_metrics_df["fragment_memberships"].min()),
         "items_count_below_replication": items_below_replication,
         "items_count_equal_replication": items_equal_replication,
         "items_count_above_replication": items_above_replication,
@@ -301,18 +346,27 @@ def compute_summary_metrics(node_metrics_df, overlap_assignment_df, items_df, it
         "nodes_exceeding_capacity": int((capacity_excess > 0).sum()),
         "maximum_capacity_excess": int(capacity_excess.max()),
         "total_capacity_excess": int(capacity_excess.sum()),
-        "all_nodes_within_capacity": bool((capacity_excess == 0).all()),
+        "all_nodes_within_capacity": bool((capacity_excess == 0).all())
     }
 
-    return pd.DataFrame([
-        {"metric": metric, "value": value}
-        for metric, value in summary.items()
-    ])
+    return pd.DataFrame([{"metric": metric, "value": value} 
+                         for metric, value in summary.items()])
 
 
 def process_evaluation(config, placement):
     """
-    Loads placement, computes metrics and then writes a CSV with the results.
+    Loads node databases and placement data. Calculates evaluation metrics, and stores
+    the results as CSV files.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+        placement: Paths for the selected placement method and execution mode
+    
+    Returns:
+        node_metrics_df: DataFrame with calculated node metrics
+        overlap_assignment_df: DataFrame with overlap assignment metrics
+        summary_metrics_df: DataFrame with summary metrics
+        replication_metrics_df: DataFrame with replication metrics
     """
 
     results_output = placement["results_output"]
@@ -335,7 +389,8 @@ def process_evaluation(config, placement):
     )
 
     summary_metrics_df = compute_summary_metrics(node_metrics_df, overlap_assignment_df, 
-                                                 items_df, config["item_id_column"], replication_metrics_df,
+                                                 items_df, config["item_id_column"], 
+                                                 replication_metrics_df,
                                                  config["replication_factor"], node_capacity)
     
     node_metrics_df.to_csv(results_output / "node_metrics.csv", index=False)

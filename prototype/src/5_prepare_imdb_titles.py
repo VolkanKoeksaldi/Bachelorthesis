@@ -12,46 +12,47 @@ basics_path = prototype_dir / "data" / "raw" / "imdb" / "title.basics.tsv"
 ratings_path = prototype_dir / "data" / "raw" / "imdb" / "title.ratings.tsv"
 output_path = experiment_path("processed/imdb_titles.csv")
 
-# Columns required from title.basics.tsv
-basics_column = [
-    "tconst",
-    "titleType",
-    "primaryTitle",
-    "originalTitle",
-    "isAdult",
-    "startYear",
-    "endYear",
-    "runtimeMinutes",
-    "genres"
-]
+# Columns read from title.basics.tsv
+basics_column = ["tconst", "titleType", "primaryTitle", "originalTitle", "isAdult",
+                 "startYear", "endYear", "runtimeMinutes", "genres"]
 
-# Columns required from title.ratings.tsv
-ratings_column = [
-    "tconst",
-    "averageRating",
-    "numVotes"
-]
+# Columns read from title.ratings.tsv
+ratings_column = ["tconst", "averageRating", "numVotes"]
 
-# Optional filtering by title types
-# If set to None, titles are not filtered.
+# If set to None, titles are not filtered by their type.
 # Example: ["movie", "tvSeries", "tvMovie"]
 TITLE_TYPES = None
 
 def read_tsv(path: Path, use_columns=None):
     """
-    Reads selected columns from IMDb dataset.
+    Reads selected columns from IMDb TSV file.
+
+    Parameters:
+        path: Input TSV file path
+        use_columns: Defines columns that need to be read optionally
+    
+    Returns:
+        A DataFrame that contains the selected columns
     """
 
-    # Loads selected tsv columns and converts IMDb \N values into missing values
-    # sep="\t" separates columns with a tabulator
-    # data compressions are automatically seen
-    # low_memory=False -> pandas reads the file in chunks, without mixed type inference
+    # Loads selected tsv columns and converts IMDb \N values into missing values.
+    # sep="\t" separates columns with a tabulator.
+    # Data compressions are automatically seen by applying compression="infer".
+    # low_memory=False -> pandas reads the file in chunks, without mixed type inference.
     return pd.read_csv(path, sep="\t", usecols=use_columns, na_values="\\N", 
                        compression="infer", low_memory=False)
 
 def clean_values(value):
     """
-    Converts missing values to None and attributes into Python values.
+    Converts missing values to None and NumPy or pandas values
+    to their corresponding Python values.
+
+    Parameters:
+        value: Value that needs to be normalized
+    
+    Returns:
+        None for missing values, a Python value if conversion is possible,
+        otherwise their original value.
     """
 
     if pd.isna(value):
@@ -66,6 +67,12 @@ def clean_values(value):
 def parse_genres(value):
     """
     Converts a genre string separated by commas into a Python list.
+
+    Parameters:
+        value: Genre field from the IMDb title data
+    
+    Returns:
+        A list of genres, or an empty list if there is none.
     """
 
     if pd.isna(value):
@@ -77,6 +84,12 @@ def get_primary_genre(value):
     """
     Returns the first genre of a title.
     Titles without genre information are assigned "UNKNOWN" as primary genre.
+
+    Parameters:
+        value: Genre field from the IMDb title data.
+
+    Returns:
+        The first listed genre or "UNKNOWN"
     """
 
     genres = parse_genres(value)
@@ -88,7 +101,13 @@ def get_primary_genre(value):
 
 def compute_decade(year):
     """
-    Converts year into a decade label.
+    Converts start year into a decade label.
+
+    Parameters:
+        year: The start year of an IMDb title.
+    
+    Returns:
+        A decade such as "2000s" or "UNKNOWN" if there is no year information.
     """
     if pd.isna(year):
         return "UNKNOWN"
@@ -98,6 +117,12 @@ def compute_decade(year):
 def build_metadata(row):
     """
     Builds the metadata object for an IMDb title.
+
+    Parameters:
+        row: DataFrame row that contains the source title and the rating attributes
+
+    Returns:
+        A dictionary that contains attributes that are stored as metadata
     """
 
     return {
@@ -114,12 +139,17 @@ def build_metadata(row):
 
 def calculate_item_size(row):
     """
-    Calculates the item size as the utf-8 size of the row
+    Calculates the item size as the utf-8 byte length of the title_id, source_title_id,
+    primary_title, and metadata.
+
+    Parameters:
+        row: A processed IMDb title row
+
+    Returns:
+        The byte size of the selected item fields
     """
-    item_data = (row["title_id"]
-                 + row["source_title_id"]
-                 + row["primary_title"]
-                 + row["metadata_json"])
+    item_data = (row["title_id"] + row["source_title_id"]
+                 + row["primary_title"] + row["metadata_json"])
 
     return len("".join(str(value or "") for value in item_data).encode("utf-8"))
 
@@ -131,31 +161,33 @@ def prepare_titles():
     Afterwards these are merged on the title id.
     Then selects a reproducible sample, derives the fragmentation attributes and
     stores the processed titles as a CSV file.
+
+    Returns:
+        result: The processed and expanded IMDb title DataFrame
     """
 
-    # Loads required columns
     basics = read_tsv(basics_path, use_columns=basics_column)
     ratings = read_tsv(ratings_path, use_columns=ratings_column)
 
-    # Joins title information and ratings on unique IMDb title ID
+    # Left-joins title information and ratings on unique IMDb title ID.
     data = basics.merge(ratings, on="tconst", how="left", validate="one_to_one")
 
-    # Replaces missing title types with "UNKNOWN"
+    # Replaces missing title types with "UNKNOWN".
     data["titleType"] = data["titleType"].fillna("UNKNOWN")
 
-    # applies the optional title type filters
+    # Applies the optional title type filters.
     if TITLE_TYPES is not None:
         data = data[data["titleType"].isin(TITLE_TYPES)].copy()
 
-    # titles without primary title are ignored
+    # Titles without primary title are excluded.
     data = data[data["primaryTitle"].notna()].copy()
 
-    # draws a random sample of configured SOURCE_ROWS size
+    # Draws a random sample of configured SOURCE_ROWS size.
     if len(data) < SOURCE_ROWS:
         raise ValueError(f"IMDb contains {len(data)} titles, but {SOURCE_ROWS} are expected.")
     base_df = data.sample(n=SOURCE_ROWS, random_state=IMDB_RANDOM_SEED).reset_index(drop = True)
 
-    # converts information to integer value
+    # Converts integer valued information to pandas integer type.
     base_df["isAdult"] = pd.to_numeric(base_df["isAdult"], errors="coerce").astype("Int64")
     base_df["startYear"] = pd.to_numeric(base_df["startYear"], errors="coerce").astype("Int64")
     base_df["endYear"] = pd.to_numeric(base_df["endYear"], errors="coerce").astype("Int64")
@@ -163,33 +195,33 @@ def prepare_titles():
                                               errors="coerce").astype("Int64")
     base_df["numVotes"] = pd.to_numeric(base_df["numVotes"], errors="coerce").astype("Int64")  
 
-    # converts ratings to numeric value
+    # Converts average ratings to numeric values.
     base_df["averageRating"] = pd.to_numeric(base_df["averageRating"], errors="coerce")
 
-    # calculated decade
+    # Calculates the decade from the start year.
     base_df["decade"] = base_df["startYear"].apply(compute_decade)
 
-    # calculates primary_genre
+    # Calculates primary_genre from the first listed genre
     base_df["primary_genre"] = base_df["genres"].apply(get_primary_genre)
 
-    # Adds the metadata json as information
+    # Adds the metadata json as information.
     base_df["metadata_json"] = base_df.apply(build_metadata, 
                                              axis=1).apply(lambda value: json.dumps(
                                                  value,
                                                  ensure_ascii=False,
                                                  separators=(",", ":")))
 
-    # Uses UNKNOWN for missing genre strings in CSV
+    # Uses UNKNOWN for missing genre strings in the CSV
     base_df["genres"] = base_df["genres"].fillna("UNKNOWN")
 
-    # renames columns to snake case names
+    # Renames columns to snake_case names
     base_df = base_df.rename(columns={
         "tconst": "source_title_id",
         "primaryTitle": "primary_title",
         "titleType": "title_type"
     })
 
-    # sets the most important columns for DataFrame
+    # Selects and orders the most important columns for DataFrame
     base_df = base_df[[
         "source_title_id",
         "primary_title",
@@ -203,7 +235,7 @@ def prepare_titles():
     if not base_df["source_title_id"].is_unique:
         raise ValueError("Selected IMDb source_title_id values are not unique.")
 
-    # Copies base dataframe copy factor amount of times
+    # Expands the base DataFrame copy factor amount of times
     result = expand_base_table(
         base_df,
         copy_factor,
@@ -211,7 +243,7 @@ def prepare_titles():
         id_prefix="IT"
     )
 
-    # calculates the item size in bytes
+    # Calculates the item size in bytes
     result["item_size_bytes"] = result.apply(calculate_item_size, axis=1)
 
     
@@ -225,7 +257,7 @@ def prepare_titles():
         "genres",
         "metadata_json",
         "item_size_bytes",
-        "copy_number",
+        "copy_number"
     ]]
 
     if len(result) != target_rows:

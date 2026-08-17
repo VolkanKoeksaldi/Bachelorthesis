@@ -1,7 +1,6 @@
 import pulp
 import time
 import pandas as pd
-from pathlib import Path
 from experiment_config import CAPACITY_BUFFER, NUM_NODES, experiment_path
 import math
 import highspy
@@ -9,7 +8,7 @@ from itertools import combinations
 from placement_capacity import calculate_node_capacity
 
 MODE = "baseline" # baseline or updates
-DATASET = "mesh"
+DATASET = "mesh" # imdb or mesh
 
 
 
@@ -93,7 +92,13 @@ DATASETS = {
 
 def parse_item_ids(item_ids_string):
     """
-    Converts item ids stored in a csv file into Python set
+    Converts comma-separated item ids stored in a CSV field into a set.
+
+    Parameters:
+        item_ids_string: item ids field from CSV
+
+    Returns:
+        Set of item id Strings
     """
 
     if pd.isna(item_ids_string) or item_ids_string == "":
@@ -105,12 +110,16 @@ def load_fragments(fragments_path, item_ids_column):
     """
     Loads fragments from CSV file and prepares the information for the ILP.
 
-    return:
-        - fragments_df:
+    Parameters:
+        fragments_path: Path to fragments CSV file
+        item_ids_column: Defines on which column the item ids are stored
+
+    Returns:
+        fragments_df:
             fragment DataFrame with additional column "item_id_set"
-        - fragment_item_ids:
+        fragment_item_ids:
             Dictionary mapping fragment id to the set of items contained in fragment
-        - fragment_weights:
+        fragment_weights:
             Dictionary mapping every fragment id to its weight. 
             Weight = number of unique items contained in fragment.
     """
@@ -152,11 +161,20 @@ def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes):
     First maps items to all fragments that contain that item.  
     The number of memberships is the item's implicit replication count.
     The function then verifies that every implied conflict pair occurs in the overlap file.
+
+    Parameters:
+        fragment_item_ids: Map from fragment to item ids it contains
+        conflict_pairs: Pairwise conflicts between fragments
+        num_nodes: Number of available nodes
+
+    Returns:
+        min_memberships: Minimum item replication count
+        max_memberships: Maximum item replication count
     """
 
     item_fragments = {}
 
-    # maps item ids to set of fragments that contain that item id
+    # Maps item ids to set of fragments that contain that item id
     for fragment_id, item_ids in fragment_item_ids.items():
         for item_id in item_ids:
             item_fragments.setdefault(item_id, set()).add(fragment_id)
@@ -166,20 +184,20 @@ def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes):
     # Determines the largest item replication count
     max_memberships = max((len(fragments) for fragments in item_fragments.values()), default=0)
 
-    # If fragment memberships is greater than number of available nodes
-    # an item is stored multiple times in a single node.
+    # If the maximum number of fragment memberships exceeds the number of available nodes,
+    # the pairwise conflict constraints cannot assign all fragments to distinct nodes.
     if max_memberships > num_nodes:
         raise ValueError(f"Conflict model infeasible: one item belongs to "
                          f"{max_memberships} fragments, but only {num_nodes} nodes exist.")
 
-    # Generates fragment pairs that represent expected conflict paird
+    # Generates all fragment pairs implied by shared items.
     expected_pairs = set()
 
     for fragments in item_fragments.values():
         expected_pairs.update(combinations(sorted(fragments), 2))
 
-    # normalizes order of loaded pair ids.
-    # this means that pair: (i, l) and (l, i) are treated as the same conflict pair.
+    # Normalizes order of loaded pair ids.
+    # This means that pair: (i, l) and (l, i) are treated as the same conflict pair.
     loaded_pairs = {tuple(sorted((fragment_i, fragment_j))) 
                     for fragment_i, fragment_j in conflict_pairs
                     if fragment_i != fragment_j}
@@ -214,6 +232,15 @@ def assignments(fragment_ids, fragment_weights, node_ids, x):
     Identifies for every fragment the node for which x[i][k] = 1.
     Then returns a DataFrame that contains fragment id, 
     assigned node id, and fragment weight for the fragment.
+
+    Parameters:
+        fragment_ids: The ids of every fragment
+        fragment_weights: The weights corresponding to every fragment_id
+        node_ids: The node_ids where fragments are stored on
+        x: Describes whether fragment i is assigned to node k
+
+    Returns:
+        A DataFrame of the assignment rows for every fragment_id to their node_id and weights
     """
     assignment_rows = []
 
@@ -238,9 +265,18 @@ def assignments(fragment_ids, fragment_weights, node_ids, x):
 def compute_loads(fragment_ids, fragment_weights, node_ids, x, y, node_capacity):
     """
     Calculates load and remaining capacity of nodes.
-    Load = sum of the weights of all fragments on a node.
-    Returns a DataFrame that contains usage state, number of assigned fragments,
-    fragment load, capacity, and remaining capacity of every node.
+    
+    Parameters:
+        fragment_ids: The ids of every fragment
+        fragment_weights: The weights corresponding to every fragment_id
+        node_ids: The node_ids where fragments are stored on
+        x: Fragment-assignment variables
+        y: Node-usage variables
+        node_capacity: Maximum capacity of each node
+
+    Returns:
+        A DataFrame that contains node usage, assigned-fragment count, node loads,
+        capacities, and remaining node capacities
     """
     
     load_rows = []
@@ -269,8 +305,13 @@ def load_overlap_pairs(overlaps_path):
     Loads overlapping fragment pairs from csv.
     Only rows with positive overlap size are used because only they
     share items and therefore require the conflict constraint.
-    Then returns a DataFrame with the filtered overlap data
-    and a list of fragment id pairs with positive overlap.
+
+    Parameters:
+        overlaps_path: CSV path with the calculated overlaps for corresponding dataset and mode
+    
+    Returns:
+        overlap_file: A DataFrame with the filtered overlap data
+        conflict_pairs: A list of fragment id pairs with positive overlap
     """
 
     if not overlaps_path.exists():
@@ -303,8 +344,13 @@ def load_affinity(affinity_path, valid_fragment_ids):
     values are added together. When pairs reference fragments that are not a part of 
     the current model, they are ignored. Necessary for update mode.
 
-    Then returns a tuple of dictionary with fragment pair -> affinity value and number of
-    skipped rows.
+    Parameters:
+        affinity_path: The path to the calculated affinities CSV
+        valid_fragment_ids: Eligible fragment ids that are assigned to a node
+
+    Returns:
+        affinities: A dictionary with fragment pair -> affinity value
+        unavailable_pairs: Number of skipped rows
     """
 
     if not affinity_path.exists():
@@ -356,9 +402,16 @@ def load_affinity(affinity_path, valid_fragment_ids):
 
 def process_conflict_locality_ilp(config, mode):
     """
-    Loads selected data and then constructs and solves conflict-locality ILP.
-    Stores the resulting assignments, node loads and statistics.
-    Returns a tuple of the two DataFrames that contain assignments and node loads.
+    Builds and solved the conflict-locality ILP for the selected dataset and mode.
+    Stores the resulting assignments, node loads and statistics as CSV files.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+        mode: Execution mode, either "baseline" or "updates"
+
+    Returns:
+        assignment_df: DataFrame that contains the assignments
+        loads_df: DataFrame that contains the node loads
     """
 
     if mode not in config["modes"]:
@@ -454,7 +507,7 @@ def process_conflict_locality_ilp(config, mode):
     print(f"Largest fragment weight: {max_fragment_weight}")
     print(f"Average node weight: {average_node_weight:.2f}")
     print(f"Theoretical minimum node capacity: {min_capacity}")
-    print(f"Maximum configured node capacity: {node_capacity}")
+    print(f"Configured node capacity: {node_capacity}")
     print(f"Number of conflict pairs: {len(conflict_pairs)}")
     print(f"Number of affinity pairs: {len(affinity_pairs)}")
     print(f"Sum of affinity values: {gamma_sum}")
@@ -499,15 +552,14 @@ def process_conflict_locality_ilp(config, mode):
     # First term minimizes number of used nodes. By multiplying it with gamma it gives this term
     # priority over complete locality term.
     # Second term penalizes the separation of affine fragment pairs.
-    model += (gamma * pulp.lpSum(y[node_id] for node_id in node_ids) + 
-              pulp.lpSum(affinities[(fragment_i, fragment_j)] * 
-                         pulp.lpSum(a[(fragment_i, fragment_j)][node_id] + 
-                                    b[(fragment_i, fragment_j)][node_id] 
-                                    for node_id in node_ids)
-                         for fragment_i, fragment_j in affinity_pairs 
-                         if fragment_i != fragment_j),
-                "Minimize_nodes_separated_affinities"
-            )
+    model += (gamma * pulp.lpSum(y[node_id] for node_id in node_ids) 
+              + pulp.lpSum(affinities[(fragment_i, fragment_j)] 
+                           * pulp.lpSum(a[(fragment_i, fragment_j)][node_id]
+                                        + b[(fragment_i, fragment_j)][node_id] 
+                                        for node_id in node_ids)
+                                        for fragment_i, fragment_j in affinity_pairs 
+                                        if fragment_i != fragment_j),
+                                        "Minimize_nodes_separated_affinities")
     
     # Constraint (11)
     # Every fragment is here assigned to exactly one node
@@ -520,7 +572,7 @@ def process_conflict_locality_ilp(config, mode):
     # exceed its nodes max capacity or not.
     # By multiplying with y[node_id] the node load is linked to node usage.
     # y[k] = 0: right-hand side is zero -> no fragment can use the node
-    # y[1] = 1: node may contain data with size <= node capacity
+    # y[k] = 1: node may contain data with size <= node capacity
     for node_id in node_ids:
         model += (pulp.lpSum(fragment_weights[fragment_id] * x[fragment_id][node_id]
                              for fragment_id in fragment_ids)
@@ -621,12 +673,8 @@ def process_conflict_locality_ilp(config, mode):
     # stops runtime measurement
     solver_runtime = time.perf_counter() - start_time
 
-    # retrieves PuLP status. Output however only uses HiGHS status text.
-    solver_status = pulp.LpStatus[model.status]
-
-    # Checks whether solver has proven optimality if it reports optimal status with
-    # remaining MIP gap <= 1e-9
-    is_optimal = (is_feasible_sol and highs_status == highspy.HighsModelStatus.kOptimal)
+    # Checks whether HiGHS reports an optimal solution for the feasible solution
+    is_optimal = is_feasible_sol and highs_status == highspy.HighsModelStatus.kOptimal
 
     solver_result = pd.DataFrame([{
         "dataset": DATASET,

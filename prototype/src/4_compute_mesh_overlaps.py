@@ -7,7 +7,7 @@ from clustering_utils import parse_item_ids
 from experiment_config import experiment_path
 
 
-MODE = "baseline"
+MODE = "baseline" # baseline or updates
 
 
 
@@ -18,17 +18,23 @@ OUTPUT_PATH = experiment_path("processed/mesh_overlaps.csv")
 UPDATED_INPUT_PATH = experiment_path("reoptimization/mesh_fragments_updates.csv")
 UPDATED_OUTPUT_PATH = experiment_path("reoptimization/mesh_overlaps_updates.csv")
 
-MODES = {
-    "baseline": (INPUT_PATH, OUTPUT_PATH),
-    "updates": (UPDATED_INPUT_PATH, UPDATED_OUTPUT_PATH),
-}
+MODES = {"baseline": (INPUT_PATH, OUTPUT_PATH),
+         "updates": (UPDATED_INPUT_PATH, UPDATED_OUTPUT_PATH)}
+
 
 def compute_overlaps(fragments_df):
     """
     Computes the overlaps between fragments belonging to different schemes.
     Here only pairs with at least one shared item are included in the resulting table.
+
+    Parameters:
+        fragments_df: DataFrame that contains the fragment definitions and tuple IDs
+    
+    Returns:
+        A DataFrame that contains all non-empty fragment overlaps across schemes
     """
 
+    # Parses the tuple_ids once in order to calculate pairwise comparisons.
     prepared = [{"fragment_id": row.fragment_id,
                  "scheme": row.scheme,
                  "value": row.value,
@@ -37,20 +43,20 @@ def compute_overlaps(fragments_df):
     
     overlap_rows = []
     
-    # Examines every pair of fragments
+    # Examines every pair of fragments once.
     for f1, f2 in combinations(prepared, 2):
 
-        # if fragments are from the same scheme, they are not compared
+        # If fragments belong to the same scheme, they are skipped.
         if f1["scheme"] == f2["scheme"]:
             continue
         
-        # determines the overlap by calculating intersection of item ids
+        # Determines the overlap by calculating intersection of item ids.
         overlap = f1["item_ids"] & f2["item_ids"]
 
         if not overlap:
             continue
 
-        # Stores only pairs with intersections that are not empty
+        # Stores only pairs with non-empty intersections
         overlap_rows.append({
             "fragment_1": f1["fragment_id"],
             "scheme_1": f1["scheme"],
@@ -68,16 +74,23 @@ def process_overlaps(input_path: Path, output_path: Path):
     """
     Loads the fragment definitions and then computes their overlaps.
     The results are then stored as a CSV file.
+
+    Parameters:
+        input_path: Fragments CSV file path
+        output_path: Overlaps CSV file path
+    
+    Returns:
+        overlaps_df: A DataFrame that contains all non-empty overlaps
     """
 
     fragments_df = pd.read_csv(input_path)
 
     required = {"fragment_id", "scheme", "value", "tuple_ids"}
 
-    # checks whether every required column is included in fragments
+    # Verifies the Fragments columns for missing attributes.
     missing = required - set(fragments_df.columns)
     if missing:
-        raise ValueError(f"Fragment file is missing: {sorted(missing)}")
+        raise ValueError(f"Fragment file is missing columns: {sorted(missing)}")
 
     overlaps_df = compute_overlaps(fragments_df)
 
@@ -88,7 +101,7 @@ def process_overlaps(input_path: Path, output_path: Path):
     print("Input fragments:", len(fragments_df))
     print("Computed overlaps:", len(overlaps_df))
     print(f"Sum of pairwise overlap sizes: {overlaps_df['overlap_size'].sum()}")
-    print(f"Saved to; {output_path}")
+    print(f"Saved to: {output_path}")
 
     return overlaps_df
 

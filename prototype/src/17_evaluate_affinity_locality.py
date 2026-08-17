@@ -1,15 +1,21 @@
-from pathlib import Path
 from experiment_config import experiment_path
 import pandas as pd
+
+DATASET = "mesh" # imdb or mesh
+
+
 
 AFFINITY_LOCALITY_CONFIGS = {
     "mesh": {
         "affinity_path": experiment_path("workload_affinities/mesh_workload_affinities.csv"),
         "output_directory": experiment_path("affinity_evaluation"),
         "assignment_paths": {
-            "round_robin" : experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
-            "tuple_ilp": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
-            "conflict_locality_ilp": experiment_path("processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
+            "round_robin" : experiment_path(
+                "processed/mesh_fragment_assignment_round_robin.csv"),
+            "tuple_ilp": experiment_path(
+                "processed/mesh_fragment_assignment_tuple_ilp.csv"),
+            "conflict_locality_ilp": experiment_path(
+                "processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
             "conflict_locality_ilp_updated": experiment_path(
                 "reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv"
             ),
@@ -23,9 +29,12 @@ AFFINITY_LOCALITY_CONFIGS = {
         "affinity_path": experiment_path("workload_affinities/imdb_workload_affinities.csv"),
         "output_directory": experiment_path("affinity_evaluation"),
         "assignment_paths": {
-            "round_robin" : experiment_path("processed/imdb_fragment_assignment_round_robin.csv"),
-            "tuple_ilp": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
-            "conflict_locality_ilp": experiment_path("processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
+            "round_robin" : experiment_path(
+                "processed/imdb_fragment_assignment_round_robin.csv"),
+            "tuple_ilp": experiment_path(
+                "processed/imdb_fragment_assignment_tuple_ilp.csv"),
+            "conflict_locality_ilp": experiment_path(
+                "processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
             "conflict_locality_ilp_updated": experiment_path(
                 "reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv"
             ),
@@ -36,11 +45,16 @@ AFFINITY_LOCALITY_CONFIGS = {
     }
 }
 
-DATASET = "mesh"
 
 def load_affinities(path):
     """
-    Loads computed fragment affinities.
+    Loads and validates the computed workload-based fragment affinities.
+
+    Parameters:
+        path: The path to the affinity CSV file
+    
+    Returns:
+        A DataFrame that contains fragment_i, fragment_j, and affinity
     """
 
     if not path.exists():
@@ -50,7 +64,7 @@ def load_affinities(path):
     # in the assignment file
     affinity_df = pd.read_csv(path, dtype={"fragment_i": "string", "fragment_j": "string"})
 
-    required_columns = {"fragment_i", "fragment_j", "affinity",}
+    required_columns = {"fragment_i", "fragment_j", "affinity"}
 
     missing_columns = required_columns - set(affinity_df.columns)
 
@@ -60,15 +74,24 @@ def load_affinities(path):
     if affinity_df.empty:
         raise ValueError(f"Affinity file has no affinity pairs: {path}")
 
-    # errors="raise" means, that if there is an invalid parsing, then an exception is raised.
+    # errors="raise" raises an exception if there is an invalid parsing.
     affinity_df["affinity"] = pd.to_numeric(affinity_df["affinity"], errors="raise")
+
+    if (affinity_df["affinity"] <= 0).any():
+        raise ValueError(f"Affinity file contains a negative affinity value: {path}")
 
     return affinity_df
 
 
 def load_assignment(assignment_path):
     """
-    Loads fragment assignment of one placement type.
+    Loads and validates fragment assignment of one placement type.
+
+    Parameters:
+        assignment_path: Path to fragment assignment CSV file
+
+    Returns:
+        assignment_df: A DataFrame that maps every fragment id to one node id
     """
 
     if not assignment_path.exists():
@@ -77,28 +100,41 @@ def load_assignment(assignment_path):
     # Fragment ids are read as strings to match affinity file
     assignment_df = pd.read_csv(assignment_path, dtype={"fragment_id": "string"})
 
-    required_columns = {"fragment_id", "node_id",}
+    required_columns = {"fragment_id", "node_id"}
 
     missing_columns = required_columns - set(assignment_df.columns)
 
     if missing_columns:
-        raise ValueError(f"There are missing columns in assignment file: {assignment_path}: {sorted(missing_columns)}")
+        raise ValueError(f"There are missing columns in assignment file: "
+                         f"{assignment_path}: {sorted(missing_columns)}")
 
-    # checks that each fragment must occur only once, otherwise duplicates are marked as True
-    # and an Error message is shown
+    # Identifies fragment ids that appear multiple times in the assignment
     duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
 
     if duplicate_fragments.any():
         duplicated_ids = sorted(assignment_df.loc[duplicate_fragments, "fragment_id"].unique())
 
-        raise ValueError(f"Fragments occur more than once in {assignment_path}: {duplicated_ids}")
+        raise ValueError(f"Fragments occur more than once in {assignment_path}: "
+                         f"{duplicated_ids}")
 
     return assignment_df
 
 
 def evaluate(placement_type, assignment_df, affinity_df):
     """
-    Evaluates amount of affine fragment pairs assigned to the same node.
+    Evaluates amount of affine fragment pairs assigned to the same node of one placement.
+
+    The locality ratio is calculated as the proportion of total affinity weight
+    whose pairs are assigned to the same node.
+
+    Parameters:
+        placement_type: Selected placement method
+        assignment_df: The assignment from fragment to nodes
+        affinity_df: The fragment affinities
+
+    Returns:
+        summary: The summary dictionary with evaluated metrics
+        details_df: The detailed evaluation DataFrame
     """
 
     # Maps fragment id to the node where it was assigned to
@@ -142,7 +178,7 @@ def evaluate(placement_type, assignment_df, affinity_df):
 
     same_node_mask = details_df["same_node"]
 
-    # Shows number of colocated and separated affinity pairs
+    # COunts colocated and separated distinct affinity pairs.
     same_node_pairs = int(same_node_mask.sum())
     separated_pairs = (len(details_df) - same_node_pairs)
 
@@ -196,6 +232,12 @@ def save(summary, details, dataset, config):
 def process_evaluate_affinity_locality(dataset, config):
     """
     Evaluates affinity locality for every placement type and saves the combined results.
+    The same workload-derived affinities are used for every placement method to ensure
+    comparability.
+
+    Returns:
+        summary_df: Combined summary DataFrame
+        detail_df: Combined details DataFrame
     """
 
     affinity = load_affinities(config["affinity_path"])

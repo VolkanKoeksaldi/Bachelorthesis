@@ -2,7 +2,9 @@ from pathlib import Path
 import pandas as pd
 from experiment_config import experiment_path, NUM_NODES
 
-DATASET = "mesh"
+DATASET = "mesh" # imdb or mesh
+
+
 
 CONFIGS = {
     "mesh": {
@@ -20,8 +22,8 @@ CONFIGS = {
 
 def assign_round_robin(fragments_df, num_nodes):
     """
-    Assigns fragments to nodes using round-robin.
-    Represents a simple deterministic baseline for comparisons with the ILP methods.
+    Assigns fragments cyclically to available nodes using round-robin.
+    This provides a simple deterministic baseline.
 
     Example with 4 nodes for cyclical assignment:
     Fragment 0 -> node_1
@@ -29,6 +31,13 @@ def assign_round_robin(fragments_df, num_nodes):
     Fragment 2 -> node_3
     Fragment 3 -> node_4
     Fragment 4 -> node_1
+
+    Parameters:
+        fragments_df: DataFrame that contains the fragments
+        num_nodes: Total number of available nodes
+
+    Returns:
+        assignment_df: A copy of the fragments DataFrame with the assigned node_id column
     """
 
     if num_nodes <= 0:
@@ -37,7 +46,7 @@ def assign_round_robin(fragments_df, num_nodes):
     if "node_id" in fragments_df.columns:
         raise ValueError("The fragment input already contains a node_id column.")
 
-    # Creates a copy with a new index for the assignment DataFrame
+    # Creates a copy with a new index for the assignment DataFrame,
     # drop=True prevents the old index from becoming an additional column.
     assignment_df = fragments_df.copy().reset_index(drop=True)
 
@@ -52,9 +61,17 @@ def assign_round_robin(fragments_df, num_nodes):
 def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
     """
     Loads the fragments, validates the input, and assigns the fragments
-    according to the round-robin strategy.
+    according to the round-robin strategy. The result is stored as a CSV file.
 
     All original fragment columns are preserved and only node_id is added.
+
+    Parameters:
+        input_path: Fragment CSV file path
+        output_path: Path to the output assignments
+        num_nodes: Total number of available nodes
+
+    Returns:
+        assignment_df: A DataFrame that contains the fragment assignments
     """
 
     if not input_path.exists():
@@ -73,15 +90,14 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
     if fragments_df.empty:
         raise ValueError(f"The fragment file is empty: {input_path}")
 
-    # Fragment IDs must not be missing or empty.
     fragment_ids = (fragments_df["fragment_id"].astype("string"))
-    # .eq("") checks here whether the fragment_ids still contains empty strings
+    # Checks here whether any fragment IDs are missing or empty
     invalid_fragment_ids = (fragment_ids.isna()| fragment_ids.str.strip().eq(""))
 
     if invalid_fragment_ids.any():
         raise ValueError("The fragment file contains missing or empty fragment IDs.")
 
-    # Every Fragment must have a unique fragment id
+    # Every fragment must have a unique fragment ID
     if not fragment_ids.is_unique:
         raise ValueError("The fragment file contains duplicate fragment IDs.")
 
@@ -90,9 +106,9 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
     # The assignment must contain all fragments.
     if len(assignment_df) != len(fragments_df):
         raise ValueError("The number of assigned fragments does not match "
-                         f"to the number of input fragments.")
+                         f"the number of input fragments.")
 
-    # The output consists of all input columns plus node_id.
+    # The output consists of all input columns plus node_id column.
     expected_columns = [*fragments_df.columns, "node_id"]
 
     if assignment_df.columns.tolist() != expected_columns:
@@ -102,12 +118,12 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
 
     assignment_df.to_csv(output_path, index=False)
 
-    # Displays the number of assigned fragments for every node.
+    # Displays the node order for the assigned fragments.
     node_order = [f"node_{node_number}"  for node_number in range(1, num_nodes + 1)]
 
     # Counts the assigned fragments per node from node_id column
     # then reindexes it to node_order and gives missing nodes the value 0.
-    # Renames the result to fragment_count
+    # Renames the result to fragment_count.
     fragments_per_node = (assignment_df["node_id"].value_counts()
                           .reindex(node_order, fill_value=0).rename("fragment_count"))
 
@@ -132,7 +148,6 @@ def main():
     config = CONFIGS[DATASET]
 
     process_round_robin(config["input_path"], config["output_path"], NUM_NODES)
-
 
 if __name__ == "__main__":
     main()

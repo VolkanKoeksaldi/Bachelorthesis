@@ -7,7 +7,13 @@ from copy import deepcopy
 
 from experiment_config import RUN_LABEL, experiment_path
 
-from database_operations import DATASETS as CONFIGS, select_item, select_fragments, insert_item, update_item, delete_item, find_item_nodes
+from database_operations import (DATASETS as CONFIGS, select_item, select_fragments, 
+                                 insert_item, update_item, delete_item, find_item_nodes)
+
+DATASET = "mesh" # imdb or mesh
+PLACEMENT = "conflict_locality_ilp" # tuple_ilp, round_robin, or conflict_locality_ilp
+REPETITIONS = 5
+
 
 
 WORKLOAD_CONFIGS = {
@@ -17,7 +23,7 @@ WORKLOAD_CONFIGS = {
 
         "item_id_column": "tuple_id",
         "item_name_column": "mesh_term",
-        "new_item_name": "new_mesh_term",
+        "new_item_name": "new_mesh_term"
     },
 
     "imdb": {
@@ -26,13 +32,9 @@ WORKLOAD_CONFIGS = {
 
         "item_id_column": "title_id",
         "item_name_column": "primary_title",
-        "new_item_name": "new_primary_title",
+        "new_item_name": "new_primary_title"
     }
 }
-
-DATASET = "mesh"
-PLACEMENT = "conflict_locality_ilp"
-REPETITIONS = 5
 
 def load_workload(workload_path):
     """
@@ -53,7 +55,17 @@ def load_workload(workload_path):
 
 def execute_operation(operation, placement_type, workload_config, config):
     """
-    Executes and then measures a single database operation.
+    Executes one workload operation and measures its runtime.
+
+    Parameters:
+        operation: Dictionary that describes the workload operation
+        placement_type: Placement method
+        workload_config: The dataset-specific workload columns
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        A dictionary that contains operation type, referenced item, fragments,
+        measured runtime, and operation result
     """
 
     operation_type = operation["operation"]
@@ -71,14 +83,17 @@ def execute_operation(operation, placement_type, workload_config, config):
         result = select_item(item_id=item_id, placement_type=placement_type, config=config)
 
     elif operation_type == "FRAGMENT_SELECT":
-        result = select_fragments(fragment_ids=operation["fragment_ids"], placement_type=placement_type, config=config)
+        result = select_fragments(fragment_ids=operation["fragment_ids"], 
+                                  placement_type=placement_type, config=config)
 
     elif operation_type == "INSERT":
-        result = insert_item(item_id=item_id, item_name=operation[item_name_column], fragment_ids=operation["fragment_ids"],
+        result = insert_item(item_id=item_id, item_name=operation[item_name_column], 
+                             fragment_ids=operation["fragment_ids"],
                              placement_type=placement_type, config=config)
 
     elif operation_type == "UPDATE":
-        result = update_item(item_id=item_id, update_item_name=operation[new_item_name], placement_type=placement_type, config=config)
+        result = update_item(item_id=item_id, update_item_name=operation[new_item_name], 
+                             placement_type=placement_type, config=config)
 
     elif operation_type == "DELETE":
         result = delete_item(item_id=item_id, placement_type=placement_type, config=config)
@@ -98,7 +113,10 @@ def execute_operation(operation, placement_type, workload_config, config):
 
 def execute_workload(workload, placement_type, workload_config, config):
     """
-    Executes all database operations in the workload.
+    Executes all workload operations sequentially in their stored order.
+
+    Returns:
+        results: A list that contains one result dictionary for every operation
     """
     results = []
 
@@ -134,25 +152,28 @@ def save(results, placement_type, dataset, config):
 
 def copy_node_databases(node_directory, target_directory):
     """
-    Copies initial nodes for one independent benchmark repitition.
+    Copies the initial nodes for one independent repetition.
     """
 
     node_files = sorted(node_directory.glob("node_*.db"))
 
     if not node_files:
         raise FileNotFoundError(f"No node databases were found in {node_directory}. "
-                                "First file 11 needs to be run before executing the workload.")
+                                "Run the script for creating SQLite nodes before "
+                                "executing the workload.")
 
     target_directory.mkdir(parents=True, exist_ok=True)
 
     for node_file in node_files:
         # shutil used for file and folder operations.
-        # copy2 copies a file and retains original information of the node file into target directory
+        # copy2 copies the database file while preserving the information of the node
+        # file into target directory
         shutil.copy2(node_file, target_directory / node_file.name)
 
 def create_repeated_config(database_config, placement_type, node_directory):
     """
-    Returns the database configurations pointing to a copy of the benchmark nodes.
+    Creates an independent database configuration that redirects the selected placement
+    to a copy of the node directory.
     """
 
     # Creates an independent copy to avoid modifying original configurations
@@ -164,12 +185,13 @@ def create_repeated_config(database_config, placement_type, node_directory):
 
 def verify_deleted_items(workload, placement_type, workload_config, database_config):
     """
-    Verifies every item deleted with a DELETE operation from all node databases.
+    Verifies every item targeted by a DELETE operation from all node databases.
     """
     item_id_column = workload_config["item_id_column"]
 
-    # Extracts ids of all items targeted by DELETE
-    deleted_item_ids = [operation[item_id_column] for operation in workload if operation["operation"] == "DELETE"]
+    # Extracts ids of all items targeted by DELETE operations
+    deleted_item_ids = [operation[item_id_column] for operation in workload 
+                        if operation["operation"] == "DELETE"]
 
     remaining_items = {}
 
@@ -183,14 +205,21 @@ def verify_deleted_items(workload, placement_type, workload_config, database_con
     if remaining_items:
         details = "; ".join(f"{item_id}: {nodes}" for item_id, nodes in remaining_items.items())
 
-        raise RuntimeError(f"The following items still exist in node databases, even though they should be deleted: {details}")
+        raise RuntimeError(f"The following items still exist in node databases, "
+                           f"even though they should be deleted: {details}")
 
-    print("All items that were supposed to be deleted using DELETE operations, were removed from every node.")
+    print("All items targeted by DELETE operations were removed from every node.")
 
 
-def process_execute_workload(dataset, placement_type, workload_config, database_config, repetitions=REPETITIONS):
+def process_execute_workload(dataset, placement_type, workload_config, 
+                             database_config, repetitions=REPETITIONS):
     """
-    Loads, executes, verifies and saves the workload.
+    Executes the workload repeatedly on independent copies of the original node databases.
+    Each repetition starts from the same initial state.
+    Temporary copies are deleted after the repetition, while measurements are retained.
+
+    Returns:
+        results: Result list for all workload repetitions
     """
 
     workload = load_workload(workload_config["workload_path"])
@@ -201,25 +230,28 @@ def process_execute_workload(dataset, placement_type, workload_config, database_
     source_node_directory = database_config["placements"][placement_type]["node_output"]
 
     results = []
-    total_runs = repetitions
 
-    for run_number in range(1, total_runs + 1):
-        run_kind = f"repeat {run_number}"
-
-        print(f"\nStarting {run_kind} of {placement_type}...")
+    for run_number in range(1, repetitions + 1):
+        print(f"\nStarting repetition {run_number} of {repetitions} for {placement_type}...")
 
         # Uses temporary node directory
         # Every repetition then starts from the same unchanged database node state.
-        with tempfile.TemporaryDirectory(prefix=f"{dataset}_{placement_type}_") as temp_directory:
+        with tempfile.TemporaryDirectory(
+            prefix=f"{dataset}_{placement_type}_") as temp_directory:
             repeat_node_directory = Path(temp_directory) / "nodes"
             copy_node_databases(source_node_directory, repeat_node_directory)
 
-            repeat_database_config = create_repeated_config(database_config, placement_type, repeat_node_directory)
+            repeat_database_config = create_repeated_config(database_config, 
+                                                            placement_type, 
+                                                            repeat_node_directory)
 
-            repeat_results = execute_workload(workload=workload, placement_type=placement_type, workload_config=workload_config,
+            repeat_results = execute_workload(workload=workload, 
+                                              placement_type=placement_type, 
+                                              workload_config=workload_config,
                                               config=repeat_database_config)
 
-            verify_deleted_items(workload, placement_type, workload_config, repeat_database_config)
+            verify_deleted_items(workload, placement_type, workload_config, 
+                                 repeat_database_config)
 
         for result in repeat_results:
             result["run_label"] = RUN_LABEL
@@ -242,7 +274,11 @@ def main():
     workload_config = WORKLOAD_CONFIGS[DATASET]
     database_config = CONFIGS[DATASET]
 
-    results = process_execute_workload(dataset=DATASET, placement_type=PLACEMENT, workload_config=workload_config,
+    if PLACEMENT not in database_config["placements"]:
+        raise ValueError(f"Unknown placement method for {DATASET}: {PLACEMENT}")
+
+    results = process_execute_workload(dataset=DATASET, placement_type=PLACEMENT, 
+                                       workload_config=workload_config,
                                        database_config=database_config, repetitions=REPETITIONS)
 
 

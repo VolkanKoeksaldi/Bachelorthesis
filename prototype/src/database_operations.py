@@ -1,4 +1,3 @@
-from pathlib import Path
 import sqlite3
 import pandas as pd
 import json
@@ -28,17 +27,12 @@ DATASETS = {
         },
 
         "placements": {
-            "round_robin": {
-                "node_output": experiment_path("nodes/mesh/round_robin")
-            },
+            "round_robin": {"node_output": experiment_path("nodes/mesh/round_robin")},
 
-            "tuple_ilp": {
-                "node_output": experiment_path("nodes/mesh/tuple_ilp")
-            },
+            "tuple_ilp": {"node_output": experiment_path("nodes/mesh/tuple_ilp")},
 
             "conflict_locality_ilp": {
-                "node_output": experiment_path("nodes/mesh/conflict_locality_ilp")
-            }
+                "node_output": experiment_path("nodes/mesh/conflict_locality_ilp")}
         }
     },
 
@@ -60,17 +54,12 @@ DATASETS = {
         },
 
         "placements": {
-            "round_robin": {
-                "node_output": experiment_path("nodes/imdb/round_robin")
-            },
+            "round_robin": {"node_output": experiment_path("nodes/imdb/round_robin")},
 
-            "tuple_ilp": {
-                "node_output": experiment_path("nodes/imdb/tuple_ilp")
-            },
+            "tuple_ilp": {"node_output": experiment_path("nodes/imdb/tuple_ilp")},
 
             "conflict_locality_ilp": {
-                "node_output": experiment_path("nodes/imdb/conflict_locality_ilp")
-            }
+                "node_output": experiment_path("nodes/imdb/conflict_locality_ilp")}
         }
     }
 }
@@ -163,7 +152,7 @@ def insert_into_node(item_id, item_name, fragment_ids, node_id, placement_type, 
     item_values = [item_id, item_name, *[generated_item_data.get(column_name) 
                                          for column_name in additional_item_columns]]
 
-    # sets placeholders for every item columns that needs to be inserted for new item
+    # Creates placeholders for all item columns of the new item
     placeholders = ", ".join("?" for _ in item_columns)
 
     node_output = get_node_output(config, placement_type)
@@ -279,7 +268,7 @@ def update(node_id, config, placement_type, table, updates, where=None, paramete
 
     validated_set, set_parameter_count = validate_updates(table, updates, config)
 
-    # checks whether parameters are given
+    # Counts the placeholders required by WHERE
     if where:
         where_param_count = where.count("?")
     else:
@@ -341,7 +330,8 @@ def validate_delete(table, where, config):
             raise ValueError(f"Unknown column {column} was found in table {table}")
 
         if placeholder != "?":
-            raise ValueError(f"Condition for column {column} does not contain a ? placeholder.")
+            raise ValueError(f"Condition for column {column} does not"
+                             " contain a ? placeholder.")
 
         validated.append(column)
 
@@ -351,7 +341,8 @@ def validate_delete(table, where, config):
     return normalized_where, len(validated)
 
 
-def delete(node_id, config, placement_type, table, where=None, parameters=(), delete_all=False):
+def delete(node_id, config, placement_type, table, where=None, 
+           parameters=(), delete_all=False):
     """
     Deletes rows from a node database.
         
@@ -375,7 +366,8 @@ def delete(node_id, config, placement_type, table, where=None, parameters=(), de
         expected_param_count = 0
 
     if len(parameters) != expected_param_count:
-        raise ValueError(f"Received {len(parameters)} parameters, but {expected_param_count} were expected.")
+        raise ValueError(f"Received {len(parameters)} parameters, but "
+                         f"{expected_param_count} were expected.")
 
     node_output = get_node_output(config, placement_type)
     db_path = node_output / f"{node_id}.db"
@@ -441,7 +433,6 @@ def delete_membership_from_node(fragment_id, item_id, node_id, placement_type, c
     return deleted_rows
 
 
-# ----------------------------------------------------------------
 # Helper functions for distributed operations
 
 def get_node_output(config, placement_type):
@@ -467,7 +458,7 @@ def get_nodes(config, placement_type):
     node_ids = [
         db_path.stem
         for db_path in node_output.glob("node_*.db")
-        # isdigit checks whether node is followed by a digit
+        # Ensures that the "node_" is followed by digits
         if db_path.stem.replace("node_", "").isdigit()
     ]
 
@@ -596,16 +587,16 @@ def find_item_fragments(item_id, placement_type, config, item_nodes=None):
     return sorted(fragment_ids)
 
 
-# ---------------------------------------------------------------
 # Distributed operations
 
 def select_fragments(fragment_ids, placement_type, config):
     """
-    Executes union for all items in the requested fragments.
+    Executes union of all items in the requested fragments.
 
-    First finds the fragment locations.
-    Then assigns fragments tot he same node that are queried together.
-    That way execution_nodes represent the nodes used by multi-fragment query.
+    First finds node of each requested fragment.
+    Fragments located on the same node are then grouped so that each relevant node
+    needs to be queried only once.
+    That way execution_nodes represent the nodes involved in the multi-fragment query.
     """
 
     membership_item_column = config["membership_item_column"]
@@ -613,7 +604,7 @@ def select_fragments(fragment_ids, placement_type, config):
     # Keeps requested unique fragment ids
     requested_fragments = list(dict.fromkeys(str(fragment_id) for fragment_id in fragment_ids))
 
-    # multi-fragment queries require at least two fragments
+    # Multi-fragment queries require at least two distinct fragments
     if len(requested_fragments) < 2:
         raise ValueError("FRAGMENT_SELECT requires at least two different fragments.")
 
@@ -705,7 +696,8 @@ def select_item(item_id, placement_type, config):
             "fragment_ids": []
         }
 
-    # Every available node stores the same item information, so that one node is sufficient for SELECT
+    # Every available node stores the same item information, so that one node 
+    # is sufficient for SELECT
     selected_node = item_nodes[0]
 
     result = select(
@@ -718,8 +710,10 @@ def select_item(item_id, placement_type, config):
         parameters=(item_id,)
     )
     
-    return {"rows": result, "contacted_nodes": [selected_node],  "execution_nodes": [selected_node],
-            "searched_nodes": searched_nodes, "available_nodes": item_nodes, "fragment_ids": fragment_ids}
+    return {"rows": result, "contacted_nodes": [selected_node],  
+            "execution_nodes": [selected_node],
+            "searched_nodes": searched_nodes, "available_nodes": item_nodes, 
+            "fragment_ids": fragment_ids}
 
 
 def insert_item(item_id, item_name, fragment_ids, placement_type, config):
@@ -727,14 +721,15 @@ def insert_item(item_id, item_name, fragment_ids, placement_type, config):
     Inserts an item into nodes storing its fragments.
     """
 
-    # Used to group fragments by node
-    # that way an item is inserted only once when associated fragments share the same node
+    # Groups fragments by their assigned node so that an item is inserted
+    # only once when associated fragments share the same node
     fragments_in_node = {}
 
     searched_nodes = get_nodes(config, placement_type)
 
     for fragment_id in fragment_ids:
-        fragment_nodes = find_fragment_nodes(fragment_id, placement_type, config, node_ids=searched_nodes,)
+        fragment_nodes = find_fragment_nodes(fragment_id, placement_type, config, 
+                                             node_ids=searched_nodes,)
 
         if not fragment_nodes:
             raise ValueError(f"Fragment {fragment_id} is not stored on any node.")
@@ -795,7 +790,8 @@ def update_item(item_id, update_item_name, placement_type, config):
         metadata_json = (curr_item[0][0] if curr_item and curr_item[0][0] else "{}")
 
         # Recalculates the stored size because of the item name change
-        item_size_bytes = len((str(item_id) + str(update_item_name) + metadata_json).encode("utf-8"))
+        item_size_bytes = len((str(item_id) + str(update_item_name) 
+                               + metadata_json).encode("utf-8"))
 
         result = update(
             node_id=node_id,
@@ -840,8 +836,8 @@ def delete_item(item_id, placement_type, config):
             parameters=(item_id,)
         )
 
-        # Deletes the memberships, so that stored fragment sizes can remain constant
-        # afterwards the item is removed
+        # Deletes the memberships first so that the stored fragment sizes
+        # can be updated before the item itself is deleted
         for membership in memberships:
             fragment_id = membership[0]
 
@@ -863,4 +859,5 @@ def delete_item(item_id, placement_type, config):
         )
 
     return {"deleted_rows": deleted_rows, "deleted_memberships": deleted_memberships, 
-            "contacted_nodes": item_nodes, "execution_nodes": item_nodes, "searched_nodes": searched_nodes}
+            "contacted_nodes": item_nodes, "execution_nodes": item_nodes, 
+            "searched_nodes": searched_nodes}

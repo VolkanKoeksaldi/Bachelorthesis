@@ -1,14 +1,23 @@
 import re
-
 import pandas as pd
 
 
 def expand_base_table(base_df, copy_factor, id_column, id_prefix):
     """
-    Duplicates base table with copy factor while assigning a unique row ID to every copy.
+    Duplicates a base DataFrame according to the copy factor 
+    and assigns a unique row id to every row.
 
     Source identifiers and fragmentation attributes are preserved.
-    Therefore duplicated rows remain in the same fragments.
+    Therefore duplicated rows remain in the same fragment-memberships as their original source.
+
+    Parameters:
+        base_df: The base DataFrame that is duplicated
+        copy_factor: Duplication number for the base DataFrame
+        id_column: Name of the generated unique-id column
+        id_prefix: Sets a prefix for every generated ids.
+
+    Returns:
+        result: The expanded DataFrame with new unique physical item ids
     """
 
     if copy_factor < 1:
@@ -16,7 +25,7 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
 
     copies = []
 
-    # Preserves all source attributes and records for the copy associated with each row
+    # Creates the configured number of copies while preserving all source attributes
     for copy_number in range(copy_factor):
         current_copy = base_df.copy()
         current_copy["copy_number"] = copy_number
@@ -24,7 +33,7 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
 
     result = pd.concat(copies, ignore_index=True)
 
-    # uses padded sequential ids for all rows
+    # Assigns zero-padded sequential ids to all rows.
     width = max(9, len(str(len(result))))
     result[id_column] = [f"{id_prefix}{row_number:0{width}d}" 
                          for row_number in range(1, len(result) + 1)]
@@ -37,7 +46,13 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
 
 def parse_item_ids(value):
     """
-    Parses item ids and convers it into a set of non empty ids.
+    Converts comma-separated item ids stored in a CSV field into a set.
+
+    Parameters:
+        value: item ids field from CSV
+
+    Returns:
+        Set of item id Strings
     """
 
     if pd.isna(value) or str(value).strip() == "":
@@ -48,7 +63,7 @@ def parse_item_ids(value):
 
 def safe_fragment_component(value):
     """
-    Creates a deterministic string for use in fragment ids.
+    Converts a value into a deterministic string which can be used as a part of a fragment id.
     """
 
     text = str(value).strip() or "UNKNOWN"
@@ -58,25 +73,31 @@ def safe_fragment_component(value):
 def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected_schemes, 
                                        item_ids_column):
     """
-    Requires every expected item to occur in exactly one fragment of every scheme.
+    Validates that every expected item occurs in exactly one fragment of every scheme.
     Overlaps only allowed between different schemes.
+
+    Parameters:
+        fragments_df: A DataFrame that contains the fragment definitions
+        expected_item_ids: The expected item ids in every fragmentation
+        expected_schemes: The required fragmentation schemes
+        item_ids_column: The column that contains comma-separated item ids
     """
 
     expected_item_ids = {str(item_id) for item_id in expected_item_ids}
     expected_schemes = tuple(expected_schemes)
 
-    # Initializes one membership set for every expected item-scheme combination
+    # Initializes one fragment-membership set for every expected item-scheme combination
     memberships = {item_id: {scheme: set() for scheme in expected_schemes} 
                    for item_id in expected_item_ids}
 
-    # iterates through every row in fragment DataFrane
+    # Iterates over all fragment definitions
     for row in fragments_df.itertuples(index=False):
         if row.scheme not in expected_schemes:
             continue
 
         # gets item id for every row
         for item_id in parse_item_ids(getattr(row, item_ids_column)):
-            # Adds fragment_id to scheme set for every scheme in item id
+            # Adds fragment_id to the item's membership set for this scheme
             memberships.setdefault(item_id, {scheme: set() 
                                              for scheme 
                                              in expected_schemes}
@@ -96,14 +117,13 @@ def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected
     if violations or unexpected_items:
         raise ValueError(f"Invalid fragmentation memberships.")
 
-    # checks total amount of expected memberships and detected memberships
+    # Compares expected and observed numbers of memberships
     expected_memberships = len(expected_item_ids) * len(expected_schemes)
     actual_memberships = sum(len(parse_item_ids(value)) 
                              for value in fragments_df[item_ids_column])
-
     if actual_memberships != expected_memberships:
         raise ValueError(f"Expected {expected_memberships} memberships, "
-                         f"but a total of {actual_memberships} found.")
+                         f"but a total of {actual_memberships} were found.")
 
-    print(f"Validated a total of {len(expected_item_ids)} items are exactly in "
+    print(f"Validated a total of {len(expected_item_ids)} items belong to exactly "
           f"one fragment in each of {len(expected_schemes)} schemes.")

@@ -1,4 +1,3 @@
-from pathlib import Path
 from experiment_config import experiment_path
 import sqlite3
 import time
@@ -7,6 +6,10 @@ from contextlib import closing
 
 from database_operations import DATASETS as DATABASE_CONFIGS
 
+DATASET = "imdb" # imdb or mesh
+MODE = "updates" # baseline or updates
+
+
 RECOVERY_CONFIGS = {
     "mesh": {
         "failed_node_id": "node_1",
@@ -14,18 +17,25 @@ RECOVERY_CONFIGS = {
         "baseline": {
             "fragments_path": experiment_path("processed/mesh_fragments.csv"),
             "assignment_paths": {
-                        "round_robin": experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
-                        "tuple_ilp": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
-                        "conflict_locality_ilp": experiment_path("processed/mesh_fragment_assignment_conflict_locality_ilp.csv")
+                        "round_robin": experiment_path(
+                            "processed/mesh_fragment_assignment_round_robin.csv"),
+                        "tuple_ilp": experiment_path(
+                            "processed/mesh_fragment_assignment_tuple_ilp.csv"),
+                        "conflict_locality_ilp": experiment_path(
+                            "processed/mesh_fragment_assignment_conflict_locality_ilp.csv")
             }
         },
 
         "updates": {
             "fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
             "assignment_paths": {
-                        "round_robin": experiment_path("processed/mesh_fragment_assignment_round_robin.csv"),
-                        "tuple_ilp": experiment_path("reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
-                        "conflict_locality_ilp": experiment_path("reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv")
+                        "round_robin": experiment_path(
+                            "processed/mesh_fragment_assignment_round_robin.csv"),
+                        "tuple_ilp": experiment_path(
+                            "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
+                        "conflict_locality_ilp": experiment_path(
+                            "reoptimization/mesh_fragment_assignment_" \
+                            "conflict_locality_ilp_updated.csv")
             }
         },
         
@@ -40,18 +50,25 @@ RECOVERY_CONFIGS = {
         "baseline": {
             "fragments_path": experiment_path("processed/imdb_fragments.csv"),
             "assignment_paths": {
-                        "round_robin": experiment_path("processed/imdb_fragment_assignment_round_robin.csv"),
-                        "tuple_ilp": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
-                        "conflict_locality_ilp": experiment_path("processed/imdb_fragment_assignment_conflict_locality_ilp.csv")
+                        "round_robin": experiment_path(
+                            "processed/imdb_fragment_assignment_round_robin.csv"),
+                        "tuple_ilp": experiment_path(
+                            "processed/imdb_fragment_assignment_tuple_ilp.csv"),
+                        "conflict_locality_ilp": experiment_path(
+                            "processed/imdb_fragment_assignment_conflict_locality_ilp.csv")
             }
         },
 
         "updates": {
             "fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
             "assignment_paths": {
-                        "round_robin": experiment_path("processed/imdb_fragment_assignment_round_robin.csv"),
-                        "tuple_ilp": experiment_path("reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"),
-                        "conflict_locality_ilp": experiment_path("reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv")
+                        "round_robin": experiment_path(
+                            "processed/imdb_fragment_assignment_round_robin.csv"),
+                        "tuple_ilp": experiment_path(
+                            "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"),
+                        "conflict_locality_ilp": experiment_path(
+                            "reoptimization/imdb_fragment_" \
+                            "assignment_conflict_locality_ilp_updated.csv")
             }
         },
         
@@ -61,13 +78,15 @@ RECOVERY_CONFIGS = {
     }
 }
 
-DATASET = "imdb"
-MODE = "updates" # baseline or updates
+
 
 
 def find_nodes(placement_type, database_config, mode):
     """
-    Finds node databases for one placement type and execution mode.
+    Locates the materialized SQLite node databases for one placement type and execution node.
+
+    Returns:
+        node_files: Sorted list of the SQLite database paths
     """
 
     if placement_type not in database_config["placements"]:
@@ -85,7 +104,9 @@ def find_nodes(placement_type, database_config, mode):
     node_files = sorted(placement_directory.glob("node_*.db"))
 
     if not node_files:
-        raise FileNotFoundError(f"No SQLite nodes were found in {placement_directory}. First run file 11 in {mode}.")
+        raise FileNotFoundError(f"No SQLite nodes were found in "
+                                f"{placement_directory}. First the {mode} node databases"
+                                " need to be materialized before running recovery.")
 
     return node_files
 
@@ -102,7 +123,10 @@ def find_failed_node(node_files, failed_node_id):
 
 def load_failed_items(node_file, database_config):
     """
-    Loads item ids of all items affected by node failure.
+    Loads item ids of all items affected by simulated node failure.
+
+    Returns:
+        Set of distinct item ids stored on the failed node
     """
 
     item_table = database_config["item_table"]
@@ -113,7 +137,7 @@ def load_failed_items(node_file, database_config):
             cur.execute(f"""
                 SELECT {item_id}
                 FROM {item_table}
-            """)
+                """)
 
             rows = cur.fetchall()
 
@@ -162,7 +186,13 @@ def get_recovery_path(placement_type, failed_node_id, recovery_config, mode):
 
 def parse_item_ids(value):
     """
-    Converts item id string into a list.
+    Converts comma-separated item ids stored in a CSV field into a set.
+
+    Parameters:
+        value: item ids field from CSV
+
+    Returns:
+        Set of item id Strings
     """
 
     if pd.isna(value) or str(value).strip() == "":
@@ -184,28 +214,34 @@ def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, m
 
     required_assignment_columns = {"fragment_id", "node_id"}
 
-    missing_assignment_columns = (required_assignment_columns - set(assignment.columns))
+    missing_assignment_columns = required_assignment_columns - set(assignment.columns)
 
     if missing_assignment_columns:
-        raise ValueError(f"Missing columns in assignment file: {sorted(missing_assignment_columns)}")
+        raise ValueError(f"Missing columns in assignment file: "
+                         f"{sorted(missing_assignment_columns)}")
 
-    required_fragment_columns = {"fragment_id", "scheme", "value", "fragment_size", item_ids_column}
+    required_fragment_columns = {"fragment_id", "scheme", "value", 
+                                 "fragment_size", item_ids_column}
 
-    missing_fragments_columns = (required_fragment_columns - set(fragments_df.columns))
+    missing_fragments_columns = required_fragment_columns - set(fragments_df.columns)
 
     if missing_fragments_columns:
-        raise ValueError(f"Missing columns in fragment file: {sorted(missing_fragments_columns)}")
+        raise ValueError(f"Missing columns in fragment file: "
+                         f"{sorted(missing_fragments_columns)}")
 
     # retains fragments assigned to the failed node
-    failed_fragment_ids = set(assignment.loc[assignment["node_id"] == failed_node_id, "fragment_id"])
+    failed_fragment_ids = set(assignment.loc[assignment["node_id"] == failed_node_id, 
+                                             "fragment_id"])
 
-    missing_fragment_ids = (failed_fragment_ids - set(fragments_df["fragment_id"]))
+    missing_fragment_ids = failed_fragment_ids - set(fragments_df["fragment_id"])
 
     if missing_fragment_ids:
-        raise ValueError(f"Fragments assigned to {failed_node_id} are missing from the fragments path. "
+        raise ValueError(f"Fragments assigned to {failed_node_id} are "
+                         "missing from the fragments path. "
                          f"{sorted(missing_fragment_ids)}")
     
-    failed_fragments = fragments_df.loc[fragments_df["fragment_id"].isin(failed_fragment_ids)].copy()
+    failed_fragments = fragments_df.loc[fragments_df["fragment_id"]
+                                        .isin(failed_fragment_ids)].copy()
 
     fragment_rows = list(failed_fragments[["fragment_id", "scheme", "value", 
                                            "fragment_size"]].itertuples(index=False, name=None))
@@ -222,9 +258,16 @@ def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, m
     return fragment_rows, fragment_membership_rows
 
 
-def recover(placement_type, recover_path, node_files, selected_nodes, failed_node_id, recovery_config, database_config, mode_config):
+def recover(placement_type, recover_path, node_files, selected_nodes, 
+            failed_node_id, recovery_config, database_config, mode_config):
     """
-    Reconstructs recoverable information of the failed node from remaining nodes.
+    Reconstructs recoverable item records, fragment records, and 
+    fragment memberships of the failed node from remaining nodes.
+
+    Returns:
+        recovered_rows: Recovered item rows
+        fragment_rows: Fragment rows
+        fragment_membership_rows: Fragment-membership rows
     """
 
     item_table = database_config["item_table"]
@@ -238,7 +281,8 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 
     node_file_id = {node_file.stem: node_file for node_file in node_files}
 
-    # groups recoverable items by their selected source node, thus reducing the number of database
+    # groups recoverable items by their selected source node, 
+    # thus reducing the number of database
     # connections and queries needed for recovery.
     items_recoverable = {}
 
@@ -246,10 +290,9 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
         items_recoverable.setdefault(source_id, []).append(item_id)
 
     recovered_rows = []
-    fragment_rows, fragment_membership_rows = load_failed_fragment_info(placement_type, 
-                                                                        failed_node_id=failed_node_id, 
-                                                                        recovery_config=recovery_config, 
-                                                                        mode_config=mode_config)
+    fragment_rows, fragment_membership_rows = load_failed_fragment_info(
+        placement_type, failed_node_id=failed_node_id, 
+        recovery_config=recovery_config, mode_config=mode_config)
 
     print(f"Number of fragments to be recovered: {len(fragment_rows)}")
     print(f"Number of fragment memberships to be recovered: {len(fragment_membership_rows)}")
@@ -259,7 +302,7 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 
         with sqlite3.connect(path) as conn:
             # SQLite limits the number of bound variables in one SQL statement.
-            # For large recovery requests these are divided into smaller batch sizes of 10.000 size.
+            # Therefore batches with sizes of 10.000 size.
             sql_variable_limit = conn.getlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER)
             batch_size = min(sql_variable_limit, 10_000)
 
@@ -282,10 +325,13 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
     recovered_fragment_sizes = {}
 
     # retains memberships whose items were successfully recovered
-    fragment_membership_rows = [membership for membership in fragment_membership_rows if membership[1] in recovered_item_ids]
+    fragment_membership_rows = [membership 
+                                for membership in fragment_membership_rows 
+                                if membership[1] in recovered_item_ids]
 
     for fragment_id, item_id in fragment_membership_rows:
-        recovered_fragment_sizes[fragment_id] = recovered_fragment_sizes.get(fragment_id, 0) + 1
+        recovered_fragment_sizes[fragment_id] = recovered_fragment_sizes.get(
+            fragment_id, 0) + 1
 
     fragment_rows = [(fragment_id, scheme, value, recovered_fragment_sizes.get(fragment_id, 0))
                       for fragment_id, scheme, value, fragment_size in fragment_rows]
@@ -302,17 +348,14 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
     item_placeholders = ", ".join("?" for _ in item_columns)
 
     with sqlite3.connect(recover_path) as conn:
-        # Enables foreign keys to match the node database schema from file 11
+        # Enables enforcement of any foreign keys 
+        # declared in the recovered database
         conn.execute("PRAGMA foreign_keys=ON")
         with closing(conn.cursor()) as cur:
-            cur = conn.cursor()
-
-            # Creates the recovered item table
+            # Creates a reduced fragment table that contains metadata
+            # required for the recovery evaluation.
             cur.execute(f"""
-                CREATE TABLE {item_table} (
-                    {", ".join(item_column_def)}
-                    )
-            """)
+                CREATE TABLE {item_table} ({", ".join(item_column_def)})""")
 
             # Inserts recovered item rows into the table
             cur.executemany(f"""
@@ -333,7 +376,8 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 
             # Inserts recovered fragment metadata
             cur.executemany("""
-                INSERT INTO fragments(fragment_id, scheme, value, fragment_size) VALUES(?, ?, ?, ?)
+                INSERT INTO fragments(fragment_id, scheme, value, fragment_size) 
+                VALUES(?, ?, ?, ?)
             """, fragment_rows)
 
             conn.commit()
@@ -348,7 +392,8 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 
             # Inserts recovered fragment-member relationships
             cur.executemany(f"""
-                INSERT INTO fragment_members(fragment_id, {membership_item_column}) VALUES(?, ?)
+                INSERT INTO fragment_members(fragment_id, {membership_item_column}) 
+                VALUES(?, ?)
             """, fragment_membership_rows)
             conn.commit()
 
@@ -358,6 +403,9 @@ def recover(placement_type, recover_path, node_files, selected_nodes, failed_nod
 def process_recovery(dataset, recovery_config, database_config, mode_config, mode):
     """
     Simulates and evaluates a node failure for every configured placement type.
+
+    Returns:
+        recovery_df: A DataFrame that contains the recovery results
     """
 
     failed_node_id = recovery_config["failed_node_id"]
@@ -390,11 +438,11 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
         failed_items = load_failed_items(failed_node, database_config)
         recovery_time_start = time.perf_counter()
         recovery = find_copies(node_files, failed_node, failed_items, database_config)
-        # distinguishes between recoverable items from failed node and unrecoverable nodes
+        # Separates recoverable and unrecoverable items from failed node
         recoverable = {item_id: nodes for item_id, nodes in recovery.items() if nodes}
         unrecoverable = {item_id: nodes for item_id, nodes in recovery.items() if not nodes}
         source_nodes = {node_id for nodes in recoverable.values() for node_id in nodes}
-        # Uses first available copy of every item
+        # Selects the first available copy of every recoverable item.
         selected_sources = {item_id: nodes[0] for item_id, nodes in recoverable.items()}
         recovery_node = set(selected_sources.values())
 
@@ -438,14 +486,13 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
     recovery_df = pd.DataFrame(recovery_results)
     base_output_path = recovery_config["recovery_output_path"]
 
-    output_path = base_output_path.with_name(f"{base_output_path.stem}_{mode}{base_output_path.suffix}")
+    output_path = base_output_path.with_name(f"{base_output_path.stem}_{mode}"
+                                             f"{base_output_path.suffix}")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     recovery_df.to_csv(output_path, index=False)
     print(f"Recovery results saved to: {output_path}")
 
     return recovery_df
-        
-
 
 def main():
     if DATASET not in RECOVERY_CONFIGS:
@@ -466,7 +513,8 @@ def main():
     mode_config = recovery_config[MODE]
 
     recovery_df = process_recovery(dataset=DATASET, recovery_config=recovery_config, 
-                                   database_config=database_config, mode_config=mode_config, mode=MODE)
+                                   database_config=database_config, 
+                                   mode_config=mode_config, mode=MODE)
 
     print(f"\nRecovery Summary {MODE}:")
     print(recovery_df.to_string(index=False))

@@ -3,7 +3,7 @@ import pandas as pd
 
 def parse_item_count(value):
     """
-    Counts distinct item ids.
+    Counts number of distinct item ids in a comma-separated CSV filed.
     """
     if pd.isna(value) or value == "":
         return 0
@@ -13,7 +13,10 @@ def parse_item_count(value):
 def calculate_node_capacity(reference_fragments_path, item_ids_column, 
                             num_nodes, capacity_buffer):
     """
-    Calculates node capacity from baseline fragments file.
+    Calculates node capacity from a baseline fragments file.
+    The lower bound is calculated as the maximum of the largest fragment weight
+    and the average fragment weight for every available node. The configured buffer is then
+    applied to that lower bound.
     """
 
     fragments_df = pd.read_csv(reference_fragments_path)
@@ -31,6 +34,8 @@ def calculate_node_capacity(reference_fragments_path, item_ids_column,
     total_fragment_weight = int(fragment_weights.sum())
     average_node_weight = math.ceil(total_fragment_weight / num_nodes)
 
+    # Every fragment must fit on one node, and the overall fragment weight 
+    # should also fit across the available runs.
     capacity_lower_bound = max(max_fragment_weight, average_node_weight)
 
     return math.ceil((1 + capacity_buffer) * capacity_lower_bound)
