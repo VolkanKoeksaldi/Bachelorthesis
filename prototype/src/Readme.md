@@ -7,32 +7,29 @@ It implements and evaluates three fragment-placement methods:
 * a tuple-based Integer Linear Programming (ILP) formulation
 * a conflict-locality-based ILP formulation
 
-The prototype preprocesses MeSH and IMDb data, creates three horizontal fragmentations for each dataset, computes their fragment overlaps, assigns fragments to simulated database nodes according to the placement method, and lastly materializes the used nodes as separate SQLite database files. It also generates and executes a reproducible workload and evaluates storage, replication, locality, reoptimization, and recovery metrics.
+This prototype preprocesses MeSH and IMDb data and creates three horizontal fragmentations for each dataset. Afterwards it computes their fragment overlaps and according to the placement methods assigns fragments to simulated database nodes, which are subsequently materialized as separate SQLite database files. It also generates and executes a reproducible workload and evaluates storage, replication, locality, reoptimization, and recovery metrics.
 
-## Scope
-The SQLite database simulates database nodes locally within a Docker container. The prototype evaluates placement behavior, but does not simulate network latency, distributed transactions, or distributed database servers.
+The copy factors x1, x2, x4, and x8 increase the number of items and fragment weights, while preserving the fragment categories, overlap structure, and membership-pattern structure.
+Therefore, the scalability of the placement methods with increasing dataset sizes is evaluated.
+The evaluations assume `r=m=3`.
 
-The copy factors x1, x2, x4, and x8 increase the number of items and fragment weights, while preserving the fragment categories, overlap-pair structure, and membership-pattern structure.
-Therefore, these runs evaluate the scalability of the placement methods with increasing dataset sizes.
-The evaluations assumed `r=m=3`.
+## Configuration
+The central parameters are defined in `src/experiment_config.py`.
 
-## Main configuration
-The central experiment parameters are defined in **src/experiment_config.py**.
+Each run is named as:
+evaluation_runs/base_<SOURCE_ROWS>_x<COPY_FACTOR>_<RUN_ID>/
 
-Each run is written below as:
-output/evaluation_runs/base_<SOURCE_ROWS>_x<COPY_FACTOR>_<RUN_ID>/
-
-By using a separate RUN_ID, container name, and Docker output volume, results from several runs can be retained.
+By using a separate RUN_ID, container name, and Docker output volume, results from several runs can be preserved.
 
 ## Required Source Data
-Place the following source files at the following paths before starting the prototype:
+The source dataset files need to be stored in the following paths before starting the Data Preprocessing:
 `data/raw/mesh/desc2026.xml`
 
 `data/raw/imdb/title.basics.tsv`
 
 `data/raw/imdb/title.ratings.tsv`
 
-These source datasets can be downloaded from:
+These datasets can be downloaded from:
 - [Medical Subject Headings (MeSH)](https://healthdata.gov/NIH/Medical-Subject-Headings-MeSH-/rc3i-uvpj/about_data)
 - [IMDb non-commercial datasets](https://developer.imdb.com/non-commercial-datasets/)
 
@@ -64,27 +61,8 @@ Scripts can be run inside the container with:
 python src/<script_name>.py
 ```
 
-The scripts use manual selectors near the beginning of the respective files.
-Before execution, the selectors `DATASET`, `PLACEMENT`, and `MODE` used by the respective script need to be configured as required.
-
-## Script settings
-| Script | Selectors that may need to be changed |
-|---|---|
-| `4_compute_mesh_overlaps.py` | `MODE = "baseline"` or `"updates"` |
-| `7_compute_imdb_overlaps.py` | `MODE = "baseline"` or `"updates"` |
-| `8_assign_fragments_baseline_round_robin.py` | `DATASET` |
-| `9_bin_packing_ILP_tuple_based.py` | `DATASET`, `MODE` |
-| `10_conflict_locality_ILP.py` | `DATASET`, `MODE` |
-| `11_create_sqlite_nodes.py` | `DATASET`, `PLACEMENT`, `MODE` |
-| `12_evaluate.py` | `DATASET`, `PLACEMENT` |
-| `13_generate_workload.py` | `DATASET` |
-| `14_execute_workload.py` | `DATASET`, `PLACEMENT` |
-| `15_compute_workload_metrics.py` | `DATASET` |
-| `16_compute_workload_affinities.py` | `DATASET` |
-| `17_evaluate_affinity_locality.py` | `DATASET` |
-| `18_reoptimization.py` | `DATASET`, `MODE = "prepare"` or `"evaluate"` |
-| `19_recovery.py` | `DATASET`, `MODE = "baseline"` or `"updates"` |
-
+The scripts use manual configurable selectors near the beginning of the files.
+Before execution, the selectors `DATASET`, `PLACEMENT`, and `MODE` used by the script need to be configured.
 
 ## Execution Order
 The following pipeline shows the execution order for every desired copy factor.
