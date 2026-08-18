@@ -13,18 +13,14 @@ cluster_output_path = experiment_path("processed/imdb_clusters.csv")
 
 # Describes how the clusters of each fragmentation scheme are generated.
 SCHEME_METADATA = {
-    "title_type": {
-        "relaxation_attribute": "title_type",
-        "cluster_method": "categorical_value_cluster"
-    },
-    "decade": {
-        "relaxation_attribute": "start_year",
-        "cluster_method": "numeric_decade_cluster"
-    },
-    "primary_genre": {
-        "relaxation_attribute": "primary_genre",
-        "cluster_method": "categorical_value_cluster"
-    }
+    "title_type": {"relaxation_attribute": "title_type",
+                   "cluster_method": "categorical_value_cluster"},
+
+    "decade": {"relaxation_attribute": "start_year",
+               "cluster_method": "numeric_decade_cluster"},
+
+    "primary_genre": {"relaxation_attribute": "primary_genre",
+                      "cluster_method": "categorical_value_cluster"}
 }
 
 def create_memberships(titles_df):
@@ -50,7 +46,7 @@ def create_memberships(titles_df):
             # Reads the title's value for the current scheme
             value = getattr(row, scheme)
 
-            # Replaces missing fragmentation values with "UNKNOWN" as the scheme
+            # Replaces missing fragmentation values with "UNKNOWN"
             value = "UNKNOWN" if pd.isna(value) else str(value)
 
             # Makes the value safe for use as part of a fragment ID.
@@ -87,14 +83,8 @@ def create_fragments(memberships):
 
     # Includes cluster metadata in the grouping so that it remains explicitly
     # associated with the resulting fragment.
-    group_columns = [
-        "fragment_id",
-        "scheme",
-        "relaxation_attribute",
-        "value",
-        "cluster_head",
-        "cluster_method"
-    ]
+    group_columns = ["fragment_id", "scheme", "relaxation_attribute", "value",
+                     "cluster_head", "cluster_method"]
 
     # Each group represents here one fragment.
     for keys, group in memberships.groupby(group_columns, sort=True):
@@ -105,13 +95,11 @@ def create_fragments(memberships):
         # orders the titles by their IDs.
         unique_titles = group.drop_duplicates(subset=["title_id"]).sort_values("title_id")
 
-        # Converts the title_id column into a list of string values.
         title_ids = unique_titles["title_id"].astype(str).tolist()
 
-        # Stores the title names of the primary titles as a list of string values.
         item_names = unique_titles["primary_title"].astype(str).tolist()
 
-        # Stores aggregated fragment and its metadata
+        # Stores aggregated fragment and its metadata.
         fragment_rows.append({
             "fragment_id": fragment_id,
             "scheme": scheme,
@@ -135,7 +123,8 @@ def process_imdb_fragments(input_path, membership_output_path,
                            fragment_output_path, cluster_output_path):
     """
     Loads the prepared titles and creates their fragment memberships.
-    Afterwards the memberships are grouped into fragments and both result tables are stored.
+    Afterwards the memberships are grouped into fragments,
+    and membership, fragment, and cluster tables are stored as CSV files.
 
     Parameters:
         input_path: Path to prepared IMDb title CSV
@@ -182,17 +171,10 @@ def process_imdb_fragments(input_path, membership_output_path,
     memberships_df.to_csv(membership_output_path, index=False)
     fragments_df.to_csv(fragment_output_path, index=False)
 
-    # Defines columns stored in the cluster table
-    cluster_columns = [
-        "fragment_id",
-        "scheme",
-        "relaxation_attribute",
-        "value",
-        "cluster_head",
-        "cluster_head_source_id",
-        "cluster_method",
-        "fragment_size"
-    ]
+    # Defines columns stored in the cluster table.
+    cluster_columns = ["fragment_id", "scheme", "relaxation_attribute", "value",
+                       "cluster_head", "cluster_head_source_id", "cluster_method",
+                       "fragment_size"]
 
     fragments_df[cluster_columns].to_csv(cluster_output_path, index=False)
 

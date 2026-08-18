@@ -12,9 +12,9 @@ def expand_base_table(base_df, copy_factor, id_column, id_prefix):
 
     Parameters:
         base_df: The base DataFrame that is duplicated
-        copy_factor: Duplication number for the base DataFrame
+        copy_factor: Number of copies of the base DataFrame
         id_column: Name of the generated unique-id column
-        id_prefix: Sets a prefix for every generated ids.
+        id_prefix: Prefix for every generated id
 
     Returns:
         result: The expanded DataFrame with new unique physical item ids
@@ -52,7 +52,7 @@ def parse_item_ids(value):
         value: item ids field from CSV
 
     Returns:
-        Set of item id Strings
+        Set of item id strings
     """
 
     if pd.isna(value) or str(value).strip() == "":
@@ -74,7 +74,7 @@ def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected
                                        item_ids_column):
     """
     Validates that every expected item occurs in exactly one fragment of every scheme.
-    Overlaps only allowed between different schemes.
+    Overlaps are only allowed between different schemes.
 
     Parameters:
         fragments_df: A DataFrame that contains the fragment definitions
@@ -95,7 +95,7 @@ def validate_fragmentation_memberships(fragments_df, expected_item_ids, expected
         if row.scheme not in expected_schemes:
             continue
 
-        # gets item id for every row
+        # Iterates over every item id contained in the fragment
         for item_id in parse_item_ids(getattr(row, item_ids_column)):
             # Adds fragment_id to the item's membership set for this scheme
             memberships.setdefault(item_id, {scheme: set() 

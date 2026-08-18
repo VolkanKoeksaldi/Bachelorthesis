@@ -6,8 +6,8 @@ from contextlib import closing
 
 from database_operations import DATASETS as DATABASE_CONFIGS
 
-DATASET = "imdb" # imdb or mesh
-MODE = "updates" # baseline or updates
+DATASET = "mesh" # imdb or mesh
+MODE = "baseline" # baseline or updates
 
 
 RECOVERY_CONFIGS = {
@@ -83,7 +83,7 @@ RECOVERY_CONFIGS = {
 
 def find_nodes(placement_type, database_config, mode):
     """
-    Locates the materialized SQLite node databases for one placement type and execution node.
+    Locates the materialized SQLite node databases for one placement type and execution mode.
 
     Returns:
         node_files: Sorted list of the SQLite database paths
@@ -123,7 +123,8 @@ def find_failed_node(node_files, failed_node_id):
 
 def load_failed_items(node_file, database_config):
     """
-    Loads item ids of all items affected by simulated node failure.
+    Loads item ids from the failed node to identify all affected items.
+    The failed node is used for identifying affected items and not as a recovery source.
 
     Returns:
         Set of distinct item ids stored on the failed node
@@ -186,13 +187,13 @@ def get_recovery_path(placement_type, failed_node_id, recovery_config, mode):
 
 def parse_item_ids(value):
     """
-    Converts comma-separated item ids stored in a CSV field into a set.
+    Converts comma-separated item ids stored in a CSV field into a list.
 
     Parameters:
         value: item ids field from CSV
 
     Returns:
-        Set of item id Strings
+        List of item id Strings
     """
 
     if pd.isna(value) or str(value).strip() == "":
@@ -202,7 +203,8 @@ def parse_item_ids(value):
 
 def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, mode_config):
     """
-    Loads fragments and fragment memberships assigned to failed node.
+    Loads fragment metadata and reconstructs fragment memberships assigned to the failed node
+    from the assignment and fragment files.
     """
 
     assignment = pd.read_csv(mode_config["assignment_paths"][placement_type], 
@@ -261,13 +263,14 @@ def load_failed_fragment_info(placement_type, failed_node_id, recovery_config, m
 def recover(placement_type, recover_path, node_files, selected_nodes, 
             failed_node_id, recovery_config, database_config, mode_config):
     """
-    Reconstructs recoverable item records, fragment records, and 
-    fragment memberships of the failed node from remaining nodes.
+    Reconstructs recoverable item records from surviving nodes and rebuilds
+    the failed node's metadata and memberships from configured
+    assignment and fragment files.
 
     Returns:
         recovered_rows: Recovered item rows
-        fragment_rows: Fragment rows
-        fragment_membership_rows: Fragment-membership rows
+        fragment_rows: Reconstructed fragment rows
+        fragment_membership_rows: Reconstructed fragment-membership rows
     """
 
     item_table = database_config["item_table"]
@@ -302,7 +305,8 @@ def recover(placement_type, recover_path, node_files, selected_nodes,
 
         with sqlite3.connect(path) as conn:
             # SQLite limits the number of bound variables in one SQL statement.
-            # Therefore batches with sizes of 10.000 size.
+            # Therefore, item ids are queried in batches with sizes of max 10.000 values
+            # without exceeding SQLite's variable limit.
             sql_variable_limit = conn.getlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER)
             batch_size = min(sql_variable_limit, 10_000)
 
@@ -436,6 +440,8 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
 
         # Loads all affected items by the node failure
         failed_items = load_failed_items(failed_node, database_config)
+
+        # Starts recovery timing after affected items have been found.
         recovery_time_start = time.perf_counter()
         recovery = find_copies(node_files, failed_node, failed_items, database_config)
         # Separates recoverable and unrecoverable items from failed node
@@ -480,8 +486,7 @@ def process_recovery(dataset, recovery_config, database_config, mode_config, mod
 
     if not recovery_results:
         raise FileNotFoundError(
-            "No placement had both an assignment and usable node databases."
-        )
+            "No placement had both an assignment and usable node databases.")
 
     recovery_df = pd.DataFrame(recovery_results)
     base_output_path = recovery_config["recovery_output_path"]

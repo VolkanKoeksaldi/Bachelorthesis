@@ -4,7 +4,7 @@ import random
 from experiment_config import experiment_path
 from itertools import combinations
 
-DATASET = "imdb" # imdb or mesh
+DATASET = "mesh" # imdb or mesh
 random_seed = 42
 number_blocks_operations = 200
 number_fragment_selects = 500
@@ -56,8 +56,8 @@ def load_workload_inputs(config):
     items_df = pd.read_csv(config["items_path"], usecols=[config["item_id_column"]])
     fragments_df = pd.read_csv(config["fragments_path"], usecols=["fragment_id", "scheme"])
 
-    # Extracts distinct, non-missing item_ids by using dropna()
-    item_ids = (items_df[config["item_id_column"]].dropna().astype(str).unique().tolist())
+    # Extracts distinct, non-missing item_ids by using dropna().
+    item_ids = items_df[config["item_id_column"]].dropna().astype(str).unique().tolist()
 
     fragments_by_scheme = {scheme: group["fragment_id"].astype(str).tolist()
                            for scheme, group in fragments_df.groupby("scheme")}
@@ -79,26 +79,26 @@ def select_affinity_pairs(fragments_by_scheme, required_schemes, number_affinity
     """
     possible_pairs = []
 
-    # considers every unordered combination of two different schemes
+    # Considers every unordered combination of two different schemes.
     for scheme_i, scheme_j in combinations(required_schemes, 2):
-        # generates all possible fragment pairs for each scheme_i and scheme_j
+        # Generates all possible fragment pairs for each scheme_i and scheme_j.
         for fragment_i in fragments_by_scheme[scheme_i]:
 
             for fragment_j in fragments_by_scheme[scheme_j]:
                 
                 possible_pairs.append((fragment_i, fragment_j))
 
-    # Ensures that enough distinct fragment pairs are available
+    # Ensures that enough distinct fragment pairs are available.
     if len(possible_pairs) < number_affinity_pairs:
         raise ValueError(f"Only {len(possible_pairs)} fragment pairs "
                          f"are available, but {number_affinity_pairs} are required.")
 
-    # Then selects a random sample of unique pairs
+    # Then selects a random sample of unique pairs.
     return rng.sample(possible_pairs, number_affinity_pairs)    
 
 def generate_fragment_select(affinity_pairs, number_fragment_selects, rng):
     """
-    Generates the random FRAGMENT_SELECT operation for calculating affinity 
+    Generates random FRAGMENT_SELECT operations for calculating affinities
     from the selected affinity pairs.
 
     Parameters:
@@ -135,9 +135,9 @@ def generate_workload(item_ids, fragments_by_scheme, config,
         item_ids: Existing source-item ids
         fragments_by_scheme: Map from schemes to fragment ids
         config: Configurations for dataset-specific paths and parameters
-        number_blocks_operations: Amount of five-operation blocks
-        number_fragment_selects: Amount of FRAGMENT_SELECT operations
-        number_affinity_pairs: Amount of distinct affinity pairs
+        number_blocks_operations: Number of five-operation blocks
+        number_fragment_selects: Number of FRAGMENT_SELECT operations
+        number_affinity_pairs: Number of distinct affinity pairs
         seed: Random seed for reproducible generation
 
     Returns:
@@ -165,7 +165,7 @@ def generate_workload(item_ids, fragments_by_scheme, config,
         raise ValueError(f"No fragments were found for the required schemes: {missing_schemes}")
     
     for num in range(1, number_blocks_operations + 1):
-        # Chooses a random element
+        # Chooses a random existing item for the SELECT operation.
         existing_item = block_rng.choice(item_ids)
 
         new_item = f"{config['generated_id_prefix']}{num:03d}"
@@ -189,10 +189,10 @@ def generate_workload(item_ids, fragments_by_scheme, config,
 
         workload.append({"operation": "DELETE", config["item_id_column"]: new_item})
 
-    # Selects the random affinity pairs
+    # Selects the random affinity pairs.
     affinity_pairs = select_affinity_pairs(fragments_by_scheme, required_schemes, 
                                            number_affinity_pairs, affinity_rng)
-    # Generates FRAGMENT_SELECT operations
+
     fragment_selects = generate_fragment_select(affinity_pairs, number_fragment_selects, 
                                                 affinity_rng)
 

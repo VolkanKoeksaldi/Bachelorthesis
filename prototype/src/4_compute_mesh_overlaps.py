@@ -34,7 +34,7 @@ def compute_overlaps(fragments_df):
         A DataFrame that contains all non-empty fragment overlaps across schemes
     """
 
-    # Parses the tuple_ids once in order to calculate pairwise comparisons.
+    # Parses the tuple_ids once before calculating the pairwise intersections.
     prepared = [{"fragment_id": row.fragment_id,
                  "scheme": row.scheme,
                  "value": row.value,
@@ -56,7 +56,7 @@ def compute_overlaps(fragments_df):
         if not overlap:
             continue
 
-        # Stores only pairs with non-empty intersections
+        # Stores only pairs with non-empty intersections.
         overlap_rows.append({
             "fragment_1": f1["fragment_id"],
             "scheme_1": f1["scheme"],
@@ -87,7 +87,7 @@ def process_overlaps(input_path: Path, output_path: Path):
 
     required = {"fragment_id", "scheme", "value", "tuple_ids"}
 
-    # Verifies the Fragments columns for missing attributes.
+    # Verifies that all required fragment columns exist.
     missing = required - set(fragments_df.columns)
     if missing:
         raise ValueError(f"Fragment file is missing columns: {sorted(missing)}")

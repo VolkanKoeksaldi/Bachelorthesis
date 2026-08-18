@@ -23,7 +23,7 @@ DATASETS = {
             "subbranch_code": "TEXT",
             "metadata_json": "TEXT",
             "item_size_bytes": "INTEGER",
-            "copy_number": "INTEGER",
+            "copy_number": "INTEGER"
         },
 
         "placements": {
@@ -50,7 +50,7 @@ DATASETS = {
             "genres": "TEXT",
             "metadata_json": "TEXT",
             "item_size_bytes": "INTEGER",
-            "copy_number": "INTEGER",
+            "copy_number": "INTEGER"
         },
 
         "placements": {
@@ -462,7 +462,7 @@ def get_nodes(config, placement_type):
         if db_path.stem.replace("node_", "").isdigit()
     ]
 
-    # Sorts node ids according to its id
+    # Sorts node ids by their numeric number
     return sorted(node_ids, key=lambda node_id: int(node_id.rsplit("_", 1)[-1]))
 
 
@@ -474,7 +474,7 @@ def get_valid_tables(config):
 
 def get_valid_columns(config):
     """
-    Returns all valid columns for each table
+    Returns the columns allowed by the update and delete operations for each table.
     """
 
     additional_item_columns = set(config.get("additional_item_columns", {}).keys())
@@ -508,11 +508,7 @@ def find_item_nodes(item_id, placement_type, config, node_ids=None):
 
     nodes_array = []
 
-    all_nodes = (
-        node_ids
-        if node_ids is not None
-        else get_nodes(config, placement_type)
-    )
+    all_nodes = (node_ids if node_ids is not None else get_nodes(config, placement_type))
 
     for node_id in all_nodes:
         result = select(
@@ -536,11 +532,7 @@ def find_fragment_nodes(fragment_id, placement_type, config, node_ids=None):
     """
     nodes_array = []
 
-    all_nodes = (
-        node_ids
-        if node_ids is not None
-        else get_nodes(config, placement_type)
-    )
+    all_nodes = (node_ids if node_ids is not None else get_nodes(config, placement_type))
 
     for node_id in all_nodes:
         result = select(
@@ -578,7 +570,7 @@ def find_item_fragments(item_id, placement_type, config, item_nodes=None):
             placement_type=placement_type,
             table="fragment_members",
             where=f"{membership_item_column} = ?",
-            parameters=(item_id,),
+            parameters=(item_id,)
         )
 
         for row in result:
@@ -614,12 +606,8 @@ def select_fragments(fragment_ids, placement_type, config):
 
     # Resolves each requested fragment to its assigned storage node
     for fragment_id in requested_fragments:
-        nodes = find_fragment_nodes(
-            fragment_id,
-            placement_type,
-            config,
-            node_ids=searched_nodes,
-        )
+        nodes = find_fragment_nodes(fragment_id, placement_type, config,
+                                    node_ids=searched_nodes)
 
         if len(nodes) != 1:
             raise ValueError(
@@ -649,20 +637,17 @@ def select_fragments(fragment_ids, placement_type, config):
                 FROM fragment_members
                 WHERE fragment_id IN ({placeholders})
                 """,
-                node_fragments,
+                node_fragments
             )
 
             selected_item_ids.update(row[0] for row in cur.fetchall())
 
         conn.close()
 
-    # Collects distinct item IDs returned by all relevant nodes
-    execution_nodes = sorted(
-        fragments_in_node,
-        key=lambda node_id: int(node_id.rsplit("_", 1)[-1]),
-    )
+    # Collects and sorts distinct execution nodes in stable numeric order.
+    execution_nodes = sorted(fragments_in_node,
+                             key=lambda node_id: int(node_id.rsplit("_", 1)[-1]))
 
-    # Sort the execution nodes in a stable numeric order
     return {
         "row_count": len(selected_item_ids),
         "fragment_ids": requested_fragments,
@@ -729,7 +714,7 @@ def insert_item(item_id, item_name, fragment_ids, placement_type, config):
 
     for fragment_id in fragment_ids:
         fragment_nodes = find_fragment_nodes(fragment_id, placement_type, config, 
-                                             node_ids=searched_nodes,)
+                                             node_ids=searched_nodes)
 
         if not fragment_nodes:
             raise ValueError(f"Fragment {fragment_id} is not stored on any node.")
@@ -759,7 +744,7 @@ def insert_item(item_id, item_name, fragment_ids, placement_type, config):
             , "inserted_memberships": count_inserted_memberships, 
             "contacted_nodes": execution_nodes,
             "execution_nodes": execution_nodes,
-            "searched_nodes": searched_nodes,}
+            "searched_nodes": searched_nodes}
 
 
 def update_item(item_id, update_item_name, placement_type, config):
@@ -855,7 +840,7 @@ def delete_item(item_id, placement_type, config):
             placement_type=placement_type,
             table=item_table,
             where= f"{item_id_column} = ?",
-            parameters=(item_id,),
+            parameters=(item_id,)
         )
 
     return {"deleted_rows": deleted_rows, "deleted_memberships": deleted_memberships, 

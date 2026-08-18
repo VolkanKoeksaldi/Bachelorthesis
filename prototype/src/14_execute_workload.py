@@ -11,7 +11,7 @@ from database_operations import (DATASETS as CONFIGS, select_item, select_fragme
                                  insert_item, update_item, delete_item, find_item_nodes)
 
 DATASET = "mesh" # imdb or mesh
-PLACEMENT = "conflict_locality_ilp" # tuple_ilp, round_robin, or conflict_locality_ilp
+PLACEMENT = "tuple_ilp" # tuple_ilp, round_robin, or conflict_locality_ilp
 REPETITIONS = 5
 
 
@@ -20,7 +20,6 @@ WORKLOAD_CONFIGS = {
     "mesh": {
         "workload_path": experiment_path("workloads/mesh_workload.json"),
         "result_output": experiment_path("mesh/workload_results"),
-
         "item_id_column": "tuple_id",
         "item_name_column": "mesh_term",
         "new_item_name": "new_mesh_term"
@@ -29,7 +28,6 @@ WORKLOAD_CONFIGS = {
     "imdb": {
         "workload_path": experiment_path("workloads/imdb_workload.json"),
         "result_output": experiment_path("imdb/workload_results"),
-
         "item_id_column": "title_id",
         "item_name_column": "primary_title",
         "new_item_name": "new_primary_title"
@@ -120,7 +118,7 @@ def execute_workload(workload, placement_type, workload_config, config):
     """
     results = []
 
-    # executes the operations one after another starting with index 1.
+    # Executes the operations one after another starting with index 1.
     for operation_id, operation in enumerate(workload, start=1):
         print(f"Operation {operation_id} of {len(workload)}: {operation['operation']}")
 
@@ -165,9 +163,8 @@ def copy_node_databases(node_directory, target_directory):
     target_directory.mkdir(parents=True, exist_ok=True)
 
     for node_file in node_files:
-        # shutil used for file and folder operations.
-        # copy2 copies the database file while preserving the information of the node
-        # file into target directory
+        # shutil is used for file and directory operations.
+        # copy2 copies the database file while preserving file metadata when possible.
         shutil.copy2(node_file, target_directory / node_file.name)
 
 def create_repeated_config(database_config, placement_type, node_directory):
@@ -176,26 +173,27 @@ def create_repeated_config(database_config, placement_type, node_directory):
     to a copy of the node directory.
     """
 
-    # Creates an independent copy to avoid modifying original configurations
+    # Creates an independent copy to avoid modifying original configurations.
     repeat_config = deepcopy(database_config)
-    # Redirects selected placement to the directory that contains the copied nodes
+    # Redirects selected placement to the directory that contains the copied nodes.
     repeat_config["placements"][placement_type]["node_output"] = node_directory
 
     return repeat_config
 
 def verify_deleted_items(workload, placement_type, workload_config, database_config):
     """
-    Verifies every item targeted by a DELETE operation from all node databases.
+    Verifies that every item targeted by a DELETE operation was removed
+    from all node databases.
     """
     item_id_column = workload_config["item_id_column"]
 
-    # Extracts ids of all items targeted by DELETE operations
+    # Extracts ids of all items targeted by DELETE operations.
     deleted_item_ids = [operation[item_id_column] for operation in workload 
                         if operation["operation"] == "DELETE"]
 
     remaining_items = {}
 
-    # Checks all nodes because an item can be stored on multiple nodes
+    # Checks all nodes because an item can be stored on multiple nodes.
     for item_id in deleted_item_ids:
         remaining_nodes = find_item_nodes(item_id, placement_type, database_config)
 
@@ -234,7 +232,7 @@ def process_execute_workload(dataset, placement_type, workload_config,
     for run_number in range(1, repetitions + 1):
         print(f"\nStarting repetition {run_number} of {repetitions} for {placement_type}...")
 
-        # Uses temporary node directory
+        # Uses temporary node directory.
         # Every repetition then starts from the same unchanged database node state.
         with tempfile.TemporaryDirectory(
             prefix=f"{dataset}_{placement_type}_") as temp_directory:
@@ -280,7 +278,6 @@ def main():
     results = process_execute_workload(dataset=DATASET, placement_type=PLACEMENT, 
                                        workload_config=workload_config,
                                        database_config=database_config, repetitions=REPETITIONS)
-
 
     print(f"Executed database operations: {len(results)}")
 

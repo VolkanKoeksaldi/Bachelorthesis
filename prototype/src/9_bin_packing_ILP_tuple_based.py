@@ -30,8 +30,8 @@ DATASETS = {
                         "results/mesh/tuple_ilp/node_loads.csv"),
                     "solver_result_path": experiment_path(
                         "processed/mesh/mesh_baseline_solver_result_tuple_ilp.csv")
-
                 },
+
                 "updates": {
                     "fragments_path": experiment_path(
                         "reoptimization/mesh_fragments_updates.csv"),
@@ -66,6 +66,7 @@ DATASETS = {
                 "solver_result_path": experiment_path(
                     "processed/imdb/imdb_baseline_solver_result_tuple_ilp.csv")
             },
+
             "updates": {
                 "fragments_path": experiment_path(
                     "reoptimization/imdb_fragments_updates.csv"),
@@ -91,7 +92,7 @@ def parse_item_ids(item_ids_string):
         item_ids_string: item ids field from CSV
     
     Returns:
-        Set of item id Strings
+        Set of item ID strings
     """
 
     if pd.isna(item_ids_string) or item_ids_string == "":
@@ -123,16 +124,16 @@ def load_fragments(fragments_path, item_ids_column):
 
     fragments_df = pd.read_csv(fragments_path)
 
-    # Converts item ids of every fragment into a set and stores the result in a new column
+    # Converts item ids of every fragment into a set and stores the result in a new column.
     fragments_df["item_id_set"] = fragments_df[item_ids_column].apply(parse_item_ids)
 
-    # Removes empty fragments
+    # Removes empty fragments.
     fragments_df = fragments_df[fragments_df["item_id_set"].map(len) > 0].copy()
 
-    # Constructs a dictionary that maps fragment id to the set of items contained in the fragment
+    # Constructs a dictionary that maps fragment id to the set of items contained in the fragment.
     fragment_item_ids = {row.fragment_id: row.item_id_set for row in fragments_df.itertuples()}
     
-    # Calculates the weight of every fragment
+    # Calculates the weight of every fragment.
     fragment_weights = {fragment_id: len(item_ids) for fragment_id, 
                         item_ids in fragment_item_ids.items()}
     
@@ -165,7 +166,7 @@ def item_to_fragments(fragment_item_ids):
     # Processes every item contained in every fragment from fragment_item_ids dictionary
     for fragment_id, item_ids in fragment_item_ids.items():
         for item_id in item_ids:
-            # if item has not been seen encountered, an empty list is created for its
+            # if item has not been encountered before, an empty list is created for its
             # fragment memberships
             if item_id not in item_fragments:
                 item_fragments[item_id] = []
@@ -176,8 +177,9 @@ def item_to_fragments(fragment_item_ids):
 
 def check_replication_feasibility(item_fragments, replication_factor):
     """
-    Checks whether every item is in atleast "replication_factor" amount of fragments.
-    If not, then replication is not possible as every fragment is assigned to one node. 
+    Checks whether every item belongs to at least "replication_factor" distinct fragments.
+    If not, then replication factor cannot be fulfilled because
+    every fragment is assigned to exactly one node. 
 
     Parameters:
         item_fragments: A map from every item to fragments they belong to
@@ -214,7 +216,7 @@ def assignments(fragment_ids, fragment_weights, node_ids, x):
 
     assignment_rows = []
 
-    # Finds all nodes to which current fragment is assigned on.
+    # Finds all nodes to which the current fragment is assigned.
     # The resulting assigned_nodes list should only contain one node, 
     # because Constraint 2 assigns every fragment exactly once.
     for fragment_id in fragment_ids:
@@ -243,6 +245,7 @@ def compute_loads(fragment_ids, pattern_ids, pattern_weights, node_ids, x, y, z,
         fragment_ids: IDs of every fragment
         pattern_ids: Every membership pattern id
         pattern_weights: Map from each pattern id to their number of represented items
+        node_ids: IDs of every available node
         x: Fragment-assignment variable
         y: Node-usage variable
         z: Membership-pattern availability variable
@@ -316,7 +319,7 @@ def process_tuple_ilp(config, mode):
     node_ids = [f"node_{i}" for i in range(1, num_nodes + 1)]
 
     # Loads fragment data and calculates fragment weights.
-    fragments_df, fragment_item_ids, fragment_weights = load_fragments(fragments_path, 
+    fragments_df, fragment_item_ids, fragment_weights = load_fragments(fragments_path,
                                                                        item_ids_column)
 
     item_fragments = item_to_fragments(fragment_item_ids)
@@ -326,9 +329,8 @@ def process_tuple_ilp(config, mode):
 
     total_fragment_weight = sum(fragment_weights.values())
 
-    fragments_per_item = [len(fragment_ids_for_items)
-                                    for fragment_ids_for_items
-                                    in item_fragments.values()]
+    fragments_per_item = [len(fragment_ids_for_items) for fragment_ids_for_items
+                          in item_fragments.values()]
 
     print("Tuple-based ILP: Input")
     print("--------------------------------")
@@ -346,11 +348,11 @@ def process_tuple_ilp(config, mode):
 
     total_num_unique_items = len(item_ids)
 
-    # Constraint 6 requires that every item is available on atleast m nodes.
+    # Constraint 6 requires that every item is available on at least m nodes.
     # Shows the minimum total number of item copies that must be stored across all nodes.
-    min_replicated_weight = (replication_factor * total_num_unique_items)
+    min_replicated_weight = replication_factor * total_num_unique_items
 
-    average_required_tuple_load = (min_replicated_weight / num_nodes)
+    average_required_tuple_load = min_replicated_weight / num_nodes
 
     # Calculates lower bound for node capacity.
     capacity_lower_bound = max(max_fragment_weight, math.ceil(min_replicated_weight / num_nodes))
@@ -372,7 +374,7 @@ def process_tuple_ilp(config, mode):
 
     print(f"Largest fragment weight: {max_fragment_weight}")
     print(f"Minimum number of tuple copies needed on nodes: {min_replicated_weight}")
-    print(f"Average node load: {average_required_tuple_load:.2f}")
+    print(f"Average required load across available nodes: {average_required_tuple_load:.2f}")
     print(f"Capacity lower bound: {capacity_lower_bound}")
     print(f"Calculated node capacity: {node_capacity}")
 
@@ -393,13 +395,13 @@ def process_tuple_ilp(config, mode):
 
     patterns = list(pattern_for_items.keys())
 
-    # Assigns id to each membership pattern
+    # Assigns an id to each membership pattern.
     pattern_ids = list(range(len(patterns)))
 
-    # Maps pattern id to fragments belonging to pattern
+    # Maps each pattern id to its containing fragments.
     pattern_fragments = {pattern_id: patterns[pattern_id] for pattern_id in pattern_ids}
 
-    # Pattern weights are calculated by the amount of items represented by pattern
+    # Pattern weights correspond to the number of items represented by each pattern.
     pattern_weights = {pattern_id: len(pattern_for_items[patterns[pattern_id]]) 
                        for pattern_id in pattern_ids}
 
@@ -455,7 +457,7 @@ def process_tuple_ilp(config, mode):
     print(f"Minimum number of used nodes: {min_used_nodes}")
 
     # Breaks symmetry:
-    # Nodes are interchangable. These constraints reduce equivalent solutions
+    # Nodes are interchangeable. These constraints reduce equivalent solutions
     # and help the solver search more efficiently.
     for curr_node, next_node in zip(node_ids, node_ids[1:]):
         # Used nodes appear before unused nodes.
@@ -482,7 +484,7 @@ def process_tuple_ilp(config, mode):
 
             # Constraint (4)
             # If at least one containing fragment is assigned to node, fragment_sum is positive.
-            # Because z is binary, because of inequality z[p][k] = 1 is forced.
+            # Because z is binary, a positive fragment_sum forces z[p][k] = 1.
             model += (fragment_sum <= pattern_size * z[pattern_id][node_id],
                         f"Availability_lower_{pattern_id}_{node_id}")
 
@@ -505,18 +507,16 @@ def process_tuple_ilp(config, mode):
 
     start_time = time.perf_counter()
 
-    # Configures HiGHS solver
-    # msg=True: Display solver log
-    # threads=8: allows solver to use up to 8 CPU threads
-    # timeLimit=1800: stops solver after 1800 seconds
-    # parallel="on": Enables parallel solver execution
-    # mip_heuristic_effort=0.5: Increases effort spent on heuristics 
-    #                           for finding feasible solutions 
-    #                           (finds a feasible solution quicker)
-    # mip_heuristic_run_shifting=True: Enables shifting heuristics for quicker 
-    #                                  finding feasible solutions
-    # mip_heuristic_run_zi_round=True: Enable ZI round heuristics, which attempts 
-    #                                  to obtain feasible solutions by rounding a solution
+    # Configures HiGHS solver.
+    # msg=True: Display solver log.
+    # threads=8: allows solver to use up to 8 CPU threads.
+    # timeLimit=1800: stops solver after 1800 seconds.
+    # parallel="on": Enables parallel solver execution.
+    # mip_heuristic_effort=0.5: Increases effort spent on MIP heuristics
+    #                           for finding feasible solutions.
+    # mip_heuristic_run_shifting=True: Enables shifting heuristics.
+    # mip_heuristic_run_zi_round=True: Enable ZI round heuristics, which attempt
+    #                                  to obtain feasible solutions by rounding a solution.
     solver = pulp.HiGHS(msg=True, threads=8, timeLimit=1800, parallel="on", 
                         mip_heuristic_effort=0.5, 
                         mip_heuristic_run_shifting=True, mip_heuristic_run_zi_round=True)

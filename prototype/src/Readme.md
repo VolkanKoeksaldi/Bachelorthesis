@@ -13,7 +13,7 @@ The prototype preprocesses MeSH and IMDb data, creates three horizontal fragment
 The SQLite database simulates database nodes locally within a Docker container. The prototype evaluates placement behavior, but does not simulate network latency, distributed transactions, or distributed database servers.
 
 The copy factors x1, x2, x4, and x8 increase the number of items and fragment weights, while preserving the fragment categories, overlap-pair structure, and membership-pattern structure.
-Therefore, these runs evaluate the methods for scalability of physical dataset sizes.
+Therefore, these runs evaluate the scalability of the placement methods with increasing dataset sizes.
 The evaluations assumed `r=m=3`.
 
 ## Main configuration
@@ -32,19 +32,19 @@ Place the following source files at the following paths before starting the prot
 
 `data/raw/imdb/title.ratings.tsv`
 
-These source datasets are available from:
+These source datasets can be downloaded from:
 - [Medical Subject Headings (MeSH)](https://healthdata.gov/NIH/Medical-Subject-Headings-MeSH-/rc3i-uvpj/about_data)
 - [IMDb non-commercial datasets](https://developer.imdb.com/non-commercial-datasets/)
 
 The IMDb downloads are provided as compressed `.tsv.gz` files. Therefore, these need to be decompressed to `.tsv` files beforehand.
 
-## Docker Execution on Windows Powershell
+## Docker Execution on Windows PowerShell
 Open PowerShell in the `prototype` directory and build the image:
 ```powershell
 docker build -t bachelor-prototype .
 ```
 
-Then create an Output-Volume. The following example is for an x1 run:
+Then create an output volume. The following example is for an x1 run:
 
 ```powershell
 docker volume create bachelor-x1-output
@@ -64,7 +64,8 @@ Scripts can be run inside the container with:
 python src/<script_name>.py
 ```
 
-The scripts use manual selectors near the beginning of the respective files. Setting `DATASET`, `PLACEMENT`, and `MODE` is required before each execution.
+The scripts use manual selectors near the beginning of the respective files.
+Before execution, the selectors `DATASET`, `PLACEMENT`, and `MODE` used by the respective script need to be configured as required.
 
 ## Script settings
 | Script | Selectors that may need to be changed |
@@ -147,22 +148,28 @@ For each dataset:
 5. Run script 18 with `MODE = "evaluate"`.
 6. Run script 17 to evaluate locality for the initial and reoptimized assignments.
 
-###  6. Recovery
+### 6. Recovery
 For each dataset, run `19_recovery.py` twice:
 
 1. once with `MODE = "baseline"`; and
 2. once with `MODE = "updates"`.
 
-The recovery simulation treats `node_1` as unavailable. The file is retained only to identify whether the affected items could be recovered.
+The recovery simulation treats `node_1` as unavailable as a recovery source. The file is retained only to identify the items affected by the simulated failure.
 
 ## Copying the Results from the Container
+To reduce the storage required when copying the output to the host, the following command can optionally be executed to delete the generated `*.db` files:
+
+```powershell
+docker exec bachelor-x1 sh -c "find /app/output -type f -name '*.db' -delete"
+```
+
 After the pipeline has finished, exit the container:
 
 ```bash
 exit
 ```
 
-Copy the output to the host. The following example is for x1:
+Then you can copy the output to the host. The following example is for x1:
 
 ```powershell
 docker cp bachelor-x1:/app/output/. .\docker_results\x1\

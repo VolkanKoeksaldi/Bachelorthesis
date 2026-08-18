@@ -12,16 +12,18 @@ AFFINITY_LOCALITY_CONFIGS = {
         "assignment_paths": {
             "round_robin" : experiment_path(
                 "processed/mesh_fragment_assignment_round_robin.csv"),
+
             "tuple_ilp": experiment_path(
                 "processed/mesh_fragment_assignment_tuple_ilp.csv"),
+
             "conflict_locality_ilp": experiment_path(
                 "processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
+
             "conflict_locality_ilp_updated": experiment_path(
-                "reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv"
-            ),
+                "reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv"),
+
             "tuple_ilp_updated": experiment_path(
-                "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"
-            )
+                "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv")
         }
     },
 
@@ -31,16 +33,18 @@ AFFINITY_LOCALITY_CONFIGS = {
         "assignment_paths": {
             "round_robin" : experiment_path(
                 "processed/imdb_fragment_assignment_round_robin.csv"),
+
             "tuple_ilp": experiment_path(
                 "processed/imdb_fragment_assignment_tuple_ilp.csv"),
+
             "conflict_locality_ilp": experiment_path(
                 "processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
+
             "conflict_locality_ilp_updated": experiment_path(
-                "reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv"
-            ),
+                "reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv"),
+
             "tuple_ilp_updated": experiment_path(
-                "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"
-            )
+                "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv")
         }
     }
 }
@@ -60,8 +64,6 @@ def load_affinities(path):
     if not path.exists():
         raise FileNotFoundError(f"Affinity file not found: {path}")
 
-    # Fragment ids are read as strings so that they have the same data type as the ids
-    # in the assignment file
     affinity_df = pd.read_csv(path, dtype={"fragment_i": "string", "fragment_j": "string"})
 
     required_columns = {"fragment_i", "fragment_j", "affinity"}
@@ -78,7 +80,7 @@ def load_affinities(path):
     affinity_df["affinity"] = pd.to_numeric(affinity_df["affinity"], errors="raise")
 
     if (affinity_df["affinity"] <= 0).any():
-        raise ValueError(f"Affinity file contains a negative affinity value: {path}")
+        raise ValueError(f"Affinity file contains zero or negative affinity value: {path}")
 
     return affinity_df
 
@@ -97,7 +99,6 @@ def load_assignment(assignment_path):
     if not assignment_path.exists():
         raise FileNotFoundError(f"Assignment file not found: {assignment_path}")
 
-    # Fragment ids are read as strings to match affinity file
     assignment_df = pd.read_csv(assignment_path, dtype={"fragment_id": "string"})
 
     required_columns = {"fragment_id", "node_id"}
@@ -108,7 +109,7 @@ def load_assignment(assignment_path):
         raise ValueError(f"There are missing columns in assignment file: "
                          f"{assignment_path}: {sorted(missing_columns)}")
 
-    # Identifies fragment ids that appear multiple times in the assignment
+    # Identifies fragment ids that appear multiple times in the assignment.
     duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
 
     if duplicate_fragments.any():
@@ -122,7 +123,7 @@ def load_assignment(assignment_path):
 
 def evaluate(placement_type, assignment_df, affinity_df):
     """
-    Evaluates amount of affine fragment pairs assigned to the same node of one placement.
+    Evaluates the number of affinity fragment pairs assigned to the same node of one placement.
 
     The locality ratio is calculated as the proportion of total affinity weight
     whose pairs are assigned to the same node.
@@ -158,7 +159,7 @@ def evaluate(placement_type, assignment_df, affinity_df):
         node_i = fragment_node[fragment_i]
         node_j = fragment_node[fragment_j]
 
-        # checks whether fragment_i and fragment_j are assigned on the same node
+        # Checks whether fragment_i and fragment_j are assigned on the same node.
         if node_i == node_j:
             same_node = True
         else:
@@ -178,20 +179,20 @@ def evaluate(placement_type, assignment_df, affinity_df):
 
     same_node_mask = details_df["same_node"]
 
-    # COunts colocated and separated distinct affinity pairs.
+    # Counts colocated and separated distinct affinity pairs.
     same_node_pairs = int(same_node_mask.sum())
     separated_pairs = (len(details_df) - same_node_pairs)
 
-    # Sum of affinities of all pairs
+    # Sum of affinities of all pairs.
     total_affinity = details_df["affinity"].sum()
 
-    # Sum of affinities whose fragments are placed together on the same node
+    # Sum of affinities whose fragments are placed together on the same node.
     colocated_affinity = details_df.loc[same_node_mask, "affinity"].sum()
 
-    # Sum of affinities whose fragments are placed on different nodes
+    # Sum of affinities whose fragments are placed on different nodes.
     separated_affinity = details_df.loc[details_df["same_node"]==False, "affinity"].sum()
 
-    # Locality ratio represents workload weighted share of affinity that is colocated
+    # Locality ratio represents workload weighted share of affinity that is colocated.
     if total_affinity == 0:
         locality_ratio = 0
     else:
@@ -245,7 +246,7 @@ def process_evaluate_affinity_locality(dataset, config):
     summary_array = []
     detail_array = []
 
-    # same workload affinities are used for every placement type
+    # Same workload affinities are used for every placement type.
     for placement_type, path in config["assignment_paths"].items():
         if not path.exists():
             print(f"Skipping {placement_type} because assignment file not found: {path}")

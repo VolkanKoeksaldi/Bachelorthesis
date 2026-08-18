@@ -12,11 +12,11 @@ basics_path = prototype_dir / "data" / "raw" / "imdb" / "title.basics.tsv"
 ratings_path = prototype_dir / "data" / "raw" / "imdb" / "title.ratings.tsv"
 output_path = experiment_path("processed/imdb_titles.csv")
 
-# Columns read from title.basics.tsv
+# Columns read from title.basics.tsv.
 basics_column = ["tconst", "titleType", "primaryTitle", "originalTitle", "isAdult",
                  "startYear", "endYear", "runtimeMinutes", "genres"]
 
-# Columns read from title.ratings.tsv
+# Columns read from title.ratings.tsv.
 ratings_column = ["tconst", "averageRating", "numVotes"]
 
 # If set to None, titles are not filtered by their type.
@@ -29,7 +29,7 @@ def read_tsv(path: Path, use_columns=None):
 
     Parameters:
         path: Input TSV file path
-        use_columns: Defines columns that need to be read optionally
+        use_columns: Optional list of columns that should be read
     
     Returns:
         A DataFrame that contains the selected columns
@@ -37,8 +37,8 @@ def read_tsv(path: Path, use_columns=None):
 
     # Loads selected tsv columns and converts IMDb \N values into missing values.
     # sep="\t" separates columns with a tabulator.
-    # Data compressions are automatically seen by applying compression="infer".
-    # low_memory=False -> pandas reads the file in chunks, without mixed type inference.
+    # compression="infer" automatically infers compression from the file extension.
+    # low_memory=False avoids mixed type inference.
     return pd.read_csv(path, sep="\t", usecols=use_columns, na_values="\\N", 
                        compression="infer", low_memory=False)
 
@@ -58,7 +58,6 @@ def clean_values(value):
     if pd.isna(value):
         return None
 
-    # Converts values into Python values
     if hasattr(value, "item"):
         return value.item()
     
@@ -187,7 +186,7 @@ def prepare_titles():
         raise ValueError(f"IMDb contains {len(data)} titles, but {SOURCE_ROWS} are expected.")
     base_df = data.sample(n=SOURCE_ROWS, random_state=IMDB_RANDOM_SEED).reset_index(drop = True)
 
-    # Converts integer valued information to pandas integer type.
+    # Converts integer valued attributes to pandas integer type.
     base_df["isAdult"] = pd.to_numeric(base_df["isAdult"], errors="coerce").astype("Int64")
     base_df["startYear"] = pd.to_numeric(base_df["startYear"], errors="coerce").astype("Int64")
     base_df["endYear"] = pd.to_numeric(base_df["endYear"], errors="coerce").astype("Int64")
@@ -201,7 +200,7 @@ def prepare_titles():
     # Calculates the decade from the start year.
     base_df["decade"] = base_df["startYear"].apply(compute_decade)
 
-    # Calculates primary_genre from the first listed genre
+    # Calculates primary_genre from the first listed genre.
     base_df["primary_genre"] = base_df["genres"].apply(get_primary_genre)
 
     # Adds the metadata json as information.
@@ -235,15 +234,10 @@ def prepare_titles():
     if not base_df["source_title_id"].is_unique:
         raise ValueError("Selected IMDb source_title_id values are not unique.")
 
-    # Expands the base DataFrame copy factor amount of times
-    result = expand_base_table(
-        base_df,
-        copy_factor,
-        id_column="title_id",
-        id_prefix="IT"
-    )
+    # Expands the base DataFrame according to the copy factor.
+    result = expand_base_table(base_df, copy_factor, id_column="title_id", id_prefix="IT")
 
-    # Calculates the item size in bytes
+    # Calculates the item size in bytes.
     result["item_size_bytes"] = result.apply(calculate_item_size, axis=1)
 
     

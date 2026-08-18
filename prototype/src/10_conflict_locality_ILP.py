@@ -98,7 +98,7 @@ def parse_item_ids(item_ids_string):
         item_ids_string: item ids field from CSV
 
     Returns:
-        Set of item id Strings
+        Set of item ID strings
     """
 
     if pd.isna(item_ids_string) or item_ids_string == "":
@@ -129,7 +129,6 @@ def load_fragments(fragments_path, item_ids_column):
     
     fragments_df = pd.read_csv(fragments_path)
 
-    # Verifies scheme by checking whether every required column for calculation is existent
     required_columns = {"fragment_id", item_ids_column}
     missing_columns = required_columns - set(fragments_df.columns)
 
@@ -202,7 +201,7 @@ def validate_conflicts(fragment_item_ids, conflict_pairs, num_nodes):
                     for fragment_i, fragment_j in conflict_pairs
                     if fragment_i != fragment_j}
 
-    # Conflict pairs only reference fragments when they are part of the model
+    # Checks whether all loaded conflict pairs reference fragments that are a part of the model
     known_fragments = set(fragment_item_ids)
     unknown_pairs = {pair for pair in loaded_pairs 
                      if pair[0] not in known_fragments or pair[1] not in known_fragments}
@@ -286,7 +285,7 @@ def compute_loads(fragment_ids, fragment_weights, node_ids, x, y, node_capacity)
         assigned_fragments = [fragment_id for fragment_id in fragment_ids
                               if pulp.value(x[fragment_id][node_id]) > 0.5]
 
-        # Adds weight of every assigned node as node_load
+        # Adds the weights of all assigned fragments to calculate the node_load
         node_load = sum(fragment_weights[fragment_id] for fragment_id in assigned_fragments)
 
         load_rows.append({
@@ -319,7 +318,6 @@ def load_overlap_pairs(overlaps_path):
 
     overlap_file = pd.read_csv(overlaps_path)
 
-    # Verifies expected overlap-file scheme:
     required_columns = {"fragment_1", "fragment_2", "overlap_size"}
     missing_columns = required_columns - set(overlap_file.columns)
 
@@ -327,7 +325,7 @@ def load_overlap_pairs(overlaps_path):
         raise ValueError(f"Overlap file {overlaps_path} has some missing columns: "
                          f"{missing_columns}")
 
-    # Filters the overlap size, so that empty overlaps are removed
+    # Removes rows with empty or negative overlaps
     overlap_file = overlap_file[overlap_file["overlap_size"] > 0].copy()
 
     # Normalizes pairs by removing self-pairs (i, i) and duplicates.
@@ -358,7 +356,6 @@ def load_affinity(affinity_path, valid_fragment_ids):
     
     affinity_df = pd.read_csv(affinity_path)
 
-    # Verifies the expected affinity file scheme
     required_columns = {"fragment_i", "fragment_j", "affinity"}
     missing_columns = required_columns - set(affinity_df.columns)
 
@@ -380,19 +377,19 @@ def load_affinity(affinity_path, valid_fragment_ids):
                              f"There are invalid values for ({fragment_i}, {fragment_j})"
                              f" with value {affinity}")
 
-        # An affinity of zero does not affect the objective function
+        # An affinity of zero does not affect the objective function.
         if affinity == 0:
             continue
 
         if fragment_i == fragment_j:
             continue
 
-        # Ignores pairs that are not valid
+        # Ignores pairs that are not valid.
         if fragment_i not in valid_fragment_ids or fragment_j not in valid_fragment_ids:
             unavailable_pairs += 1
             continue
 
-        # normalizes pair order
+        # Normalizes pair order.
         pair = tuple(sorted((fragment_i, fragment_j)))
 
         # adds duplicated affinity observations
@@ -402,7 +399,7 @@ def load_affinity(affinity_path, valid_fragment_ids):
 
 def process_conflict_locality_ilp(config, mode):
     """
-    Builds and solved the conflict-locality ILP for the selected dataset and mode.
+    Builds and solves the conflict-locality ILP for the selected dataset and mode.
     Stores the resulting assignments, node loads and statistics as CSV files.
 
     Parameters:
@@ -460,7 +457,8 @@ def process_conflict_locality_ilp(config, mode):
     # Calculates sum of all affinity values
     gamma_sum = sum(affinities.values())
 
-    # Affinity pair contributes 2*affinity to objective.
+    # A separated affinity pair contributes 2*affinity to the objective.
+    # Colocated affinity pair contributes 0 to the objective.
     # Gamma is larger than max possible total separation penalty for affinities.
     # Gives node minimization priority over affinity locality.
     gamma = 1 + 2*gamma_sum
@@ -488,14 +486,11 @@ def process_conflict_locality_ilp(config, mode):
     if node_capacity_config is None:
         node_capacity = calculate_node_capacity(
             reference_fragments_path=config["capacity_reference_path"],
-            item_ids_column=item_ids_column,
-            num_nodes=num_nodes,
-            capacity_buffer=capacity_buffer
-        )
+            item_ids_column=item_ids_column, num_nodes=num_nodes,
+            capacity_buffer=capacity_buffer)
     else:
         node_capacity = node_capacity_config
 
-    # checks whether capacity is smaller than lower bound
     if node_capacity < min_capacity:
         raise ValueError(f"Configured node capacity {node_capacity} is "
                          f"smaller than minimum node capacity {min_capacity}.")
@@ -517,7 +512,6 @@ def process_conflict_locality_ilp(config, mode):
 
     print("\nLoaded affinities:")
 
-    # Displays short preview of 10 affinity pairs
     affinity_preview = 10
 
     for pair, affinity in list(affinities.items())[:affinity_preview]:
@@ -592,8 +586,9 @@ def process_conflict_locality_ilp(config, mode):
     
     # Constraint (13)
     # Two fragments that have an overlap cannot be assigned to the same node.
-    # That means if node k is used, then the right-hand side also equals one,
-    # therefore at most one of the two assignment variables can be equal one.
+    # That means if node k is used, then y[k] = 1 and at most one of two
+    # fragments can be assigned to it.
+    # If y[k] = 0, neither fragment can be assigned to node k.
     for node_id in node_ids:
         for fragment_i, fragment_j in conflict_pairs:
             model += (x[fragment_i][node_id] + x[fragment_j][node_id] <= y[node_id],
@@ -621,17 +616,16 @@ def process_conflict_locality_ilp(config, mode):
 
     start_time = time.perf_counter()
 
-    # Configures HiGHS solver and MIP stands for Mixed-Integer Programming
-    # msg=True: Display solver log
-    # threads=8: allows solver to use up to 8 CPU threads
-    # timeLimit=1800: stops solver after 1800 seconds
-    # parallel="on": Enables parallel solver execution
-    # mip_heuristic_effort=0.5: Increases effort spent on heuristics 
-    #                           for finding feasible solutions (finds a feasible solution quicker)
-    # mip_heuristic_run_shifting=True: Enables shifting heuristics for quicker finding feasible 
-    #                                  solutions
-    # mip_heuristic_run_zi_round=True: Enable ZI round heuristics, which attempts to obtain 
-    #                                  feasible solutions by rounding a LP solution
+    # Configures HiGHS solver.
+    # msg=True: Display solver log.
+    # threads=8: allows solver to use up to 8 CPU threads.
+    # timeLimit=1800: stops solver after 1800 seconds.
+    # parallel="on": Enables parallel solver execution.
+    # mip_heuristic_effort=0.5: Increases effort spent on MIP heuristics
+    #                           for finding feasible solutions.
+    # mip_heuristic_run_shifting=True: Enables shifting heuristics.
+    # mip_heuristic_run_zi_round=True: Enable ZI round heuristics, which attempt
+    #                                  to obtain feasible solutions by rounding a solution.
     solver = pulp.HiGHS(msg=True, threads=8, timeLimit=1800, parallel="on", 
                         mip_heuristic_effort=0.5, mip_heuristic_run_shifting=True, 
                         mip_heuristic_run_zi_round=True)
@@ -640,14 +634,8 @@ def process_conflict_locality_ilp(config, mode):
 
     # Accesses model to retrieve status and MIP information
     highs_model = model.solverModel
-
-    # retrieves status
     highs_status = highs_model.getModelStatus()
-
-    # Converts internal status into string
     highs_status_text = highs_model.modelStatusToString(highs_status)
-
-    # retrieves additional solver information like dual bound and remaining MIP gap
     highs_info = highs_model.getInfo()
 
     # checks whether variables received a value from solver

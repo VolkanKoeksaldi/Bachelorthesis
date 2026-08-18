@@ -5,7 +5,7 @@ import pandas as pd
 
 from experiment_config import REOPTIMIZATION_INSERT_COUNT, experiment_path
 
-DATASET = "imdb" # imdb or mesh
+DATASET = "mesh" # imdb or mesh
 MODE = "prepare" # prepare or evaluate
 
 
@@ -26,7 +26,7 @@ CONFIGS = {
         "new_item_prefix": "MT_RE_",
         "new_item_name_prefix": "Reoptimization MeSH Term",
         "insert_count": REOPTIMIZATION_INSERT_COUNT,
-        "prefer_new_conflicts": False, # MeSH fragments already overlap.
+        "prefer_new_conflicts": False, # False: MeSH fragments already overlap.
                                        # Therefore, insertions increase existing overlap sizes 
                                        # instead of creating new conflict pairs.
 
@@ -38,15 +38,13 @@ CONFIGS = {
             "tuple_ilp":{
                 "baseline": experiment_path("processed/mesh_fragment_assignment_tuple_ilp.csv"),
                 "updates": experiment_path(
-                    "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv")
-            },
+                    "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv")},
 
             "conflict_locality_ilp":{
                 "baseline": experiment_path(
                     "processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
                 "updates": experiment_path(
-                    "reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv")
-            }
+                    "reoptimization/mesh_fragment_assignment_conflict_locality_ilp_updated.csv")}
         },
 
         "comparison_path": experiment_path("reoptimization/mesh_reoptimization_compared.csv"),
@@ -61,14 +59,13 @@ CONFIGS = {
             "tuple_ilp":{
                 "baseline": experiment_path("results/mesh/tuple_ilp/node_loads.csv"),
                 "updates": experiment_path(
-                    "reoptimization/mesh/tuple_ilp/node_loads_updated.csv")
-            },
+                    "reoptimization/mesh/tuple_ilp/node_loads_updated.csv")},
+
             "conflict_locality_ilp": {
                 "baseline": experiment_path(
                     "results/mesh/conflict_locality_ilp/node_loads.csv"),
                 "updates": experiment_path(
-                    "reoptimization/mesh/conflict_locality_ilp/node_loads_updated.csv")
-            }
+                    "reoptimization/mesh/conflict_locality_ilp/node_loads_updated.csv")}
         }
     },
 
@@ -88,9 +85,8 @@ CONFIGS = {
         "new_item_prefix": "T_RE_",
         "new_item_name_prefix": "Reoptimization Title",
         "insert_count": REOPTIMIZATION_INSERT_COUNT,
-        "prefer_new_conflicts": True, # Prefers fragments that did not previously overlap
-                                      # this way inserted items can 
-                                      # create new conflict pairs.
+        "prefer_new_conflicts": True, # True: Prefers fragments that did not previously overlap
+                                      # so that inserted items can create new conflict pairs.
 
         "expected_schemes": ["title_type", "decade", "primary_genre"],
         
@@ -100,15 +96,13 @@ CONFIGS = {
             "tuple_ilp":{
                 "baseline": experiment_path("processed/imdb_fragment_assignment_tuple_ilp.csv"),
                 "updates": experiment_path(
-                    "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv")
-            },
+                    "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv")},
 
             "conflict_locality_ilp":{
                 "baseline": experiment_path(
                     "processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
                 "updates": experiment_path(
-                    "reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv")
-            }
+                    "reoptimization/imdb_fragment_assignment_conflict_locality_ilp_updated.csv")}
         },
 
         "comparison_path": experiment_path("reoptimization/imdb_reoptimization_compared.csv"),
@@ -123,14 +117,13 @@ CONFIGS = {
             "tuple_ilp":{
                 "baseline": experiment_path("results/imdb/tuple_ilp/node_loads.csv"),
                 "updates": experiment_path(
-                    "reoptimization/imdb/tuple_ilp/node_loads_updated.csv")
-            },
+                    "reoptimization/imdb/tuple_ilp/node_loads_updated.csv")},
+
             "conflict_locality_ilp": {
                 "baseline": experiment_path(
                     "results/imdb/conflict_locality_ilp/node_loads.csv"),
                 "updates": experiment_path(
-                    "reoptimization/imdb/conflict_locality_ilp/node_loads_updated.csv")
-            }
+                    "reoptimization/imdb/conflict_locality_ilp/node_loads_updated.csv")}
         }
     }
 }
@@ -140,7 +133,14 @@ CONFIGS = {
 
 def load_fragments(path, config):
     """
-    Loads fragment data used for preparing the update
+    Loads and validates fragment data used for preparing the update.
+
+    Parameters:
+        path: Path to the fragment CSV
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        fragments_df: A DataFrame that contains the fragment data
     """
 
     if not path.exists():
@@ -167,13 +167,13 @@ def load_fragments(path, config):
 
 def parse_item_ids(value):
     """
-    Converts comma-separated item ids stored in a CSV field into a set.
+    Converts comma-separated item ids stored in a CSV field into a list.
 
     Parameters:
-        item_ids_string: item ids field from CSV
+        value: item ids field from CSV
 
     Returns:
-        Set of item id Strings
+        List of item id strings
     """
 
     if pd.isna(value) or str(value).strip() == "":
@@ -184,6 +184,14 @@ def parse_item_ids(value):
 def validate_target_fragments(fragments_df, target_fragments, config):
     """
     Verifies that exactly one target fragment is selected per scheme.
+
+    Parameters:
+        fragments_df: A DataFrame that contains the available fragments
+        target_fragments: The fragment ids that are selected as insertion targets
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        target_fragments: A validated list of the target fragment ids
     """
 
     fragment_id_column = config["fragment_id"]
@@ -219,8 +227,12 @@ def choose_target_fragments(fragments_df, config):
     For IMDb, a combination without previous overlaps is preferred, that way
     inserted items can create new conflict pairs.
 
-    If a baseline assignment is available, combinations containing colocated fragments
+    For IMDb, if a baseline assignment is available, combinations containing colocated fragments
     receive priority.
+
+    Parameters:
+        fragments_df: A DataFrame that contains the baseline fragments
+        config: Configurations for dataset-specific paths and parameters
 
     Returns:
         Validated list that contains one target fragment per scheme
@@ -320,6 +332,12 @@ def choose_target_fragments(fragments_df, config):
 def create_new_item_ids(config):
     """
     Creates deterministic IDs for the synthetic update batch.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        List of generated synthetic item ids
     """
 
     return [f"{config['new_item_prefix']}{index:04d}" for index in 
@@ -329,6 +347,12 @@ def apply_inserts(fragments_df, new_item_ids, target_fragments, config):
     """
     Adds all synthetic items to one fragment of each fragmentation scheme.
     Recalculates fragment sizes.
+
+    Parameters:
+        fragments_df: The baseline fragment DataFrame
+        new_item_ids: The synthetic item ids for the insert
+        target_fragments: Fragment ids that receive new items
+        config: Configurations for dataset-specific paths and parameters
 
     Returns:
         update_df: A DataFrame with the updated fragments
@@ -348,7 +372,13 @@ def apply_inserts(fragments_df, new_item_ids, target_fragments, config):
 
     def append_new_items(value):
         """
-        Appends synthetic item ids without creating duplicate memberships
+        Appends synthetic item ids without creating duplicate memberships.
+
+        Parameters:
+            value: Comma-separated item ids of a fragment
+
+        Returns:
+            Comma-separated item ids including new synthetic items
         """
 
         curr_item_ids = parse_item_ids(value)
@@ -359,7 +389,7 @@ def apply_inserts(fragments_df, new_item_ids, target_fragments, config):
 
         return ",".join(curr_item_ids)
 
-    # Adds new item to selected fragments
+    # Adds new items to selected fragments
     # Applies the function to selected rows and writes updated values back
     update_df.loc[mask, item_ids_column] = (update_df.loc[mask, item_ids_column]
                                             .apply(append_new_items))
@@ -374,13 +404,22 @@ def apply_inserts(fragments_df, new_item_ids, target_fragments, config):
 def create_update_items(items_df, new_item_ids, target_fragments, config):
     """
     Adds synthetic item rows used by node creation and recovery.
+
+    Parameters:
+        items_df: The baseline item DataFrame
+        new_item_ids: The synthetic item ids
+        target_fragments: The target fragment ids for the update
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        A DataFrame that contains the baseline and synthetic update items
     """
 
     item_id_column = config["item_id"]
     item_name_column = config["item_name"]
     existing_item_ids = set(items_df[item_id_column].astype(str))
 
-    # prevents item ids from rewriting already existing items
+    # prevents generated item ids from colliding with already existing item ids
     collisions = existing_item_ids & set(new_item_ids)
 
     if collisions:
@@ -409,18 +448,28 @@ def create_update_items(items_df, new_item_ids, target_fragments, config):
 def save(updated_df, path):
     """
     Saves an updated DataFrame as a CSV file
+
+    Parameters:
+        updated_df: DataFrame to save
+        path: Output path of the CSV file
     """
 
     path.parent.mkdir(parents=True, exist_ok=True)
 
     updated_df.to_csv(path, index=False)
 
-    print(f"Updated fragments saved to: {path}")
+    print(f"Updated data saved to: {path}")
 
 
 def load_assignment(path):
     """
-    Loads and validates baseline or updated fragment assignment
+    Loads and validates a baseline or updated fragment assignment.
+
+    Parameters:
+        path: The path to the assignment CSV file
+
+    Returns:
+        assignment_df: The validated fragment assignment DataFrame
     """
 
     if not path.exists():
@@ -438,7 +487,7 @@ def load_assignment(path):
 
     assignment_df["fragment_id"] = (assignment_df["fragment_id"].astype("string"))
 
-    # checks that every fragment must have exactly one assignment
+    # Checks that no fragment appears more than once in the assignment.
     duplicate_fragments = assignment_df["fragment_id"].duplicated(keep=False)
 
     if duplicate_fragments.any():
@@ -451,6 +500,11 @@ def compare(placement_type, baseline, updated):
     """
     Compares pairwise relationships before and after reoptimization for a placement type.
 
+    Parameters:
+        placement_type: Placement method that is being compared
+        baseline: Baseline assignment DataFrame
+        updated: Updated assignment DataFrame
+    
     Returns:
         comparison_df: A DataFrame that contains one row for every unordered fragment pair
     """
@@ -471,7 +525,7 @@ def compare(placement_type, baseline, updated):
         missing_updated = sorted(baseline_fragments_ids - updated_fragments_ids)
         missing_baseline = sorted(updated_fragments_ids - baseline_fragments_ids)
 
-        raise ValueError(f"Baseline and updated assignments contain different fragments:"
+        raise ValueError(f"Baseline and updated assignments contain different fragments: "
                          f"Placement Type: {placement_type} "
                          f"Missing in updated assignment: {missing_updated} "
                          f"Missing in baseline assignment: {missing_baseline}")
@@ -505,6 +559,14 @@ def compare(placement_type, baseline, updated):
 def compare_assignments(config):
     """
     Compares baseline and updated assignments for all configured placement types.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        complete_comparison: A DataFrame that contains all pairwise comparisons
+        changed: A DataFrame that contains changed colocation relationships
+        summary: A DataFrame that summarizes changed and unchanged relationships
     """
 
     comparison = []
@@ -541,18 +603,21 @@ def compare_assignments(config):
 
     change_ratio = amount_changed/total_pairs
 
-    summary = pd.DataFrame({
-        "total_pairs": total_pairs,
-        "changed_pairs": amount_changed,
-        "unchanged_pairs": total_pairs - amount_changed,
-        "change_ratio": change_ratio
-    }).reset_index()
+    summary = pd.DataFrame({"total_pairs": total_pairs, "changed_pairs": amount_changed,
+                            "unchanged_pairs": total_pairs - amount_changed,
+                            "change_ratio": change_ratio}).reset_index()
 
     return complete_comparison, changed, summary
 
 def load_node_loads(path):
     """
-    Loads and validates a node-load result file
+    Loads and validates a node-load result file.
+
+    Parameters:
+        path: The path to the node_load CSV file
+
+    Returns:
+        node_load: The validated node-load DataFrame
     """
     if not path.exists():
         raise FileNotFoundError(f"File for node load not found: {path}")
@@ -573,6 +638,11 @@ def summarize_node_loads(placement_type, mode, node_loads):
     """
     Calculates node-load metrics for a placement type and an optimization mode.
     Unused candidate nodes are excluded from the result.
+
+    Parameters:
+        placement_type: The Placement method
+        mode: The optimization mode "baseline" or "updates"
+        node_loads: The DataFrame that contains node_load results
 
     Returns:
         A Dictionary that contains the statistics regarding node load and used-node count
@@ -602,7 +672,10 @@ def summarize_node_loads(placement_type, mode, node_loads):
 
 def compare_loads(config):
     """
-    Creates summaries for all placement types and optimization modes
+    Creates summaries for all placement types and optimization modes.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
 
     Returns:
         node_load_summary: A node-load summary DataFrame
@@ -635,6 +708,12 @@ def compare_loads(config):
 def save_assignment_comparison(complete_comparison, changed, summary, config):
     """
     Saves complete, changed, and summarized assignment comparison results.
+
+    Parameters:
+        complete_comparison: A DataFrame that contains all pairwise comparisons
+        changed: A DataFrame that contains changed colocation relationships
+        summary: A DataFrame that contains comparison summary metrics
+        config: Configurations for dataset-specific paths and parameters
     """
     comparison_path = config["comparison_path"]
     changed_path = config["changed_comparison_path"]
@@ -652,6 +731,13 @@ def save_assignment_comparison(complete_comparison, changed, summary, config):
 def save_node_load_summary(node_load_summary, config):
     """
     Saves the combined node-load summary.
+
+    Parameters:
+        node_load_summary: A DataFrame that contains node_load summary metrics
+        config: Configurations for dataset-specific paths and parameters
+
+    Returns:
+        node_load_path: The path to the saved node_load summary
     """
 
     node_load_path = config["node_load_summary_path"]
@@ -668,6 +754,9 @@ def save_node_load_summary(node_load_summary, config):
 def process_prepare_reoptimization(config):
     """
     Creates and saves the updated fragment and item states that contain the insertions.
+
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
 
     Returns:
         update_df: Updated fragments
@@ -698,11 +787,14 @@ def process_evaluate_reoptimization(config):
     """
     Evaluates assignment changes and node loads after the reoptimization
 
+    Parameters:
+        config: Configurations for dataset-specific paths and parameters
+
     Returns:
-        complete_comparison: A complete comparison over all pairs
-        changed: The amount of changed pairs
-        summary: The summary about changed assignments
-        node_load_summary: Summary about new node loads
+        complete_comparison: DataFrame that contains all pairwise assignment comparisons
+        changed: DataFrame that contains pairs whose colocation relationship changed
+        summary: DataFrame that summarizes changed and unchanged colocation relationships
+        node_load_summary: DataFrame that summarizes baseline and updated node loads
     """
     complete_comparison, changed, summary = compare_assignments(config)
 

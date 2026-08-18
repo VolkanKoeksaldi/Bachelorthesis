@@ -21,7 +21,7 @@ REOPTIMIZATION_INSERT_COUNT = 100
 copy_factor = 2 ** DUPLICATION_LEVEL
 target_rows = SOURCE_ROWS * copy_factor
 
-# Seeds that are used for reproducible dataset generation
+# Parameters used for reproducible dataset generation
 MESH_SAMPLE_SEED = 42
 MESH_PATIENT_SEED = 42
 MESH_PATIENT_COUNT = 10000
@@ -48,6 +48,6 @@ OUTPUT_ROOT = (prototype_dir / "output" / "evaluation_runs" / RUN_LABEL)
 
 def experiment_path(rel_path):
     """
-    Returns the output path for the evaluation from the experimental configurations.
+    Returns an output path relative to the current evaluation run.
     """
     return OUTPUT_ROOT / Path(rel_path)

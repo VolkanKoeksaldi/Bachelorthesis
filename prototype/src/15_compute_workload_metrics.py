@@ -3,7 +3,7 @@ import pandas as pd
 from experiment_config import experiment_path
 from database_operations import DATASETS as CONFIGS
 
-DATASET = "imdb" # imdb or mesh
+DATASET = "mesh" # imdb or mesh
 
 
 EVALUATION_CONFIGS = {
@@ -54,12 +54,12 @@ def get_operation_nodes(result, field_name, fallback_field=None):
         fallback_field: optional alternative result field
 
     Returns:
-        A sorted list of distingt node ids
+        A sorted list of distinct node ids
     """
     operation_result = result.get("result", {})
 
     if not isinstance(operation_result, dict):
-        raise ValueError(f"Result of a workload operation must be an dictionary.")
+        raise ValueError(f"Result of a workload operation must be a dictionary.")
 
     node_ids = operation_result.get(field_name)
 
@@ -124,13 +124,13 @@ def compute_stretch_jump(execution_nodes):
     if len(node_indices) == 1:
         return 1.0, 1
 
-    # Calculates span by subtracting biggest node id from first node id + 1
+    # Calculates the span from the smallest to the biggest node id.
     span = node_indices[-1] - node_indices[0] + 1
     stretch = span / len(node_indices)
 
     # Counts the number of separate contiguous node index blocks
     jump = 1
-    # calculates how often node indices only have 1 as difference between them
+    # Starts a new contiguous block whenever the gap between two nodes is greater than one.
     for pre, cur in zip(node_indices, node_indices[1:]):
         if cur > pre + 1:
             jump += 1
@@ -298,7 +298,7 @@ def process_compute_workload_metrics(dataset, evaluation_config, database_config
 
     Returns:
         results: Contains the detailed results
-        per_operation_results: Results for each operation type
+        per_operation_results: Aggregated results for each individual operation
         summary: The summary metrics.
     """
 

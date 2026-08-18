@@ -2,9 +2,9 @@ from experiment_config import experiment_path
 import sqlite3
 import pandas as pd
 
-DATASET = "imdb" # imdb or mesh
-PLACEMENT = "round_robin" # tuple_ilp, round_robin, or conflict_locality_ilp
-MODE = "updates" # baseline or updates
+DATASET = "mesh" # imdb or mesh
+PLACEMENT = "tuple_ilp" # tuple_ilp, round_robin, or conflict_locality_ilp
+MODE = "baseline" # baseline or updates
 
 
 MESH_ADDITIONAL_COLUMNS = {
@@ -48,20 +48,19 @@ DATASETS = {
                 "fragments_path": experiment_path("processed/mesh_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/mesh_fragment_assignment_round_robin.csv"),
-                "node_output": experiment_path("nodes/mesh/round_robin")
-            },
+                "node_output": experiment_path("nodes/mesh/round_robin")},
+
             "tuple_ilp": {
                 "fragments_path": experiment_path("processed/mesh_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/mesh_fragment_assignment_tuple_ilp.csv"),
-                "node_output": experiment_path("nodes/mesh/tuple_ilp")
-            },
+                "node_output": experiment_path("nodes/mesh/tuple_ilp")},
+
             "conflict_locality_ilp": {
                 "fragments_path": experiment_path("processed/mesh_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/mesh_fragment_assignment_conflict_locality_ilp.csv"),
-                "node_output": experiment_path("nodes/mesh/conflict_locality_ilp")
-            }
+                "node_output": experiment_path("nodes/mesh/conflict_locality_ilp")}
         }
     },
 
@@ -78,20 +77,19 @@ DATASETS = {
                 "fragments_path": experiment_path("processed/imdb_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/imdb_fragment_assignment_round_robin.csv"),
-                "node_output": experiment_path("nodes/imdb/round_robin")
-            },
+                "node_output": experiment_path("nodes/imdb/round_robin")},
+
             "tuple_ilp": {
                 "fragments_path": experiment_path("processed/imdb_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/imdb_fragment_assignment_tuple_ilp.csv"),
-                "node_output": experiment_path("nodes/imdb/tuple_ilp")
-            },
+                "node_output": experiment_path("nodes/imdb/tuple_ilp")},
+
             "conflict_locality_ilp": {
                 "fragments_path": experiment_path("processed/imdb_fragments.csv"),
                 "assignment_path": experiment_path(
                     "processed/imdb_fragment_assignment_conflict_locality_ilp.csv"),
-                "node_output": experiment_path("nodes/imdb/conflict_locality_ilp")
-            }
+                "node_output": experiment_path("nodes/imdb/conflict_locality_ilp")}
         }
     }
 }
@@ -105,6 +103,7 @@ UPDATE_PLACEMENTS = {
                 "processed/mesh_fragment_assignment_round_robin.csv"),
             "node_output": experiment_path("nodes/mesh/updates/round_robin")
         },
+        
         "tuple_ilp": {
             "items_path": experiment_path("reoptimization/mesh_terms_updates.csv"),
             "fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
@@ -112,6 +111,7 @@ UPDATE_PLACEMENTS = {
                 "reoptimization/mesh_fragment_assignment_tuple_ilp_updated.csv"),
             "node_output": experiment_path("nodes/mesh/updates/tuple_ilp")
         },
+
         "conflict_locality_ilp": {
             "items_path": experiment_path("reoptimization/mesh_terms_updates.csv"),
             "fragments_path": experiment_path("reoptimization/mesh_fragments_updates.csv"),
@@ -120,6 +120,7 @@ UPDATE_PLACEMENTS = {
             "node_output": experiment_path("nodes/mesh/updates/conflict_locality_ilp")
         }
     },
+
     "imdb": {
         "round_robin": {
             "items_path": experiment_path("reoptimization/imdb_titles_updates.csv"),
@@ -128,6 +129,7 @@ UPDATE_PLACEMENTS = {
                 "processed/imdb_fragment_assignment_round_robin.csv"),
             "node_output": experiment_path("nodes/imdb/updates/round_robin")
         },
+
         "tuple_ilp": {
             "items_path": experiment_path("reoptimization/imdb_titles_updates.csv"),
             "fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
@@ -135,6 +137,7 @@ UPDATE_PLACEMENTS = {
                 "reoptimization/imdb_fragment_assignment_tuple_ilp_updated.csv"),
             "node_output": experiment_path("nodes/imdb/updates/tuple_ilp")
         },
+
         "conflict_locality_ilp": {
             "items_path": experiment_path("reoptimization/imdb_titles_updates.csv"),
             "fragments_path": experiment_path("reoptimization/imdb_fragments_updates.csv"),
@@ -148,13 +151,13 @@ UPDATE_PLACEMENTS = {
 
 def parse_item_ids(item_ids_string):
     """
-    Converts comma-separated item ids stored in a CSV field into a set.
+    Converts comma-separated item ids stored in a CSV field into a list.
 
     Parameters:
         item_ids_string: item ids field from CSV
 
     Returns:
-        Set of item id Strings
+        List of item ID strings
     """
 
     if pd.isna(item_ids_string) or item_ids_string == "":
@@ -251,8 +254,8 @@ def insert_fragment(connection, fragment_row, item_lookup, config):
     # Iterates through every item in fragment
     for item_id in parse_item_ids(fragment_row[config["fragment_item_ids_column"]]):
 
-        # Retrieves item_id for the current item.
-        # In case the item is missing from the lookup, it gets the value "UNKNOWN"
+        # Retrieves the data for the current item.
+        # In case the item is missing from the lookup, its name is set to "UNKNOWN".
         item_data = item_lookup.get(item_id, {item_name_column: "UNKNOWN"})
 
         item_values = [item_id, item_data.get(item_name_column, "UNKNOWN"),
@@ -292,14 +295,13 @@ def create_sqlite_nodes(items_df, assignment_df, config):
 
     # Groups the assigned fragments by node_id
     for node_id, node_fragments in assignment_df.groupby("node_id"):
-        # gets the database paths
         database_path = node_output / f"{node_id}.db"
         # Enables foreign-keys and creates the required tables.
         with sqlite3.connect(database_path) as connection:
             connection.execute("PRAGMA foreign_keys = ON")
             create_tables(connection, config)
             for _, fragment_row in node_fragments.iterrows():
-                # Inserts the fragment metadata, item records, and memberships
+                # Inserts the fragment metadata, item records, and memberships.
                 insert_fragment(connection, fragment_row, item_lookup, config)
             connection.commit()
 
@@ -329,7 +331,7 @@ def verify_nodes(config):
 
 def add_fragment_information(assignment_df, fragments_df, item_ids_column):
     """
-    Replaces potentially outdates fragment information in the assignment with information
+    Replaces potentially outdated fragment information in the assignment with information
     from the current fragment file.
     
     This prevents updates mode from accidentally reusing outdated item ids or fragment sizes
@@ -359,7 +361,7 @@ def add_fragment_information(assignment_df, fragments_df, item_ids_column):
         "cluster_head_source_id",
         "cluster_method",
         "fragment_size",
-        item_ids_column,
+        item_ids_column
     ]
 
     # Discards outdated fragment data from assignment file
@@ -368,12 +370,12 @@ def add_fragment_information(assignment_df, fragments_df, item_ids_column):
     # Otherwise an error message would interrupt the program.
     placement_df = assignment_df.drop(columns=metadata_columns, errors="ignore")
 
-    # Collects all the fragment information that is available using 
-    # fragment_id and then the elements of the list required_columns
+    # Collects current fragmentation information by using fragment_id 
+    # and the columns defined in metadata_columns.
     current_fragment_information = fragments_df[["fragment_id", *metadata_columns]]
 
-    # merges the current fragment information with placement_df on the fragment_id
-    # validate="one_to_one" checks whether every fragment_id appears exactly once in both tables
+    # Merges the current fragment information with placement_df on the fragment_id.
+    # validate="one_to_one" checks whether every fragment_id appears exactly once in both tables.
     return placement_df.merge(current_fragment_information, on="fragment_id", 
                               how="left", validate="one_to_one")
 
@@ -392,11 +394,11 @@ def process_create_sqlite_nodes(config, placement):
     fragments_df = pd.read_csv(placement["fragments_path"])
     assignment_df = pd.read_csv(placement["assignment_path"])
 
-    # refreshes assignment with newest fragment information
+    # Refreshes the assignment with current fragment information.
     assignment_df = add_fragment_information(assignment_df, fragments_df, 
                                              config["fragment_item_ids_column"])
 
-    # ** extracts a dictionary and overwrites the value for node_output
+    # "**" extracts a dictionary and overwrites the value for node_output
     node_config = {**config, "node_output": placement["node_output"]}
 
     create_sqlite_nodes(items_df, assignment_df, node_config)

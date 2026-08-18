@@ -11,7 +11,6 @@ AFFINITY_CONFIGS = {
         "workload_path": experiment_path("workloads/mesh_workload.json"),
         "output_directory": experiment_path("workload_affinities"),
         "overlap_path": experiment_path("processed/mesh_overlaps.csv"),
-
         "overlap_fragment_1": "fragment_1",
         "overlap_fragment_2": "fragment_2"
     },
@@ -20,7 +19,6 @@ AFFINITY_CONFIGS = {
         "workload_path": experiment_path("workloads/imdb_workload.json"),
         "output_directory": experiment_path("workload_affinities"),
         "overlap_path": experiment_path("processed/imdb_overlaps.csv"),
-
         "overlap_fragment_1": "fragment_1",
         "overlap_fragment_2": "fragment_2"
     }
@@ -80,7 +78,6 @@ def compute_affinities(workload):
     affinities = {}
 
     for operation in workload:
-        # Only considers FRAGMENT_SELECT operations for the affinity generation
         if operation["operation"] != "FRAGMENT_SELECT":
             continue
 
@@ -128,7 +125,7 @@ def create_affinity_df(affinities):
     if affinity_df.empty:
         raise ValueError(f"No fragment affinities could be computed from the workload.")
     else:
-        # Sorts pairs by descending affinitiy. Ties are sorted by their fragment ids
+        # Sorts pairs by descending affinity. Ties are sorted by their fragment ids.
         affinity_df = affinity_df.sort_values(by=["affinity", "fragment_i", "fragment_j"], 
                                               ascending=False).reset_index(drop=True)
 
@@ -138,8 +135,8 @@ def compare_affinity_conflict(affinity, config):
     """
     Compares affinity pairs with fragment overlap conflict pairs.
 
-    Affinity-conflict pairs are accessed together by the workload but they cannot be
-    colocated because of their overlap.
+    Affinity-conflict pairs are accessed together by the workload and are also overlap-based
+    conflict pairs for the conflict-locality placement.
 
     Parameters:
         affinity: A DataFrame that contains the computed affinities
@@ -176,10 +173,10 @@ def compare_affinity_conflict(affinity, config):
     conflict_pairs = {normalize_pair(row[fragment_1], row[fragment_2]) 
                       for _, row in overlap_df.iterrows()}
 
-    # Affine pairs that overlap and therefore cannot be assigned to the same node
+    # Affinity pairs that are also conflict pairs. They cannot be placed on the same node.
     affinity_conflicts = affinity_pairs & conflict_pairs
 
-    # Affine pairs that can be placed on the same node
+    # Affinity pairs that are not conflict pairs and can be placed on the same node.
     non_conflict_affinities = affinity_pairs - conflict_pairs
 
     comparison = {"amount_affinity_pairs": len(affinity_pairs),

@@ -7,7 +7,6 @@ from experiment_config import MESH_SAMPLE_SEED, SOURCE_ROWS, experiment_path
 source_dir = Path(__file__).resolve().parent
 prototype_dir = source_dir.parent
 
-# Input and output paths for MeSH dataset.
 INPUT_PATH = prototype_dir / "data" / "raw" / "mesh" / "desc2026.xml"
 OUTPUT_PATH = experiment_path("prepared/mesh/desc2026_sample.xml")
 
@@ -30,7 +29,7 @@ def iter_eligible_terms(input_path):
         if descriptor_record.tag != "DescriptorRecord":
             continue
 
-        # Extracts TreeNumber from descriptors that have at least one TreeNumber.
+        # Checks whether the descriptor_record contains any TreeNumber.
         tree_number = any(element.text and element.text.strip() 
                           for element in descriptor_record.findall("TreeNumberList/TreeNumber"))
 
@@ -62,7 +61,7 @@ def select_term_ids(input_path, required_terms, seed):
         seed: Randomizer seed for the selection of sample data
     
     Returns:
-        set(array): a unique set of every selected TermUI
+        set: a unique set of every selected TermUI
         count: number of eligible MeSH terms encountered
     """
 
@@ -149,7 +148,6 @@ def write_selected_records(input_path, output_path, selected_term_ids):
         if selected_in_record:
             # Creates a deep copy because otherwise the parsed element is cleared.
             sample_root.append(copy.deepcopy(descriptor_record))
-            # Counts every selected item in descriptors.
             selected_count += selected_in_record
             descriptor_count += 1
 
@@ -170,16 +168,15 @@ def write_selected_records(input_path, output_path, selected_term_ids):
 
 def create_sample_xml(input_path, output_path, required_terms, seed=MESH_SAMPLE_SEED):
     """
-    Samples a reduced XML file containing at most SOURCE_ROWS elements from the original dataset.
+    Creates the reduced MeSH XML file that contains the required number of unique sampled terms.
 
     Parameters:
-        input_path: input_path: MeSH XML file source path
+        input_path: MeSH XML file source path
         output_path: Path to the reduced output XML file
         required_terms: Number of unique terms that need to be included
         seed: Seed is used for reproducible sampling
     """
 
-    # Samples the selected_term_ids and counts eligible items.
     selected_term_ids, eligible_count = select_term_ids(input_path, required_terms, seed)
 
     # Writes the descriptor record context for selected terms.

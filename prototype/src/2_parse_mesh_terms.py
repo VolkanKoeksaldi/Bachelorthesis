@@ -90,8 +90,8 @@ def parse_mesh_terms(xml_path):
         xml_path: The path to the reduced XML file
     
     Returns:
-        pd.DataFrame(rows): A DataFrame that contains the parsed terms and their
-                            fragmentation attributes
+        pd.DataFrame: A DataFrame that contains the parsed terms and their
+                      fragmentation attributes
     """
 
     rows = []
@@ -99,7 +99,6 @@ def parse_mesh_terms(xml_path):
     # Iterparse reads the reduced XML file step by step.
     for _, elem in ET.iterparse(xml_path, events=("end",)):
 
-        # Skips if the element does not have the tag DescriptorRecord.
         if elem.tag != "DescriptorRecord":
             continue
 
@@ -134,7 +133,6 @@ def parse_mesh_terms(xml_path):
                 term_ui = term.findtext("TermUI")
                 mesh_term = term.findtext("String")
 
-                # Skips incomplete Terms.
                 if not term_ui or not mesh_term:
                     continue
 
@@ -159,14 +157,13 @@ def parse_mesh_terms(xml_path):
 
 def calculate_item_size(row):
     """
-    Calculates the UTF-8 byte size of the fields from the item row.
-    Missing or false fields are represented by an empty string before calculating the size.
+    Calculates the UTF-8 byte size of selected item fields.
 
     Parameters:
-        row: DataFrame row that containts the item fields
+        row: DataFrame row that contains the item fields
     
     Returns:
-        Size of the item in UTF-8 bytes.
+        Size of the selected fields in UTF-8 bytes.
     """
 
     values = (row["tuple_id"], row["patient_id"], row["mesh_term"], 
@@ -213,7 +210,6 @@ def process_mesh_terms(input_path, output_path):
     # Assigns unique tuple_id to every resulting row.
     result = expand_base_table(base_df, copy_factor, id_column="tuple_id", id_prefix="MT")
 
-    # adds the item size as the weight of each physical item.
     result["item_size_bytes"] = result.apply(calculate_item_size, axis=1)
 
     # Defines dataframe columns for the generated CSV file.

@@ -18,8 +18,6 @@ CONFIGS = {
     }
 }
 
-
-
 def assign_round_robin(fragments_df, num_nodes):
     """
     Assigns fragments cyclically to available nodes using round-robin.
@@ -90,20 +88,18 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
     if fragments_df.empty:
         raise ValueError(f"The fragment file is empty: {input_path}")
 
-    fragment_ids = (fragments_df["fragment_id"].astype("string"))
+    fragment_ids = fragments_df["fragment_id"].astype("string")
     # Checks here whether any fragment IDs are missing or empty
-    invalid_fragment_ids = (fragment_ids.isna()| fragment_ids.str.strip().eq(""))
+    invalid_fragment_ids = fragment_ids.isna() | fragment_ids.str.strip().eq("")
 
     if invalid_fragment_ids.any():
         raise ValueError("The fragment file contains missing or empty fragment IDs.")
 
-    # Every fragment must have a unique fragment ID
     if not fragment_ids.is_unique:
         raise ValueError("The fragment file contains duplicate fragment IDs.")
 
     assignment_df = assign_round_robin(fragments_df, num_nodes)
 
-    # The assignment must contain all fragments.
     if len(assignment_df) != len(fragments_df):
         raise ValueError("The number of assigned fragments does not match "
                          f"the number of input fragments.")
@@ -118,12 +114,11 @@ def process_round_robin(input_path: Path, output_path: Path, num_nodes: int):
 
     assignment_df.to_csv(output_path, index=False)
 
-    # Displays the node order for the assigned fragments.
+    # Creates the ordered list of all available nodes.
     node_order = [f"node_{node_number}"  for node_number in range(1, num_nodes + 1)]
 
-    # Counts the assigned fragments per node from node_id column
-    # then reindexes it to node_order and gives missing nodes the value 0.
-    # Renames the result to fragment_count.
+    # Counts the assigned fragments per node.
+    # Gives unused nodes the value 0, and names the result fragment_count.
     fragments_per_node = (assignment_df["node_id"].value_counts()
                           .reindex(node_order, fill_value=0).rename("fragment_count"))
 

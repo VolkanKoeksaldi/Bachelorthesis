@@ -8,26 +8,20 @@ FRAGMENT_OUTPUT_PATH = experiment_path("processed/mesh_fragments.csv")
 CLUSTER_OUTPUT_PATH = experiment_path("processed/mesh_clusters.csv")
 
 SCHEME_METADATA = {
-    "top_category": {
-        "relaxation_attribute": "mesh_term",
-        "cluster_method": "mesh_taxonomy_prefix_level_1"
-    },
+    "top_category": {"relaxation_attribute": "mesh_term",
+                    "cluster_method": "mesh_taxonomy_prefix_level_1"},
 
-    "branch_code": {
-        "relaxation_attribute": "mesh_term",
-        "cluster_method": "mesh_taxonomy_prefix_level_2"
-    },
+    "branch_code": {"relaxation_attribute": "mesh_term",
+                    "cluster_method": "mesh_taxonomy_prefix_level_2"},
 
-    "subbranch_code": {
-        "relaxation_attribute": "mesh_term",
-        "cluster_method": "mesh_taxonomy_prefix_level_3"
-    }
+    "subbranch_code": {"relaxation_attribute": "mesh_term", 
+                       "cluster_method": "mesh_taxonomy_prefix_level_3"}
 }
 
 def choose_cluster_head(group):
     """
     Chooses a representative cluster head for MeSH fragments.
-    Terms with a shallower canonical Tree Numbers are preferred.
+    Terms with shallower canonical Tree Numbers are preferred.
     If there is a tie it is resolved lexicographically using Tree Number, TermUI, and term text.
 
     Parameters:
@@ -39,10 +33,10 @@ def choose_cluster_head(group):
 
     candidates = group.copy()
 
-    # Writes the tree depth by counting the separator dots of a tree number.
+    # Calculates the tree depth by counting the separator dots of a tree number.
     candidates["tree_depth"] = candidates["tree_number"].astype(str).str.count(r"\.")
 
-    # sorts the values and takes the first shallowest tree depth as the cluster head
+    # Sorts the candidates and takes the first shallowest tree depth as the cluster head.
     head = candidates.sort_values(["tree_depth", "tree_number", "term_ui", "mesh_term"]).iloc[0]
 
     return head
@@ -58,7 +52,7 @@ def create_fragments(df, fragmentation_schemes):
 
     Parameters:
         df: DataFrame that contains the processed MeSH items
-        fragmentatio_schemes: The different columns used to construct fragmentations
+        fragmentation_schemes: The different columns used to construct fragmentations
     
     Returns:
         A DataFrame that contains one row per generated fragment.
@@ -66,6 +60,7 @@ def create_fragments(df, fragmentation_schemes):
 
     fragment_rows = []
 
+    # Creates a complete fragmentation for each scheme.
     for scheme in fragmentation_schemes:
         metadata = SCHEME_METADATA[scheme]
 
@@ -80,10 +75,9 @@ def create_fragments(df, fragmentation_schemes):
 
             head = choose_cluster_head(group)
 
-            # Creates a String list of unique tuple ids.
             tuple_ids = unique_items["tuple_id"].astype(str).tolist()
 
-            # Adds all tree numbers of a term.
+            # Adds all unique tree numbers that are associated with terms.
             all_tree_numbers = sorted({tree_number.strip() 
                                        for stored_values in group["all_tree_numbers"].dropna()
                                        for tree_number in str(stored_values).split("|") 
@@ -115,13 +109,12 @@ def process(input_path, output_path, cluster_output_path):
     Parameters:
         input_path: Processed MeSH term CSV file path
         output_path: Output fragment CSV file path
-        cluster_output_path: Output to reduced cluster CSV file path
+        cluster_output_path: Path to the reduced cluster CSV file
     
     Returns:
         fragments_df: DataFrame that contains all generated fragments 
     """
 
-    # Reads the CSV file and preserves tuple_ids as strings.
     df = pd.read_csv(input_path, dtype={"tuple_id": "string"})
 
     # Sets the required columns needed for fragments and the cluster-head selection.
@@ -136,7 +129,7 @@ def process(input_path, output_path, cluster_output_path):
     if len(df) != target_rows or not df["tuple_id"].is_unique:
         raise ValueError(f"Expected {target_rows} rows with unique tuple_id values.")
 
-    # Identifies rows with missing scheme values, axis=1 applies isna() to every row.
+    # Identifies rows that contain a missing scheme value.
     missing_scheme_values = df[list(MESH_FRAGMENTATION_SCHEMES)].isna().any(axis=1)
 
     if missing_scheme_values.any():
