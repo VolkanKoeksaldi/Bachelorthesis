@@ -10,7 +10,7 @@ SOURCE_ROWS = 56341
 # 1 -> x2 = 112682 rows
 # 2 -> x4 = 225364 rows
 # 3 -> x8 = 450728 rows
-DUPLICATION_LEVEL = 1
+DUPLICATION_LEVEL = 0
 
 # Maximum number of available nodes
 NUM_NODES = 10
