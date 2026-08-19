@@ -3,13 +3,13 @@
 This repository contains the Python prototype developed for the bachelor thesis *Overlap-Aware Data Distribution Using Bin Packing in Distributed Database Systems*.
 
 It implements and evaluates three fragment-placement methods:
-* a deterministic and simple Round-Robin baseline
-* a tuple-based Integer Linear Programming (ILP) formulation
-* a conflict-locality-based ILP formulation
+* a simple Round-Robin baseline
+* a tuple-based ILP
+* a conflict-locality-based ILP
 
 This prototype preprocesses MeSH and IMDb data and creates three horizontal fragmentations for each dataset. Afterwards it computes their fragment overlaps and according to the placement methods assigns fragments to simulated database nodes, which are subsequently materialized as separate SQLite database files. It also generates and executes a reproducible workload and evaluates storage, replication, locality, reoptimization, and recovery metrics.
 
-The copy factors x1, x2, x4, and x8 increase the number of items and fragment weights, while preserving the fragment categories, overlap structure, and membership-pattern structure.
+The copy factors x1, x2, x4, and x8 increase the number of items and fragment weights, while preserving the fragment structure, overlap structure, and membership-pattern structure.
 Therefore, the scalability of the placement methods with increasing dataset sizes is evaluated.
 The evaluations assume `r=m=3`.
 
@@ -47,7 +47,7 @@ Then create an output volume. The following example is for an x1 run:
 docker volume create bachelor-x1-output
 ```
 
-Afterwards the container can be started. For different copy-factor runs, the x1 identifiers need to be changed accordingly:
+Afterwards the container can be started. For different copy-factor runs, the number needs to be changed accordingly:
 ```powershell
 docker run --name bachelor-x1 -it `
   --mount "type=bind,source=$($PWD.Path)\src,target=/app/src" `
@@ -56,13 +56,13 @@ docker run --name bachelor-x1 -it `
   bachelor-prototype
 ```
 
-Scripts can be run inside the container with:
+Scripts can be run with:
 ```bash
 python src/<script_name>.py
 ```
 
-The scripts use manual configurable selectors near the beginning of the files.
-Before execution, the selectors `DATASET`, `PLACEMENT`, and `MODE` used by the script need to be configured.
+The scripts use configurable selectors near the beginning of the files.
+Thus before execution, the selectors `DATASET`, `PLACEMENT`, and `MODE` need to be configured.
 
 ## Execution Order
 The following pipeline shows the execution order for every desired copy factor.
@@ -90,7 +90,7 @@ For both datasets:
 2. Run `13_generate_workload.py` once.
 3. Run `16_compute_workload_affinities.py` once.
 
-It is important to generate the workload and compute its affinities before the conflict-locality ILP because the formulation uses the workload-derived affinities in its objective function.
+It is important to generate the workload and compute its affinities before starting the conflict-locality ILP because it uses the workload-derived affinities in its objective function.
 
 ### 3. Initial ILP Placements
 For both datasets, set `MODE = "baseline"` and run:
@@ -101,8 +101,7 @@ python src/10_conflict_locality_ILP.py
 ```
 
 ### 4. Initial SQLite Nodes and Placement Evaluation
-For each dataset and each placement (`round_robin`, `tuple_ilp`, and
-`conflict_locality_ilp`):
+For each dataset and each placement (`round_robin`, `tuple_ilp`, and `conflict_locality_ilp`):
 
 1. Run `11_create_sqlite_nodes.py` with `MODE = "baseline"`.
 2. Run `12_evaluate.py`.
@@ -127,7 +126,7 @@ For each dataset:
 6. Run script 17 to evaluate locality for the initial and reoptimized assignments.
 
 ### 6. Recovery
-For each dataset, run `19_recovery.py` twice:
+**For each dataset**, run `19_recovery.py`:
 
 1. once with `MODE = "baseline"`; and
 2. once with `MODE = "updates"`.
